@@ -122,12 +122,25 @@
         }
       }
     }
+    //必须要把同一个维度的obj放在一堆，不然line不会连线
+    let newDataList = [];
+    for(var dimensionName of mySet){
+      for(var dataObj of dataList){
+        for(var key in dataObj){
+          if(dimensionName === key){
+            newDataList.push(dataObj)
+            break
+          }
+        }
+      }
+    }
+
     let arrayResult = []
     arrayResult.push('date')
     for (let temp of mySet) {
       arrayResult.push(temp)
     }
-    return arrayResult
+    return [arrayResult,newDataList]
   }
 
   function getSeries(arrayDimensions,seriesType) {
@@ -178,7 +191,9 @@
         this.dialogSettingVisible = false
         this.dialogShowChartVisible = true
         await sleep(1500)
-        let arrayDimensions = changeDataToDimension(this.tableData, this.view.dimension);
+        let changeResponse = changeDataToDimension(this.tableData, this.view.dimension)
+        let arrayDimensions = changeResponse[0];
+        this.tableData = changeResponse[1]
         console.log(arrayDimensions)
         var chart1 = echarts.init(document.getElementById("chart1"))
         var option = {
