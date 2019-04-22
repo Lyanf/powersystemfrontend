@@ -64,33 +64,33 @@
             </el-table>
           </el-row>
           <el-dialog title="可视化设计" :visible.sync="dialogSettingVisible">
-          <el-row>
-            <el-form label-width="80px">
-              <el-form-item label="方案选择">
-                <el-radio v-model="view.schemeRadio" label="line">折线图</el-radio>
-                <el-radio v-model="view.schemeRadio" label="bar">柱形图</el-radio>
-              </el-form-item>
-              <el-form-item label="x轴">
-                <el-input value="日期" disabled></el-input>
-              </el-form-item>
-              <el-form-item label="y轴">
-                <el-input value="值" disabled></el-input>
-              </el-form-item>
-              <el-form-item label="维度">
-                <el-select value="location" v-model="view.dimension">
-                  <el-option label="位置" value="location"></el-option>
-                  <el-option label="测点" value="measurePoint"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item>
-              <el-button type="primary" style="margin-left: 80%" v-on:click="viewClicked" >确定</el-button>
-              </el-form-item>
-            </el-form>
-          </el-row>
+            <el-row>
+              <el-form label-width="80px">
+                <el-form-item label="方案选择">
+                  <el-radio v-model="view.schemeRadio" label="line">折线图</el-radio>
+                  <el-radio v-model="view.schemeRadio" label="bar">柱形图</el-radio>
+                </el-form-item>
+                <el-form-item label="x轴">
+                  <el-input value="日期" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="y轴">
+                  <el-input value="值" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="维度">
+                  <el-select value="location" v-model="view.dimension">
+                    <el-option label="位置" value="location"></el-option>
+                    <el-option label="测点" value="measurePoint"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" style="margin-left: 80%" v-on:click="viewClicked" >确定</el-button>
+                </el-form-item>
+              </el-form>
+            </el-row>
           </el-dialog>
           <el-dialog title="可视化图像" :visible.sync="dialogShowChartVisible" width="1000px">
             <el-row>
-            <div id="chart1" style="height: 400px;width: 700px;margin-left: auto;margin-right: auto"></div>
+              <div id="chart1" style="height: 400px;width: 700px;margin-left: auto;margin-right: auto"></div>
             </el-row>
           </el-dialog>
 
@@ -117,7 +117,7 @@
       for (let key in thisData) {
         if (dimension === key) {
           let thisStr = thisData[key]
-          mySet.addComplete(thisStr)
+          mySet.add(thisStr)
           thisData[thisStr] = thisData['value']
         }
       }
@@ -171,7 +171,6 @@
             idate: that.date
 
           }).then(function (response) {
-          console.log(response)
           that.tableData = response.data
         })
       },
@@ -187,6 +186,18 @@
           tooltip: {
             // trigger:'axis'
           },
+          toolbox: {
+            show: true,
+            feature: {
+              dataZoom: {
+                yAxisIndex: 'none'
+              },
+              magicType: {type: ['line', 'bar']},
+              restore: {},
+              saveAsImage: {},
+            },
+            orient:'vertical'
+          },
           dataset: {
             source: this.tableData,
             dimensions: arrayDimensions
@@ -196,7 +207,8 @@
           series: getSeries(arrayDimensions,this.view.schemeRadio)
         };
         chart1.setOption(option,true);
-        console.log(this.tableData)
+        console.log(JSON.stringify(this.tableData))
+        console.log(JSON.stringify(option))
       },
       viewSettingClicked:function () {
         this.dialogSettingVisible = true
