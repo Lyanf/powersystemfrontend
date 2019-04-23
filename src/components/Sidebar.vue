@@ -13,10 +13,10 @@
         <i class="el-icon-upload2"></i>
         <span slot="title">本地上传</span>
       </el-menu-item>
-      <el-menu-item index="/remotedownload">
-        <i class="el-icon-upload"></i>
-        <span slot="title">远端上传</span>
-      </el-menu-item>
+      <!--<el-menu-item index="/remotedownload">-->
+        <!--<i class="el-icon-upload"></i>-->
+        <!--<span slot="title">远端上传</span>-->
+      <!--</el-menu-item>-->
       <el-menu-item index="/filesearch">
         <i class="el-icon-message"></i>
         <span slot="title">文件查看</span>
