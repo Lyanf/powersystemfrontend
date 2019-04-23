@@ -13,15 +13,15 @@
           </el-select>
         </el-col>
         <el-col :span="5">
-          <el-input
+          <el-input v-model="input1"
             placeholder="请输入地址"
-            v-model="input6">
+            >
           </el-input>
         </el-col>
         <el-col :span="3">
-          <el-input
+          <el-input v-model="input2"
             placeholder="请输入topic"
-            v-model="input6">
+            >
           </el-input>
         </el-col>
       </el-row>
@@ -49,7 +49,9 @@
     name: "RemoteDownload",
     data() {
       return {
-        input6: ''
+        input6: '',
+        input1:'',
+        input2:'',
       }
     },
     create() {
@@ -57,10 +59,10 @@
     },
     methods: {
       startDownload: function () {
-        axios.post("/api/kafka")
+        axios.get("http://192.168.1.116:8080/task/start")
       },
       stopDownload: function () {
-        axios.get()
+        axios.get("http://192.168.1.116:8080/task/stop")
       }
     }
   }
