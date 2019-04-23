@@ -63,7 +63,7 @@
               </el-table-column>
             </el-table>
           </el-row>
-          <el-dialog title="可视化设计" :visible.sync="dialogSettingVisible">
+          <el-dialog title="可视化方案" :visible.sync="dialogSettingVisible">
             <el-row>
               <el-form label-width="80px">
                 <el-form-item label="方案选择">
@@ -88,7 +88,7 @@
               </el-form>
             </el-row>
           </el-dialog>
-          <el-dialog title="可视化图像" :visible.sync="dialogShowChartVisible" width="1000px">
+          <el-dialog title="" :visible.sync="dialogShowChartVisible" width="1000px">
             <el-row>
               <div id="chart1" style="height: 400px;width: 700px;margin-left: auto;margin-right: auto"></div>
             </el-row>

@@ -14,7 +14,7 @@
               width="180">
             </el-table-column> -->
       <el-table-column
-        prop="fileName"
+        prop="filename"
         label="文件名"
         width="180">
       </el-table-column>
@@ -25,45 +25,49 @@
             </el-table-column> -->
       <el-table-column
         label="上传人"
+        prop="creator"
       >
-        <template slot-scope="scope">
+        <!--<template slot-scope="scope">-->
           <!--<a :href="'/api/downloadFile/' + scope.row.fileID">-->
           <!--<el-progress :percentage="abc"></el-progress>-->
-          <span>alvis</span>
+          <!--<span>alvis</span>-->
 
           <!--</a>-->
           <!-- <el-button type="text" size="small">编辑</el-button> -->
-        </template>
+        <!--</template>-->
       </el-table-column>
       <el-table-column
         label="上传时间"
+        prop="createtime"
       >
-        <template slot-scope="scope">
+        <!--<template slot-scope="scope">-->
           <!--<a :href="'/api/downloadFile/' + scope.row.fileID">-->
           <!--<el-progress :percentage="abc"></el-progress>-->
-          <span>20190423</span>
+          <!--<span>20190423</span>-->
 
           <!--</a>-->
           <!-- <el-button type="text" size="small">编辑</el-button> -->
-        </template>
+        <!--</template>-->
       </el-table-column>
       <el-table-column
         label="文件大小"
+        prop="size"
       >
-        <template slot-scope="scope">
+        <!--<template slot-scope="scope">-->
           <!--<a :href="'/api/parseFile/' + scope.row.fileID">-->
-          <span>10M</span>
+          <!--<span>10M</span>-->
           <!--</a>-->
-        </template>
+        <!--</template>-->
       </el-table-column>
       <el-table-column
         label="文件类型"
+        prop="type"
       >
-        <template slot-scope="scope">
+        <!--<template slot-scope="scope">-->
           <!--<a :href="'/api/parseFile/' + scope.row.fileID">-->
-          <span>源数据</span>
+          <!--<span>源数据</span>-->
           <!--</a>-->
-        </template>
+        <!--</template>-->
       </el-table-column>
       <el-table-column
         label="操作"
@@ -122,11 +126,8 @@
       fetchData() {
         let that = this
         link.getFileList.r().then((res) => {
-          if (res.data.status = "SUCCESS") {
-            that.tableData = res.data.files
-          } else {
-            alert("文件列表加载失败")
-          }
+          that.tableData = res.data
+          console.log(res)
 
         })
       },
