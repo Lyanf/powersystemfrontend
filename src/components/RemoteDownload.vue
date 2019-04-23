@@ -59,10 +59,10 @@
     },
     methods: {
       startDownload: function () {
-        axios.get("http://192.168.1.116:8080/task/start")
+        axios.get("/task/start")
       },
       stopDownload: function () {
-        axios.get("http://192.168.1.116:8080/task/stop")
+        axios.get("/task/stop")
       }
     }
   }

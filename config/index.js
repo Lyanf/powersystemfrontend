@@ -17,7 +17,14 @@ module.exports = {
             pathRewrite: {
                 '^/api':''
             }
+        },
+      '/task':{
+        target: 'http://192.168.1.116:8080/task',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/task':''
         }
+      }
     },
 
     // Various Dev Server settings
