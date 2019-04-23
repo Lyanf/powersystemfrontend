@@ -29,7 +29,19 @@
         <template slot-scope="scope">
           <!--<a :href="'/api/downloadFile/' + scope.row.fileID">-->
           <!--<el-progress :percentage="abc"></el-progress>-->
-          <span>abc</span>
+          <span>alvis</span>
+
+          <!--</a>-->
+          <!-- <el-button type="text" size="small">编辑</el-button> -->
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="上传时间"
+      >
+        <template slot-scope="scope">
+          <!--<a :href="'/api/downloadFile/' + scope.row.fileID">-->
+          <!--<el-progress :percentage="abc"></el-progress>-->
+          <span>20190423</span>
 
           <!--</a>-->
           <!-- <el-button type="text" size="small">编辑</el-button> -->
@@ -51,6 +63,18 @@
           <!--<a :href="'/api/parseFile/' + scope.row.fileID">-->
           <span>源数据</span>
           <!--</a>-->
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="操作"
+      >
+        <template slot-scope="scope">
+          <a :href="'/api/downloadFile/' + scope.row.fileID">
+          <!--<el-progress :percentage="abc"></el-progress>-->
+          <span>下载</span>
+
+          </a>
+          <!-- <el-button type="text" size="small">编辑</el-button> -->
         </template>
       </el-table-column>
     </el-table>
