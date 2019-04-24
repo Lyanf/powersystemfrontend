@@ -7,8 +7,8 @@
     <div id="input_area">
       <el-row :gutter="10">
         <el-col :span="5">
-          <el-select value>
-            <el-option value label="天合公司-kafka">
+          <el-select v-model="selectedMethod" placeholder="请选择方案">
+            <el-option  label="天合公司-kafka">
             </el-option>
           </el-select>
         </el-col>
@@ -57,7 +57,8 @@
         input1: '',
         input2: '',
         tablaData: [],
-        status: ''
+        status: '',
+        selectedMethod:''
       }
     },
     created() {
