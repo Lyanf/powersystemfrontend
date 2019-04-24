@@ -25,18 +25,18 @@
         <!--<i class="el-icon-tickets"></i>-->
         <!--<span slot="title">元数据管理</span>-->
       <!--</el-menu-item>-->
-      <!--<el-menu-item index="/conceptLayer">-->
-        <!--<i class="el-icon-tickets"></i>-->
-        <!--<span slot="title">概念层业务元数据管理</span>-->
-      <!--</el-menu-item>-->
-      <!--<el-menu-item index="/logicLayer">-->
-        <!--<i class="el-icon-tickets"></i>-->
-        <!--<span slot="title">逻辑层业务元数据管理</span>-->
-      <!--</el-menu-item>-->
-      <!--<el-menu-item index="/physicsLayer">-->
-        <!--<i class="el-icon-tickets"></i>-->
-        <!--<span slot="title">物理层元数据管理</span>-->
-      <!--</el-menu-item>-->
+      <el-menu-item index="/conceptLayer">
+        <i class="el-icon-tickets"></i>
+        <span slot="title">概念层业务元数据管理</span>
+      </el-menu-item>
+      <el-menu-item index="/logicLayer">
+        <i class="el-icon-tickets"></i>
+        <span slot="title">逻辑层业务元数据管理</span>
+      </el-menu-item>
+      <el-menu-item index="/physicsLayer">
+        <i class="el-icon-tickets"></i>
+        <span slot="title">物理层元数据管理</span>
+      </el-menu-item>
       <el-menu-item index="/handledata">
         <i class="el-icon-printer"></i>
         <span slot="title">处理入库</span>
