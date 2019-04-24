@@ -19,7 +19,7 @@ module.exports = {
             }
         },
       '/task':{
-        target: 'http://192.168.1.116:8080/task',
+        target: 'http://202.120.40.111:8080/task',
         changeOrigin: true,
         pathRewrite: {
           '^/task':''
