@@ -119,7 +119,7 @@
                 label="操作"
               >
                 <template slot-scope="scope">
-                  <a :href="'/api/downloadFile/' + scope.row.fileID">
+                  <a :href="'/api/downloadFile/' + scope.row.fileid">
                     <!--<el-progress :percentage="abc"></el-progress>-->
                     <span>下载</span>
 
@@ -168,6 +168,7 @@
         link.getFileList.r().then((res) => {
           that.tableData = res.data
           this.originTableData = this.tableData
+          console.log(that.tableData)
 
         });
       },
