@@ -175,11 +175,11 @@
         var startDate = '';
         var endDate = '';
         try {
-          var startDay = addZero(this.input1[0].getDay());
+          var startDay = addZero(this.input1[0].getDate());
           var startYear = (this.input1[0].getFullYear());
           var startMonth = addZero(parseInt(this.input1[0].getMonth()) + 1).toString();
 
-          var endDay = addZero(this.input1[1].getDay());
+          var endDay = addZero(this.input1[1].getDate());
           var endYear = (this.input1[1].getFullYear());
           var endMonth = addZero(parseInt(this.input1[1].getMonth()) + 1).toString();
 
@@ -190,8 +190,6 @@
         }
         var creatorInput = this.input2;
         var fileNameInput = this.input3;
-        console.log('123123123')
-        console.log(this.originTableData)
         var newTableData = []
         for (var obj of this.originTableData) {
           if (obj['filename'].includes(fileNameInput)) {
@@ -200,14 +198,14 @@
                 newTableData.push(obj)
               }
               else{
+                console.log(obj)
+                console.log(startDate,endDate)
                 if(startDate<=obj['createtime']&&endDate>=obj['createtime']){
                   newTableData.push(obj)
                 }
               }
             }
           }
-          console.log('input'+fileNameInput)
-          console.log('fileName'+obj['filename'])
            }
         this.tableData = newTableData
       }
@@ -216,9 +214,12 @@
     }
   }
 
-  function addZero(str) {
-    str = '00' + str;
-    return str.substring(str.length - 2, str.length);
+  function addZero(oristr) {
+    var toristr = oristr.toString()
+    return toristr.padStart(2,'0')
+    // var tempLength = str.length
+    // str = '00' + str;
+    // return str.substring(str.length - 2, tempLength);
   }
 
 </script>
