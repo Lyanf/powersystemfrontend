@@ -37,10 +37,10 @@
         <i class="el-icon-tickets"></i>
         <span slot="title">物理层元数据管理</span>
       </el-menu-item>
-      <el-menu-item index="/handledata">
-        <i class="el-icon-printer"></i>
-        <span slot="title">处理入库</span>
-      </el-menu-item>
+<!--      <el-menu-item index="/handledata">-->
+<!--        <i class="el-icon-printer"></i>-->
+<!--        <span slot="title">处理入库</span>-->
+<!--      </el-menu-item>-->
       <el-menu-item index="/inquire">
         <i class="el-icon-view"></i>
         <span slot="title">查询数据</span>

@@ -74,12 +74,12 @@
                   <el-input value="日期" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="y轴">
-                  <el-input value="值" disabled></el-input>
+                  <el-input value="电压/电流/电度" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="维度">
                   <el-select value="location" v-model="view.dimension">
-                    <el-option label="位置" value="location"></el-option>
-                    <el-option label="测点" value="measurePoint"></el-option>
+                    <el-option label="电力设备位置" value="location"></el-option>
+                    <el-option label="电力数据测点" value="measurePoint"></el-option>
                   </el-select>
                 </el-form-item>
                 <el-form-item>
