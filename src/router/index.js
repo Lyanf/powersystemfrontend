@@ -13,6 +13,12 @@ import conceptLayer from "../views/conceptLayer";
 import logicLayer from "../views/logicLayer";
 import physicsLayer from "../views/physicsLayer";
 import lyftest from "../views/lyftest"
+import needAnalyse from "../views/needAnalyse"
+import newSearch from "../views/newSearch"
+import usageSurvey from "../views/usageSurvey"
+import predict from "../views/predict"
+import usageStatistics from "../views/usageStatistics"
+import usageComparision from "../views/usageComparision"
 Vue.use(Router)
 
 export default new Router({
@@ -78,5 +84,35 @@ export default new Router({
       name: 'test',
       component:lyftest
     },
+    {
+      path: '/needAnalyse',
+      name: 'needAnalyse',
+      component:needAnalyse
+    },
+    {
+      path:'/newSearch',
+      name:'newSearch',
+      component:newSearch
+    },
+    {
+      path:'/usageSurvey',
+      name:'usageSurvey',
+      component:usageSurvey
+    },
+    {
+      path:'/predict',
+      name:'predict',
+      component:predict
+    },
+    {
+      path:'/usageStatistics',
+      name:'usageStatistics',
+      component:usageStatistics
+    },
+    {
+      path:'/usageComparision',
+      name:'usageComparision',
+      component:usageComparision
+    }
   ]
 })

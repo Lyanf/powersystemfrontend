@@ -1,5 +1,6 @@
 <template>
-  <div id="aside">
+
+  <div id="aside" style="background-color:#545c64;height: 100%;">
     <el-menu
 
       class="el-menu-vertical-demo"
@@ -45,6 +46,30 @@
         <i class="el-icon-view"></i>
         <span slot="title">查询数据</span>
       </el-menu-item>
+      <el-menu-item index="/needAnalyse">
+        <i class="el-icon-view"></i>
+        <span slot="title">需量分析</span>
+      </el-menu-item>
+      <el-menu-item index="/newSearch">
+        <i class="el-icon-view"></i>
+        <span slot="title">用能查询</span>
+      </el-menu-item>
+      <el-menu-item index="/usageSurvey">
+        <i class="el-icon-view"></i>
+        <span slot="title">分项用能概况</span>
+      </el-menu-item>
+      <el-menu-item index="/usageStatistics">
+        <i class="el-icon-view"></i>
+        <span slot="title">分项用能统计</span>
+      </el-menu-item>
+      <el-menu-item index="/usageComparision">
+        <i class="el-icon-view"></i>
+        <span slot="title">同比分析</span>
+      </el-menu-item>
+      <el-menu-item index="/predict">
+        <i class="el-icon-view"></i>
+        <span slot="title">预测模块</span>
+      </el-menu-item>
 
 
     </el-menu>
@@ -72,12 +97,12 @@
     /*text-decoration: none*/
   /*}*/
 
-  .aside {
-    width: 100%;
-    min-height: calc(100vh - 60px);
-    background-color: rgb(244, 251, 254);
-    overflow: hidden;
-  }
+  /*#aside {*/
+  /*  width: 100%;*/
+  /*  min-height: calc(100vh - 60px);*/
+  /*  background-color: rgb(244, 251, 254);*/
+  /*  overflow: hidden;*/
+  /*}*/
 
 
 </style>
