@@ -19,16 +19,43 @@
             <span>筛选</span>
           </div>
           <el-row>
-            <el-col span=6>
-              <el-select value="" v-model="location" placeholder="设备选择">
-                <el-option value="抓毛车间" label="抓毛车间断路器"></el-option>
-                <el-option value="食堂" label="食堂断路器"></el-option>
-                <el-option value="空压机" label="空压机断路器"></el-option>
-                <el-option value="织布机" label="织布机1断路器"></el-option>
-                <el-option value="织布机2" label="织布机2断路器"></el-option>
-              </el-select>
+            <!--            <el-col span=3>-->
+            <!--              <el-select value="" v-model="factory" placeholder="厂商选择">-->
+            <!--                <el-option value="抓毛车间" label="抓毛车间断路器"></el-option>-->
+            <!--                <el-option value="食堂" label="食堂断路器"></el-option>-->
+            <!--                <el-option value="空压机" label="空压机断路器"></el-option>-->
+            <!--                <el-option value="织布机" label="织布机1断路器"></el-option>-->
+            <!--                <el-option value="织布机2" label="织布机2断路器"></el-option>-->
+            <!--              </el-select>-->
+            <!--            </el-col>-->
+            <!--            <el-col span=3 push=1>-->
+            <!--              <el-select value="" v-model="line" placeholder="进线名">-->
+            <!--                <el-option value="抓毛车间" label="抓毛车间断路器"></el-option>-->
+            <!--                <el-option value="食堂" label="食堂断路器"></el-option>-->
+            <!--                <el-option value="空压机" label="空压机断路器"></el-option>-->
+            <!--                <el-option value="织布机" label="织布机1断路器"></el-option>-->
+            <!--                <el-option value="织布机2" label="织布机2断路器"></el-option>-->
+            <!--              </el-select>-->
+            <!--            </el-col>-->
+            <!--            <el-col span=3 push=2>-->
+            <!--              <el-select value="" v-model="location" placeholder="设备选择">-->
+            <!--                <el-option value="抓毛车间" label="抓毛车间断路器"></el-option>-->
+            <!--                <el-option value="食堂" label="食堂断路器"></el-option>-->
+            <!--                <el-option value="空压机" label="空压机断路器"></el-option>-->
+            <!--                <el-option value="织布机" label="织布机1断路器"></el-option>-->
+            <!--                <el-option value="织布机2" label="织布机2断路器"></el-option>-->
+            <!--              </el-select>-->
+            <!--            </el-col>-->
+            <el-col span=5>
+              <el-cascader
+                v-model="selectedMetaData"
+                :options="metaDataTree"
+                :props="{ expandTrigger: 'hover' }"
+                @change="handleChange"
+                placeholder="请选择设备"
+              ></el-cascader>
             </el-col>
-            <el-col span=10>
+            <el-col span=10 push=3>
               <el-date-picker
                 v-model="date"
                 type="daterange"
@@ -45,11 +72,11 @@
         <el-row>
           <el-col span=24>
             <el-table id="showTable"
-              :data="tableData"
-              border
-              stripe
-              height="300"
-              max-height="300"
+                      :data="tableData"
+                      border
+                      stripe
+                      height="300"
+                      max-height="300"
             >
               <!--              max-height="400px"-->
               <el-table-column
@@ -66,11 +93,11 @@
                 label="测点"
               >
               </el-table-column>
-              <el-table-column
-                prop="location"
-                label="设备"
-                width="180">
-              </el-table-column>
+              <!--              <el-table-column-->
+              <!--                prop="location"-->
+              <!--                label="设备"-->
+              <!--                width="180">-->
+              <!--              </el-table-column>-->
               <el-table-column
                 prop="value"
                 label="值"
@@ -125,7 +152,7 @@
               <el-row>
                 <el-button type="primary" v-on:click="clearChart">重置图表</el-button>
 
-                <el-button type="primary"v-on:click="compareChart">数据对比</el-button>
+                <el-button type="primary" v-on:click="compareChart">数据对比</el-button>
 
               </el-row>
             </el-card>
@@ -147,15 +174,16 @@
   import FileSaver from 'file-saver'
   import XLSX from 'xlsx'
 
-  function fixDateFormat(oriDates){
+  function fixDateFormat(oriDates) {
     let newDates = [];
-    for(let oriDate of oriDates){
+    for (let oriDate of oriDates) {
       let tempDate = oriDate.slice(0, 4) + "-" + oriDate.slice(4, 6) + "-" + oriDate.slice(6, 8);
       newDates.push(tempDate)
     }
     return oriDates
 
   }
+
   export default {
     name: "newSearch",
     components: {Sidebar, Navmenu},
@@ -163,40 +191,47 @@
       return {
         date: '',
         location: '',
+        factory: '',
+        line: '',
+        device: '',
         measurePoint: '',
         measurePoint1: '',
         measurePoint2: '',
         idate: '',
         tableData: '',
-        chartRef:''
+        chartRef: '',
+        metaDataTree: '',
+        selectedMetaData: ''
       }
     },
     methods: {
-      exportExcel:function () {
+      exportExcel: function () {
         /* generate workbook object from table */
         var wb = XLSX.utils.table_to_book(document.getElementById('showTable'))
         /* get binary string as output */
-        var wbout = XLSX.write(wb, { bookType: 'xlsx', bookSST: true, type: 'array' })
+        var wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'array'})
         try {
-          FileSaver.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), '示例表格.xlsx')
-        } catch (e) { if (typeof console !== 'undefined') console.log(e, wbout) }
+          FileSaver.saveAs(new Blob([wbout], {type: 'application/octet-stream'}), '示例表格.xlsx')
+        } catch (e) {
+          if (typeof console !== 'undefined') console.log(e, wbout)
+        }
         return wbout
       },
-      fixDateFormat:function(oriDate){
+      fixDateFormat: function (oriDate) {
         return oriDate.slice(0, 4) + "-" + oriDate.slice(4, 6) + "-" + oriDate.slice(6, 8)
       },
       getValueByMeasurePoint: function (imeasure) {
         let allValue = [];
-        for (let i of this.tableData){
-          if (i.measurePoint === imeasure){
+        for (let i of this.tableData) {
+          if (i.measurePoint === imeasure) {
             allValue.push(i.value)
           }
         }
         return allValue
       },
-      getAllDate:function(){
+      getAllDate: function () {
         let allDate = new Set();
-        for (let i of this.tableData){
+        for (let i of this.tableData) {
           allDate.add(i.date)
         }
         return Array.from(allDate)
@@ -249,14 +284,14 @@
           series: [{
             data: value,
             type: 'line',
-            name:this.measurePoint1
+            name: this.measurePoint1
           }],
         };
         let chart = echarts.init(document.getElementById("chart"));
         console.log(option);
-        chart.setOption(option,true)
+        chart.setOption(option, true)
       },
-      compareChart:function () {
+      compareChart: function () {
         let date = this.getAllDate();
         console.log(date)
         let value1 = this.getValueByMeasurePoint(this.measurePoint1);
@@ -295,19 +330,19 @@
             {
               data: value1,
               type: 'line',
-              name:this.measurePoint1
+              name: this.measurePoint1
             },
             {
               data: value2,
               type: 'line',
-              name:this.measurePoint2
+              name: this.measurePoint2
             }
           ]
         };
         let chart = echarts.init(document.getElementById("chart"));
-        chart.setOption(option,true)
+        chart.setOption(option, true)
       },
-      clearChart:function () {
+      clearChart: function () {
         this.measurePoint1 = '';
         this.measurePoint2 = '';
         var chart = echarts.init(document.getElementById("chart"));
@@ -396,7 +431,27 @@
           ]
         };
 
-        chart.setOption(option,true)
+        chart.setOption(option, true)
+      },
+      getMetaData: function () {
+        this.metaDataTree = axios.post("/api/getMetaDataTree")
+      },
+      handleChange: function () {
+        this.factory = this.selectedMetaData[0];
+        this.line = this.selectedMetaData[1];
+        this.device = this.selectedMetaData[2];
+      },
+      newSearchClicked: function () {
+        let that = this;
+        axios.post('/api/getSpecificData',
+          {
+            factory: this.factory,
+            line: this.line,
+            device: this.device,
+            timestamp:this.date
+          }).then(function (response) {
+          that.tableData = response.data
+        })
       }
     },
     mounted() {
@@ -486,7 +541,10 @@
         ]
       };
 
-      chart.setOption(option,true)
+      chart.setOption(option, true)
+      this.getMetaData()
+
+
     }
   }
 </script>

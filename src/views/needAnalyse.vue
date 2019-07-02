@@ -10,7 +10,38 @@
         <Sidebar></Sidebar>
       </el-aside>
       <el-main>
+        <el-card>
+          <div slot="header">
+            <span>筛选</span>
+          </div>
         <el-row>
+          <el-col span=4>
+<!--          <div class="block">-->
+<!--            <span class="demonstration">选择进线</span>-->
+              <el-cascader
+                v-model="value"
+                :options="options"
+                :props="{ expandTrigger: 'hover' }"
+                @change="handleChange"
+                placeholder="请选择进线"
+              ></el-cascader>
+<!--          </div>-->
+          </el-col>
+          <el-col span=4 push=2>
+          <el-date-picker
+              v-model="date"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期">
+            </el-date-picker>
+          </el-col>
+          <el-col span=3 push=10>
+            <el-button type="primary" v-on:click="searchClicked">查询</el-button>
+          </el-col>
+        </el-row>
+        </el-card>
+        <el-row style="margin-top: 20px">
           <el-col span="11">
             <el-card style="width: 100%;">
               <div slot="header">
@@ -100,7 +131,11 @@
   export default {
     name: "needAnalyse",
     components: {Navmenu, Sidebar},
-    methods: {},
+    methods: {
+      handleChange(value) {
+        console.log(value);
+      }
+    },
     data() {
       return {
         tableData: [
@@ -129,6 +164,36 @@
             a9:'0',
             a10:'0',
             a11:'0'
+          }
+        ],
+        date: '',
+        location: '',
+        factory:'',
+        line:'',
+        options:[
+          {
+            value:'1',
+            label:'1',
+            children:[
+              {
+                value:'a1',
+                label:'a1',
+              }
+            ]
+          },
+          {
+            value:'2',
+            label:'2',
+            children:[
+              {
+                value:'b1',
+                label:'b1'
+              },
+              {
+                value:'c1',
+                label:'c1'
+              }
+            ]
           }
         ]
       }

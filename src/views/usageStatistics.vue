@@ -207,7 +207,7 @@
 
       var option4 = {
         title:{
-          text:"过去31天分\n项用能趋势"
+          text:"过去7天分\n项用能趋势"
         },
         tooltip : {
           trigger: 'axis',

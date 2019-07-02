@@ -16,7 +16,7 @@
           </div>
           <el-row>
             <el-col span=6>
-              <el-select value="" v-model="manufacture" placeholder="厂商选择">
+              <el-select value="" v-model="manufacture" placeholder="设备选择">
                 <el-option value="抓毛车间" label="常州天和印染有限公司"></el-option>
                 <el-option value="食堂" label="天合紫竹园区配电站"></el-option>
 <!--                <el-option value="空压机" label="空压机断路器"></el-option>-->
