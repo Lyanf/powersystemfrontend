@@ -24,7 +24,7 @@ module.exports = {
         pathRewrite: {
           '^/task':''
         }
-      }
+      },
     },
 
     // Various Dev Server settings

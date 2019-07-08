@@ -65,7 +65,7 @@
               </el-date-picker>
             </el-col>
             <el-col span=3 push=4>
-              <el-button type="primary" v-on:click="searchClicked">查询</el-button>
+              <el-button type="primary" v-on:click="newSearchClicked">查询</el-button>
             </el-col>
           </el-row>
         </el-card>
@@ -238,11 +238,13 @@
       },
       searchClicked: function () {
         let that = this;
-        axios.post('/api/searchData',
+        console.log(this.date)
+        axios.post('/api/getSpecificData',
           {
-            ilocation: that.location,
-            imeasurePoint: that.measurePoint,
-            idate: that.date
+            factory:that.factory,
+            line:that.line,
+            device: that.device,
+            timestamp: that.date
 
           }).then(function (response) {
           that.tableData = response.data;
@@ -434,7 +436,37 @@
         chart.setOption(option, true)
       },
       getMetaData: function () {
-        this.metaDataTree = axios.post("/api/getMetaDataTree")
+        let that = this;
+        axios.post("/api/getMetaDataTree").then(function (response) {
+          that.metaDataTree = response.data
+        });
+        console.log(this.metaDataTree)
+        // this.metaDataTree = [{
+        //   label:'常州天和印染有限公司',
+        //   value:'常州天和印染有限公司',
+        //   children:[
+        //     {
+        //       label:'1P',
+        //       value:'1P',
+        //       children:[{
+        //         label: '3#楼、4#楼西',
+        //         value:'3#楼、4#楼西',
+        //       }
+        //       ]
+        //     },
+        //     {
+        //       label:'3D',
+        //       value:'3D',
+        //       children:[
+        //         {
+        //           label:'污水',
+        //           value:'污水',
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // },
+      // ]
       },
       handleChange: function () {
         this.factory = this.selectedMetaData[0];
