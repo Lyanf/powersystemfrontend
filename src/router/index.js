@@ -113,6 +113,11 @@ export default new Router({
       path:'/usageComparision',
       name:'usageComparision',
       component:usageComparision
-    }
+    },
+    // {
+    //   path:'/testapp',
+    //   name:'testapp',
+    //   component:testapp
+    // }
   ]
 })

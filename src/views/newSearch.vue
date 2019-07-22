@@ -441,32 +441,6 @@
           that.metaDataTree = response.data
         });
         console.log(this.metaDataTree)
-        // this.metaDataTree = [{
-        //   label:'常州天和印染有限公司',
-        //   value:'常州天和印染有限公司',
-        //   children:[
-        //     {
-        //       label:'1P',
-        //       value:'1P',
-        //       children:[{
-        //         label: '3#楼、4#楼西',
-        //         value:'3#楼、4#楼西',
-        //       }
-        //       ]
-        //     },
-        //     {
-        //       label:'3D',
-        //       value:'3D',
-        //       children:[
-        //         {
-        //           label:'污水',
-        //           value:'污水',
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // },
-      // ]
       },
       handleChange: function () {
         this.factory = this.selectedMetaData[0];

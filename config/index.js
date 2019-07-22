@@ -25,6 +25,13 @@ module.exports = {
           '^/task':''
         }
       },
+      '/algorithm':{
+        target: 'http://localhost:5000/algorithm',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/algorithm':''
+        }
+      },
     },
 
     // Various Dev Server settings
