@@ -44,7 +44,7 @@
 <!--            </el-col>-->
             <el-col span=5 push=10>
               <el-button type="primary" v-on:click="searchClicked">显示</el-button>
-              <el-button type="primary" v-on:click="searchClicked2">重新预测</el-button>
+<!--              <el-button type="primary" v-on:click="searchClicked2">重新预测</el-button>-->
             </el-col>
           </el-row>
         </el-card>
