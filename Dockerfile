@@ -9,7 +9,11 @@ RUN npm run build
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /static
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf.template
+COPY entry.sh .
+
+ENV BACKEND_URL http://192.168.1.115:8080
 
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+CMD ["/bin/sh", "/entry.sh"]
