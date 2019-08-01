@@ -1,57 +1,45 @@
 <template>
-  <div style="height: 100%;">
-    <el-container>
-      <el-header>
-        <Navmenu></Navmenu>
-      </el-header>
-    </el-container>
-    <el-container>
-      <el-aside width='150px'>
-        <Sidebar></Sidebar>
-      </el-aside>
-      <el-main>
-        <el-card>
-          <div slot="header">
-            <span>筛选</span>
-          </div>
-          <el-row>
-            <el-col span=5>
-<!--              <el-select value="" v-model="manufacture" placeholder="厂商选择">-->
-<!--                <el-option value="抓毛车间" label="常州天和印染有限公司"></el-option>-->
-<!--                <el-option value="食堂" label="天合紫竹园区配电站"></el-option>-->
-<!--              </el-select>-->
-              <el-cascader
-                v-model="selectedMetaData"
-                :options="metaDataTree"
-                :props="{ expandTrigger: 'hover' }"
-                @change="handleChange"
-                placeholder="请选择设备"
-              ></el-cascader>
-            </el-col>
-<!--            <el-col span=5>-->
-<!--              <el-select value="" v-model="device" placeholder="设备选择">-->
-<!--                <el-option value="照明插座"></el-option>-->
-<!--                <el-option value="空调用电"></el-option>-->
-<!--                <el-option value="动力用电"></el-option>-->
-<!--                <el-option value="特殊用电"></el-option>-->
-<!--              </el-select>-->
-<!--            </el-col>-->
-<!--            <el-col span=5>-->
-<!--              <el-select value="" v-model="algorithm" placeholder="算法选择">-->
-<!--                <el-option value="预测算法1"></el-option>-->
-<!--                <el-option value="预测算法2"></el-option>-->
-<!--              </el-select>-->
-<!--            </el-col>-->
-            <el-col span=5 push=10>
-              <el-button type="primary" v-on:click="searchClicked">显示</el-button>
-<!--              <el-button type="primary" v-on:click="searchClicked2">重新预测</el-button>-->
-            </el-col>
-          </el-row>
-        </el-card>
-        <div id="chart1" style="height: 600px;width: 100%;"></div>
-      </el-main>
-    </el-container>
-  </div>
+  <MyFrame>
+    <el-card>
+      <div slot="header">
+        <span>筛选</span>
+      </div>
+      <el-row>
+        <el-col span=5>
+          <!--              <el-select value="" v-model="manufacture" placeholder="厂商选择">-->
+          <!--                <el-option value="抓毛车间" label="常州天和印染有限公司"></el-option>-->
+          <!--                <el-option value="食堂" label="天合紫竹园区配电站"></el-option>-->
+          <!--              </el-select>-->
+          <el-cascader
+            v-model="selectedMetaData"
+            :options="metaDataTree"
+            :props="{ expandTrigger: 'hover' }"
+            @change="handleChange"
+            placeholder="请选择设备"
+          ></el-cascader>
+        </el-col>
+        <!--            <el-col span=5>-->
+        <!--              <el-select value="" v-model="device" placeholder="设备选择">-->
+        <!--                <el-option value="照明插座"></el-option>-->
+        <!--                <el-option value="空调用电"></el-option>-->
+        <!--                <el-option value="动力用电"></el-option>-->
+        <!--                <el-option value="特殊用电"></el-option>-->
+        <!--              </el-select>-->
+        <!--            </el-col>-->
+        <!--            <el-col span=5>-->
+        <!--              <el-select value="" v-model="algorithm" placeholder="算法选择">-->
+        <!--                <el-option value="预测算法1"></el-option>-->
+        <!--                <el-option value="预测算法2"></el-option>-->
+        <!--              </el-select>-->
+        <!--            </el-col>-->
+        <el-col span=5 push=10>
+          <el-button type="primary" v-on:click="searchClicked">显示</el-button>
+          <!--              <el-button type="primary" v-on:click="searchClicked2">重新预测</el-button>-->
+        </el-col>
+      </el-row>
+    </el-card>
+    <div id="chart1" style="height: 600px;width: 100%;"></div>
+  </MyFrame>
 </template>
 
 <script>
@@ -59,14 +47,15 @@
   import Navmenu from "../components/NavMenu";
   import Sidebar from "../components/Sidebar"
   import axios from "axios"
+  import MyFrame from "../components/Frame";
 
   export default {
     name: "predict",
-    components: {Navmenu, Sidebar},
+    components: {MyFrame, Navmenu, Sidebar},
     data: function () {
       return {
         factory: '',
-        line:'',
+        line: '',
         device: '',
         algorithm: '',
         date: '',
@@ -76,7 +65,7 @@
         selectedMetaData: ''
       }
     },
-    methods:{
+    methods: {
       handleChange: function () {
         this.factory = this.selectedMetaData[0];
         this.line = this.selectedMetaData[1];
@@ -89,15 +78,15 @@
         });
         console.log(this.metaDataTree)
       },
-      searchClicked:function () {
+      searchClicked: function () {
         var chart1 = document.getElementById("chart1");
 
         chart1 = echarts.init(chart1);
         let that = this;
-        axios.post("/api/predict",{
-          factory:that.factory,
-          line:that.line,
-          device:that.device
+        axios.post("/api/predict", {
+          factory: that.factory,
+          line: that.line,
+          device: that.device
         }).then(function (response) {
           let data = response.data;
           that.trueData = data['y_true'];
@@ -106,6 +95,18 @@
           console.log(that.predictData)
           console.log([Array.from({length: 4000}, (a, i) => i)])
           var option1 = {
+            toolbox: {
+              show: true,
+              feature: {
+                dataZoom: {
+                  yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+              }
+            },
             title: {
               text: "厂商用能预测图"
             },
@@ -122,13 +123,13 @@
             // to a column of dataset.source by default.
             series: [
               {
-                name:'真实值',
+                name: '真实值',
                 type: 'line',
                 smooth: 'true',
                 data: that.trueData
               },
               {
-                name:'预测值',
+                name: '预测值',
                 type: 'line',
                 smooth: 'true',
                 lineStyle: {
@@ -142,13 +143,13 @@
 
         });
       },
-      searchClicked2:function () {
+      searchClicked2: function () {
         let that = this
         axios.get("/algorithm/predict")
-        axios.post("/algorithm/predict",{
-          "factory":that.factory,
-          "line":that.line,
-          "device":that.device
+        axios.post("/algorithm/predict", {
+          "factory": that.factory,
+          "line": that.line,
+          "device": that.device
         })
       }
     },
@@ -160,16 +161,6 @@
 </script>
 
 <style scoped>
-  .el-header {
-    padding: 0;
-    margin-bottom: 0px;
-  }
-
-  .main {
-    padding: 0;
-    margin-left: 10px;
-  }
-
   .el-row {
     margin-bottom: 20px;
   }

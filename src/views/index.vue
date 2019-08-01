@@ -1,29 +1,15 @@
 <template>
-  <el-container>
-    <el-header> 
-      <NavMenu></NavMenu>
-    </el-header>
-    <el-container>
-      <el-aside width='300px'>
-          <Sidebar></Sidebar>
-      </el-aside>
-      <el-container>
-        <el-main class="main">
-          <Content></Content>
-        </el-main>
-      </el-container>
-
-    </el-container>
-  </el-container>
+  <MyFrame></MyFrame>
 </template>
 <script type="text/javascript">
   import NavMenu from '@/components/NavMenu'
   import Content from '@/components/Content'
   import Sidebar from '@/components/Sidebar'
   import {getCookie} from '@/api/util'
+  import MyFrame from "../components/Frame";
   export default {
     name: 'manage',
-    components: {NavMenu,Content,Sidebar},
+    components: {MyFrame, NavMenu,Content,Sidebar},
     created(){
       if(getCookie('username') == ""){
         this.$router.push({path:"/login"})
@@ -36,5 +22,5 @@
     padding: 0px;
     margin-bottom: 10px;
   }
-  
+
 </style>

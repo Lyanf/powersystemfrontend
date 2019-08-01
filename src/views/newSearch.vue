@@ -1,19 +1,5 @@
 <template>
-  <div style="height: 100%;">
-    <el-container>
-      <el-header>
-        <Navmenu></Navmenu>
-      </el-header>
-    </el-container>
-    <el-container>
-      <el-aside width='150px'>
-        <Sidebar></Sidebar>
-
-      </el-aside>
-      <!--      <el-aside width="200px" style="margin-left: 20px">-->
-      <!--        <div style="background: #000; width: 100%;height: 200px"></div>-->
-      <!--      </el-aside>-->
-      <el-main style="height: 100%">
+<MyFrame>
         <el-card>
           <div slot="header">
             <span>筛选</span>
@@ -161,9 +147,7 @@
             <div id="chart" style="height: 400px ;"></div>
           </el-col>
         </el-row>
-      </el-main>
-    </el-container>
-  </div>
+</MyFrame>
 </template>
 
 <script>
@@ -173,6 +157,7 @@
   import axios from 'axios'
   import FileSaver from 'file-saver'
   import XLSX from 'xlsx'
+  import MyFrame from "../components/Frame";
 
   function fixDateFormat(oriDates) {
     let newDates = [];
@@ -186,7 +171,7 @@
 
   export default {
     name: "newSearch",
-    components: {Sidebar, Navmenu},
+    components: {MyFrame, Sidebar, Navmenu},
     data() {
       return {
         date: '',
@@ -556,16 +541,6 @@
 </script>
 
 <style scoped>
-  .el-header {
-    padding: 0;
-    margin-bottom: 0px;
-  }
-
-  .main {
-    padding: 0;
-    margin-left: 10px;
-  }
-
   .el-row {
     margin-bottom: 20px;
   }

@@ -1,15 +1,5 @@
 <template>
-  <div style="height: 100%">
-    <el-container>
-      <el-header>
-        <Navmenu></Navmenu>
-      </el-header>
-    </el-container>
-    <el-container >
-      <el-aside width='150px'>
-        <Sidebar></Sidebar>
-      </el-aside>
-      <el-main>
+<MyFrame>
         <el-card>
           <div slot="header">
             <span>筛选</span>
@@ -118,19 +108,18 @@
             </el-table>
           </el-col>
         </el-row>
-      </el-main>
-    </el-container>
-  </div>
+</MyFrame>
 </template>
 
 <script>
   import * as echarts from 'echarts';
   import Navmenu from "../components/NavMenu";
   import Sidebar from "../components/Sidebar"
+  import MyFrame from "../components/Frame";
 
   export default {
     name: "needAnalyse",
-    components: {Navmenu, Sidebar},
+    components: {MyFrame, Navmenu, Sidebar},
     methods: {
       handleChange(value) {
         console.log(value);
@@ -271,16 +260,6 @@
 </script>
 
 <style scoped>
-  .el-header {
-    padding: 0;
-    margin-bottom: 0px;
-  }
-
-  .main {
-    padding: 0;
-    margin-left: 10px;
-  }
-
   .el-row {
     margin-bottom: 20px;
   }
