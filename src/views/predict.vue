@@ -43,121 +43,122 @@
 </template>
 
 <script>
-  import * as echarts from 'echarts';
-  import Navmenu from "../components/NavMenu";
-  import Sidebar from "../components/Sidebar"
-  import axios from "axios"
-  import MyFrame from "../components/Frame";
+    import * as echarts from 'echarts';
+    import Navmenu from "../components/NavMenu";
+    import Sidebar from "../components/Sidebar"
+    import axios from "axios"
+    import MyFrame from "../components/Frame";
 
-  export default {
-    name: "predict",
-    components: {MyFrame, Navmenu, Sidebar},
-    data: function () {
-      return {
-        factory: '',
-        line: '',
-        device: '',
-        algorithm: '',
-        date: '',
-        trueData: '',
-        predictData: '',
-        metaDataTree: '',
-        selectedMetaData: ''
-      }
-    },
-    methods: {
-      handleChange: function () {
-        this.factory = this.selectedMetaData[0];
-        this.line = this.selectedMetaData[1];
-        this.device = this.selectedMetaData[2];
-      },
-      getMetaData: function () {
-        let that = this;
-        axios.post("/api/getMetaDataTree").then(function (response) {
-          that.metaDataTree = response.data
-        });
-        console.log(this.metaDataTree)
-      },
-      searchClicked: function () {
-        var chart1 = document.getElementById("chart1");
+    export default {
+        name: "predict",
+        components: {MyFrame, Navmenu, Sidebar},
+        data: function () {
+            return {
+                factory: '',
+                line: '',
+                device: '',
+                algorithm: '',
+                date: '',
+                trueData: '',
+                predictData: '',
+                metaDataTree: '',
+                selectedMetaData: ''
+            }
+        },
+        methods: {
+            handleChange: function () {
+                this.factory = this.selectedMetaData[0];
+                this.line = this.selectedMetaData[1];
+                this.device = this.selectedMetaData[2];
+            },
+            getMetaData: function () {
+                let that = this;
+                axios.post("/api/getMetaDataTree").then(function (response) {
+                    that.metaDataTree = response.data
+                });
+                console.log(this.metaDataTree)
+            },
+            searchClicked: function () {
+                var chart1 = document.getElementById("chart1");
 
-        chart1 = echarts.init(chart1);
-        let that = this;
-        axios.post("/api/predict", {
-          factory: that.factory,
-          line: that.line,
-          device: that.device
-        }).then(function (response) {
-          let data = response.data;
-          that.trueData = data['y_true'];
-          that.predictData = data['y_pred'];
-          console.log(that.trueData)
-          console.log(that.predictData)
-          console.log([Array.from({length: 4000}, (a, i) => i)])
-          var option1 = {
-            toolbox: {
-              show: true,
-              feature: {
-                dataZoom: {
-                  yAxisIndex: 'none'
-                },
-                dataView: {readOnly: false},
-                magicType: {type: ['line', 'bar']},
-                restore: {},
-                saveAsImage: {}
-              }
-            },
-            title: {
-              text: "厂商用能预测图"
-            },
-            legend: {},
-            tooltip: {
-              trigger: 'axis'
-            },
-            xAxis: {
-              type: 'category',
-              data: Array.from({length: 3835}, (a, i) => i)
-            },
-            yAxis: {},
-            // Declare several bar series, each will be mapped
-            // to a column of dataset.source by default.
-            series: [
-              {
-                name: '真实值',
-                type: 'line',
-                smooth: 'true',
-                data: that.trueData
-              },
-              {
-                name: '预测值',
-                type: 'line',
-                smooth: 'true',
-                lineStyle: {
-                  type: 'dashed'
-                },
-                data: that.predictData
-              },
-            ],
-          };
-          chart1.setOption(option1);
+                chart1 = echarts.init(chart1);
+                let that = this;
+                axios.post("/api/predict", {
+                    factory: that.factory,
+                    line: that.line,
+                    device: that.device,
+                    measurePoint: "三相总有功功率"
+                }).then(function (response) {
+                    let data = response.data;
+                    that.trueData = data['y_true'];
+                    that.predictData = data['y_pred'];
+                    console.log(that.trueData)
+                    console.log(that.predictData)
+                    console.log([Array.from({length: 4000}, (a, i) => i)])
+                    var option1 = {
+                        toolbox: {
+                            show: true,
+                            feature: {
+                                dataZoom: {
+                                    yAxisIndex: 'none'
+                                },
+                                dataView: {readOnly: false},
+                                magicType: {type: ['line', 'bar']},
+                                restore: {},
+                                saveAsImage: {}
+                            }
+                        },
+                        title: {
+                            text: "厂商用能预测图"
+                        },
+                        legend: {},
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: Array.from({length: 3835}, (a, i) => i)
+                        },
+                        yAxis: {},
+                        // Declare several bar series, each will be mapped
+                        // to a column of dataset.source by default.
+                        series: [
+                            {
+                                name: '真实值',
+                                type: 'line',
+                                smooth: 'true',
+                                data: that.trueData
+                            },
+                            {
+                                name: '预测值',
+                                type: 'line',
+                                smooth: 'true',
+                                lineStyle: {
+                                    type: 'dashed'
+                                },
+                                data: that.predictData
+                            },
+                        ],
+                    };
+                    chart1.setOption(option1);
 
-        });
-      },
-      searchClicked2: function () {
-        let that = this
-        axios.get("/algorithm/predict")
-        axios.post("/algorithm/predict", {
-          "factory": that.factory,
-          "line": that.line,
-          "device": that.device
-        })
-      }
-    },
-    mounted() {
-      this.getMetaData()
+                });
+            },
+            searchClicked2: function () {
+                let that = this
+                axios.get("/algorithm/predict")
+                axios.post("/algorithm/predict", {
+                    "factory": that.factory,
+                    "line": that.line,
+                    "device": that.device
+                })
+            }
+        },
+        mounted() {
+            this.getMetaData()
 
+        }
     }
-  }
 </script>
 
 <style scoped>
