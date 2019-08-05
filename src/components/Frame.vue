@@ -1,12 +1,12 @@
 <template>
-  <div style="height: 100%;">
+  <div style="min-height: 100vh">
     <el-container>
       <el-header>
         <Navmenu></Navmenu>
       </el-header>
     </el-container>
     <el-container style="height: 100%;position: relative">
-      <el-aside width="150px">
+      <el-aside width="150px" style="min-height: 100vh">
         <Sidebar></Sidebar>
       </el-aside>
       <el-main>
@@ -31,9 +31,15 @@
     padding: 0;
     margin-bottom: 0;
   }
-
-  .main {
+  .main{
     padding: 0;
     margin-left: 10px;
+    overflow: hidden;
+  }
+  .el-main{
+    overflow-x: hidden;
+  }
+  .el-aside{
+    overflow: hidden;
   }
 </style>

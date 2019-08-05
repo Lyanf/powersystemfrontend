@@ -5,33 +5,6 @@
             <span>筛选</span>
           </div>
           <el-row>
-            <!--            <el-col span=3>-->
-            <!--              <el-select value="" v-model="factory" placeholder="厂商选择">-->
-            <!--                <el-option value="抓毛车间" label="抓毛车间断路器"></el-option>-->
-            <!--                <el-option value="食堂" label="食堂断路器"></el-option>-->
-            <!--                <el-option value="空压机" label="空压机断路器"></el-option>-->
-            <!--                <el-option value="织布机" label="织布机1断路器"></el-option>-->
-            <!--                <el-option value="织布机2" label="织布机2断路器"></el-option>-->
-            <!--              </el-select>-->
-            <!--            </el-col>-->
-            <!--            <el-col span=3 push=1>-->
-            <!--              <el-select value="" v-model="line" placeholder="进线名">-->
-            <!--                <el-option value="抓毛车间" label="抓毛车间断路器"></el-option>-->
-            <!--                <el-option value="食堂" label="食堂断路器"></el-option>-->
-            <!--                <el-option value="空压机" label="空压机断路器"></el-option>-->
-            <!--                <el-option value="织布机" label="织布机1断路器"></el-option>-->
-            <!--                <el-option value="织布机2" label="织布机2断路器"></el-option>-->
-            <!--              </el-select>-->
-            <!--            </el-col>-->
-            <!--            <el-col span=3 push=2>-->
-            <!--              <el-select value="" v-model="location" placeholder="设备选择">-->
-            <!--                <el-option value="抓毛车间" label="抓毛车间断路器"></el-option>-->
-            <!--                <el-option value="食堂" label="食堂断路器"></el-option>-->
-            <!--                <el-option value="空压机" label="空压机断路器"></el-option>-->
-            <!--                <el-option value="织布机" label="织布机1断路器"></el-option>-->
-            <!--                <el-option value="织布机2" label="织布机2断路器"></el-option>-->
-            <!--              </el-select>-->
-            <!--            </el-col>-->
             <el-col span=5>
               <el-cascader
                 v-model="selectedMetaData"
@@ -92,7 +65,6 @@
             </el-table>
           </el-col>
         </el-row>
-        <!--        <div style="height: 600px;width: 500px;background-color: #daff90"></div>-->
         <el-row>
           <el-col span=5>
             <el-card style="height: 400px;">
@@ -447,7 +419,6 @@
     },
     mounted() {
       var chart = echarts.init(document.getElementById("chart"));
-      this.$chart = chart;
       var option = {
         title: {
           text: '电气量曲线',
@@ -534,8 +505,6 @@
 
       chart.setOption(option, true)
       this.getMetaData()
-
-
     }
   }
 </script>
