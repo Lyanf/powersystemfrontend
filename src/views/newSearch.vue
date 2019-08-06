@@ -195,7 +195,6 @@
       },
       searchClicked: function () {
         let that = this;
-        console.log(this.date)
         axios.post('/api/getSpecificData',
           {
             factory:that.factory,
@@ -205,13 +204,11 @@
 
           }).then(function (response) {
           that.tableData = response.data;
-          console.log(that.tableData)
         })
       },
       generateChart: function () {
         let date = this.getAllDate();
         let value = this.getValueByMeasurePoint(this.measurePoint1);
-        console.log(value);
         let option = {
           title: {
             text: '电气量曲线'
@@ -247,12 +244,10 @@
           }],
         };
         let chart = echarts.init(document.getElementById("chart"));
-        console.log(option);
         chart.setOption(option, true)
       },
       compareChart: function () {
         let date = this.getAllDate();
-        console.log(date)
         let value1 = this.getValueByMeasurePoint(this.measurePoint1);
         let value2 = this.getValueByMeasurePoint(this.measurePoint2);
         let option = {
@@ -397,7 +392,6 @@
         axios.post("/api/getMetaDataTree").then(function (response) {
           that.metaDataTree = response.data
         });
-        console.log(this.metaDataTree)
       },
       handleChange: function () {
         this.factory = this.selectedMetaData[0];
