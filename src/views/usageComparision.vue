@@ -68,12 +68,11 @@
                 measurePoint: '',
                 algorithm: '',
                 date: '',
-                trueData: '',
-                predictData: '',
                 metaDataTree: '',
                 selectedMetaData: '',
                 tableData: [],
-                allMeasurePoint: []
+                allMeasurePoint: [],
+                correlationData: []
             }
         },
         methods: {
@@ -104,49 +103,73 @@
                     'device': this.device,
                     'measurePoint': this.measurePoint
                 }).then(function (response) {
-                    console.log(response.data);
-                    let data = response.data;
+                    let correlationValue = JSON.parse(response.data.correlationValue);
+                    let correlationData = JSON.parse(response.data['correlationData']);
                     let tableData = [];
-                    for (let i in data) {
+                    for (let i in correlationValue) {
                         let tempObj = {};
                         tempObj['device'] = i;
-                        tempObj['value'] = data[i];
+                        tempObj['value'] = correlationValue[i];
                         tableData.push(tempObj)
                     }
                     that.tableData = tableData;
-                    console.log(that.tablaData)
+                    that.correlationData = correlationData
+                    that.generateChart()
                 })
+            },
+            generateChart: function () {
+                let generateSeries = []
+                for (let tableElement in this.correlationData) {
+                    if (tableElement === 'timestamp') {
+                        continue
+                    }
+                    let i = tableElement
+                    let tempSeries = {}
+                    tempSeries.name = i
+                    tempSeries.type = 'line'
+                    tempSeries.smooth = 'true'
+                    tempSeries.data = this.correlationData[i]
+                    generateSeries.push(tempSeries)
+                }
+                console.log(generateSeries)
+                var option1 = {
+                    title: {
+                        text: "厂商用能同比分析"
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: this.correlationData.timestamp
+                    },
+                    yAxis: {scale: true},
+                    // Declare several bar series, each will be mapped
+                    // to a column of dataset.source by default.
+                    series: generateSeries,
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    }
+                }
+                let chart1 = echarts.init(document.getElementById("chart1"));
+                console.log(this.correlationData.timestamp)
+                chart1.setOption(option1)
             }
         },
         mounted() {
             this.getAllMeasurePoint()
             this.getMetaData();
-            var option1 = {
-                title: {
-                    text: "厂商用能同比分析"
-                },
-                legend: {},
-                tooltip: {},
-                dataset: {
-                    source: [
-                        ['product', '天和印染', '天合紫竹园区', 'a公司', 'b公司'],
-                        ['照明插座', 43.3, 85.8, 93.7, 22.4],
-                        ['空调用电', 83.1, 73.4, 55.1, 11.2],
-                        ['动力用电', 86.4, 65.2, 82.5, 43.4],
-                        ['特殊用电', 72.4, 53.9, 39.1, 30.3]
-                    ]
-                },
-                xAxis: {type: 'category'},
-                yAxis: {},
-                // Declare several bar series, each will be mapped
-                // to a column of dataset.source by default.
-                series: [
-                    {type: 'bar'},
-                    {type: 'bar'},
-                    {type: 'bar'},
-                    {type: 'bar'}
-                ]
-            }
         }
     }
 </script>
