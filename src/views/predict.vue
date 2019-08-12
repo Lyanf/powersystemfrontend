@@ -6,10 +6,6 @@
       </div>
       <el-row>
         <el-col span=5>
-          <!--              <el-select value="" v-model="manufacture" placeholder="厂商选择">-->
-          <!--                <el-option value="抓毛车间" label="常州天和印染有限公司"></el-option>-->
-          <!--                <el-option value="食堂" label="天合紫竹园区配电站"></el-option>-->
-          <!--              </el-select>-->
           <el-cascader
             v-model="selectedMetaData"
             :options="metaDataTree"
@@ -18,23 +14,13 @@
             placeholder="请选择设备"
           ></el-cascader>
         </el-col>
-        <!--            <el-col span=5>-->
-        <!--              <el-select value="" v-model="device" placeholder="设备选择">-->
-        <!--                <el-option value="照明插座"></el-option>-->
-        <!--                <el-option value="空调用电"></el-option>-->
-        <!--                <el-option value="动力用电"></el-option>-->
-        <!--                <el-option value="特殊用电"></el-option>-->
-        <!--              </el-select>-->
-        <!--            </el-col>-->
-        <!--            <el-col span=5>-->
-        <!--              <el-select value="" v-model="algorithm" placeholder="算法选择">-->
-        <!--                <el-option value="预测算法1"></el-option>-->
-        <!--                <el-option value="预测算法2"></el-option>-->
-        <!--              </el-select>-->
-        <!--            </el-col>-->
+        <el-col span=5>
+          <el-select value="" v-model="measurePoint" placeholder="测点选择">
+            <el-option v-for="item in allMeasurePoint" :value="item"></el-option>
+          </el-select>
+        </el-col>
         <el-col span=5 push=10>
           <el-button type="primary" v-on:click="searchClicked">显示</el-button>
-          <!--              <el-button type="primary" v-on:click="searchClicked2">重新预测</el-button>-->
         </el-col>
       </el-row>
     </el-card>
@@ -57,12 +43,14 @@
                 factory: '',
                 line: '',
                 device: '',
+                measurePoint:'',
                 algorithm: '',
                 date: '',
                 trueData: '',
                 predictData: '',
                 metaDataTree: '',
-                selectedMetaData: ''
+                selectedMetaData: '',
+                allMeasurePoint:[]
             }
         },
         methods: {
@@ -78,6 +66,13 @@
                 });
                 console.log(this.metaDataTree)
             },
+            getAllMeasurePoint:function(){
+                let that = this;
+                axios.post("/api/getAllMeasurePoint").then(function (response) {
+                    that.allMeasurePoint = response.data
+                });
+                console.log(this.allMeasurePoint)
+            },
             searchClicked: function () {
                 var chart1 = document.getElementById("chart1");
 
@@ -87,7 +82,7 @@
                     factory: that.factory,
                     line: that.line,
                     device: that.device,
-                    measurePoint: "三相总有功功率"
+                    measurePoint: that.measurePoint
                 }).then(function (response) {
                     let data = response.data;
                     that.trueData = data['y_true'];
@@ -144,19 +139,10 @@
 
                 });
             },
-            searchClicked2: function () {
-                let that = this
-                axios.get("/algorithm/predict")
-                axios.post("/algorithm/predict", {
-                    "factory": that.factory,
-                    "line": that.line,
-                    "device": that.device
-                })
-            }
         },
         mounted() {
             this.getMetaData()
-
+            this.getAllMeasurePoint()
         }
     }
 </script>
