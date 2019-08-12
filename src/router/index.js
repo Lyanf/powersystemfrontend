@@ -19,11 +19,12 @@ import usageSurvey from "../views/usageSurvey"
 import predict from "../views/predict"
 import usageStatistics from "../views/usageStatistics"
 import usageComparision from "../views/usageComparision"
+import cluster from "../views/cluster"
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    
+
     {
         path: '/',
         name: 'index',
@@ -114,6 +115,11 @@ export default new Router({
       name:'usageComparision',
       component:usageComparision
     },
+    {
+      path:'/cluster',
+      name:'cluster',
+      component:cluster
+    }
     // {
     //   path:'/testapp',
     //   name:'testapp',

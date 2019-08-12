@@ -23,20 +23,20 @@
         <span slot="title">文件查看</span>
       </el-menu-item>
       <!--<el-menu-item index="/metadata">-->
-        <!--<i class="el-icon-tickets"></i>-->
-        <!--<span slot="title">元数据管理</span>-->
+      <!--<i class="el-icon-tickets"></i>-->
+      <!--<span slot="title">元数据管理</span>-->
       <!--</el-menu-item>-->
       <!--<el-menu-item index="/conceptLayer">-->
-        <!--<i class="el-icon-tickets"></i>-->
-        <!--<span slot="title">概念层业务元数据管理</span>-->
+      <!--<i class="el-icon-tickets"></i>-->
+      <!--<span slot="title">概念层业务元数据管理</span>-->
       <!--</el-menu-item>-->
       <!--<el-menu-item index="/logicLayer">-->
-        <!--<i class="el-icon-tickets"></i>-->
-        <!--<span slot="title">逻辑层业务元数据管理</span>-->
+      <!--<i class="el-icon-tickets"></i>-->
+      <!--<span slot="title">逻辑层业务元数据管理</span>-->
       <!--</el-menu-item>-->
       <!--<el-menu-item index="/physicsLayer">-->
-        <!--<i class="el-icon-tickets"></i>-->
-        <!--<span slot="title">物理层元数据管理</span>-->
+      <!--<i class="el-icon-tickets"></i>-->
+      <!--<span slot="title">物理层元数据管理</span>-->
       <!--</el-menu-item>-->
       <el-menu-item index="/handledata">
         <i class="el-icon-printer"></i>
@@ -70,6 +70,10 @@
         <i class="el-icon-view"></i>
         <span slot="title">预测模块</span>
       </el-menu-item>
+      <el-menu-item index="/cluster">
+        <i class="el-icon-view"></i>
+        <span slot="title">用能模式挖掘</span>
+      </el-menu-item>
       <el-menu-item index="/testapp">
         <i class="el-icon-view"></i>
         <span slot="title">测试模块</span>
@@ -80,25 +84,25 @@
   </div>
 </template>
 <script type="text/javascript">
-  import * as lgn from '@/api/link'
-  import {setCookie, getCookie, delCookie} from '@/api/util'
+    import * as lgn from '@/api/link'
+    import {setCookie, getCookie, delCookie} from '@/api/util'
 
-  export default {
-    name: 'sidebar',
-    data() {
-      return {
-        isActive: true,
+    export default {
+        name: 'sidebar',
+        data() {
+            return {
+                isActive: true,
 
-      }
-    },
-    created() {
+            }
+        },
+        created() {
 
-    },
-  }
+        },
+    }
 </script>
 <style type="text/css" scoped>
   /*a {*/
-    /*text-decoration: none*/
+  /*text-decoration: none*/
   /*}*/
 
   /*#aside {*/
