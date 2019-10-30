@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import Login from '@/views/Login'
 import Index from '@/views/index'
 import UploadFile from '@/views/UploadFile'
@@ -20,6 +19,8 @@ import predict from "../views/predict"
 import usageStatistics from "../views/usageStatistics"
 import usageComparision from "../views/usageComparision"
 import cluster from "../views/cluster"
+import baseLine from "../views/baseLine"
+import olap from "../views/olap"
 Vue.use(Router)
 
 export default new Router({
@@ -106,6 +107,11 @@ export default new Router({
       component:predict
     },
     {
+      path:'/baseLine',
+      name:'baseLine',
+      component:baseLine
+    },
+    {
       path:'/usageStatistics',
       name:'usageStatistics',
       component:usageStatistics
@@ -119,6 +125,11 @@ export default new Router({
       path:'/cluster',
       name:'cluster',
       component:cluster
+    },
+    {
+      path:'/olap',
+      name: 'olap',
+      component:olap
     }
     // {
     //   path:'/testapp',

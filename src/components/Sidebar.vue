@@ -38,10 +38,10 @@
       <!--<i class="el-icon-tickets"></i>-->
       <!--<span slot="title">物理层元数据管理</span>-->
       <!--</el-menu-item>-->
-      <el-menu-item index="/handledata">
-        <i class="el-icon-printer"></i>
-        <span slot="title">处理入库</span>
-      </el-menu-item>
+<!--      <el-menu-item index="/handledata">-->
+<!--        <i class="el-icon-printer"></i>-->
+<!--        <span slot="title">处理入库</span>-->
+<!--      </el-menu-item>-->
       <el-menu-item index="/inquire">
         <i class="el-icon-view"></i>
         <span slot="title">查询数据</span>
@@ -64,20 +64,28 @@
       </el-menu-item>
       <el-menu-item index="/usageComparision">
         <i class="el-icon-view"></i>
-        <span slot="title">同比分析</span>
+        <span slot="title">时空相关性分析</span>
       </el-menu-item>
       <el-menu-item index="/predict">
         <i class="el-icon-view"></i>
-        <span slot="title">预测模块</span>
+        <span slot="title">能耗预测</span>
+      </el-menu-item>
+      <el-menu-item index="/baseLine">
+        <i class="el-icon-view"></i>
+        <span slot="title">能耗基线提取</span>
       </el-menu-item>
       <el-menu-item index="/cluster">
         <i class="el-icon-view"></i>
         <span slot="title">用能模式挖掘</span>
       </el-menu-item>
-      <el-menu-item index="/testapp">
+      <el-menu-item index="/olap">
         <i class="el-icon-view"></i>
-        <span slot="title">测试模块</span>
+        <span slot="title">OLAP时空分析</span>
       </el-menu-item>
+<!--      <el-menu-item index="/testapp">-->
+<!--        <i class="el-icon-view"></i>-->
+<!--        <span slot="title">测试模块</span>-->
+<!--      </el-menu-item>-->
 
 
     </el-menu>

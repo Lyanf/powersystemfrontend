@@ -1,5 +1,5 @@
 <template>
-  <MyFrame>
+  <my-frame>
     <el-card>
       <div slot="header">
         <span>筛选</span>
@@ -19,38 +19,44 @@
             <el-option v-for="item in allMeasurePoint" :value="item"></el-option>
           </el-select>
         </el-col>
-        <el-col span=5 push=10>
+        <el-col span=5>
+          <el-date-picker
+            v-model="date"
+            type="date">
+          </el-date-picker>
+        </el-col>
+        <el-col span=5>
           <el-button type="primary" v-on:click="searchClicked">显示</el-button>
         </el-col>
       </el-row>
     </el-card>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
-  </MyFrame>
+  </my-frame>
 </template>
 
 <script>
-    import * as echarts from 'echarts';
-    import Navmenu from "../components/NavMenu";
-    import Sidebar from "../components/Sidebar"
-    import axios from "axios"
     import MyFrame from "../components/Frame";
+    import axios from "axios"
+    import * as echarts from 'echarts';
 
     export default {
-        name: "predict",
-        components: {MyFrame, Navmenu, Sidebar},
+        name: "baseLine",
+        components: {MyFrame},
         data: function () {
             return {
                 factory: '',
                 line: '',
                 device: '',
-                measurePoint:'',
+                measurePoint: '',
                 algorithm: '',
                 date: '',
-                trueData: '',
-                predictData: '',
                 metaDataTree: '',
                 selectedMetaData: '',
-                allMeasurePoint:[]
+                allMeasurePoint: [],
+                hourX: '',
+                dayX: '',
+                hourList: [],
+                dayList: [],
             }
         },
         methods: {
@@ -66,30 +72,45 @@
                 });
                 console.log(this.metaDataTree)
             },
-            getAllMeasurePoint:function(){
+            getAllMeasurePoint: function () {
                 let that = this;
                 axios.post("/api/getAllMeasurePoint").then(function (response) {
                     that.allMeasurePoint = response.data
                 });
                 console.log(this.allMeasurePoint)
             },
+            generateSeries: function (dataList) {
+                let seriesList = []
+                for (let i in dataList) {
+                    let temp = {
+                        name: 'cluster' + i.toString(),
+                        type: 'line',
+                        smooth: 'true',
+                        data: dataList[i]
+                    }
+                    seriesList.push(temp)
+                }
+                return seriesList
+            },
             searchClicked: function () {
                 var chart1 = document.getElementById("chart1");
-
                 chart1 = echarts.init(chart1);
-                let that = this;
-                axios.post("/api/predict", {
+                let that = this
+                axios.post("/api/baseline", {
                     factory: that.factory,
                     line: that.line,
                     device: that.device,
-                    measurePoint: that.measurePoint
+                    measurePoint: that.measurePoint,
+                    year:that.date.getFullYear(),
+                    month:that.date.getMonth(),
+                    day:that.date.getDate()
                 }).then(function (response) {
                     let data = response.data;
-                    that.trueData = data['y_true'];
-                    that.predictData = data['y_pred'];
+                    that.trueData = data['trueValue'];
+                    that.predictData = data['baseValue'];
                     console.log(that.trueData)
                     console.log(that.predictData)
-                    console.log([Array.from({length: 4000}, (a, i) => i)])
+                    console.log([Array.from({length: 500}, (a, i) => i)])
                     var option1 = {
                         toolbox: {
                             show: true,
@@ -104,7 +125,7 @@
                             }
                         },
                         title: {
-                            text: "厂商用能预测图"
+                            text: "能耗基线提取"
                         },
                         legend: {},
                         tooltip: {
@@ -112,20 +133,20 @@
                         },
                         xAxis: {
                             type: 'category',
-                            data: Array.from({length: 3835}, (a, i) => i)
+                            data: Array.from({length: 500}, (a, i) => i)
                         },
-                        yAxis: {scale:true},
+                        yAxis: {scale: true},
                         // Declare several bar series, each will be mapped
                         // to a column of dataset.source by default.
                         series: [
                             {
-                                name: '真实值',
+                                name: '实际值',
                                 type: 'line',
                                 smooth: 'true',
                                 data: that.trueData
                             },
                             {
-                                name: '预测值',
+                                name: '能耗基线',
                                 type: 'line',
                                 smooth: 'true',
                                 lineStyle: {
@@ -139,20 +160,16 @@
 
                 });
             },
+
         },
         mounted() {
-            this.getMetaData()
+            this.getMetaData();
             this.getAllMeasurePoint()
         }
     }
+
 </script>
 
 <style scoped>
-  .el-row {
-    margin-bottom: 20px;
-  }
 
-  .el-card {
-    margin-bottom: 20px;
-  }
 </style>
