@@ -130,11 +130,11 @@ export default new Router({
       path:'/olap',
       name: 'olap',
       component:olap
+    },
+    {
+      path:'/testapp',
+      name:'lyftest',
+      component:lyftest
     }
-    // {
-    //   path:'/testapp',
-    //   name:'testapp',
-    //   component:testapp
-    // }
   ]
 })

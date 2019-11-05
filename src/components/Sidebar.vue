@@ -38,10 +38,10 @@
       <!--<i class="el-icon-tickets"></i>-->
       <!--<span slot="title">物理层元数据管理</span>-->
       <!--</el-menu-item>-->
-<!--      <el-menu-item index="/handledata">-->
-<!--        <i class="el-icon-printer"></i>-->
-<!--        <span slot="title">处理入库</span>-->
-<!--      </el-menu-item>-->
+      <!--      <el-menu-item index="/handledata">-->
+      <!--        <i class="el-icon-printer"></i>-->
+      <!--        <span slot="title">处理入库</span>-->
+      <!--      </el-menu-item>-->
       <el-menu-item index="/inquire">
         <i class="el-icon-view"></i>
         <span slot="title">查询数据</span>
@@ -78,14 +78,29 @@
         <i class="el-icon-view"></i>
         <span slot="title">用能模式挖掘</span>
       </el-menu-item>
-      <el-menu-item index="/olap">
-        <i class="el-icon-view"></i>
-        <span slot="title">OLAP时空分析</span>
-      </el-menu-item>
-<!--      <el-menu-item index="/testapp">-->
-<!--        <i class="el-icon-view"></i>-->
-<!--        <span slot="title">测试模块</span>-->
-<!--      </el-menu-item>-->
+      <el-submenu index="1">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>olap时空分析</span>
+        </template>
+        <el-menu-item index="/olap">
+          <i class="el-icon-view"></i>
+          <span slot="title">钻取</span>
+        </el-menu-item>
+        <el-menu-item index="/olap">
+          <i class="el-icon-view"></i>
+          <span slot="title">切片</span>
+        </el-menu-item>
+        <el-menu-item index="/olap">
+          <i class="el-icon-view"></i>
+          <span slot="title">旋转</span>
+        </el-menu-item>
+      </el-submenu>
+
+            <el-menu-item index="/testapp">
+              <i class="el-icon-view"></i>
+              <span slot="title">测试模块</span>
+            </el-menu-item>
 
 
     </el-menu>
