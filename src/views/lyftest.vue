@@ -1,19 +1,22 @@
 <template>
+  <!--  <script src="//unpkg.com/vue/dist/vue.js"></script>-->
+  <!--<script src="//unpkg.com/element-ui@2.12.0/lib/index.js"></script>-->
+  <!-- 引入样式 -->
   <div>
-  <div class="block">
-    <span class="demonstration">单选选择任意一级选项</span>
-    <el-cascader
-      :options="options"
-      :props="{ checkStrictly: true }"
-      clearable></el-cascader>
-  </div>
-  <div class="block">
-    <span class="demonstration">多选选择任意一级选项</span>
-    <el-cascader
-      :options="options"
-      :props="{ multiple: true, checkStrictly: true }"
-      clearable></el-cascader>
-  </div>
+    <div class="block">
+      <span class="demonstration">单选选择任意一级选项</span>
+      <el-cascader
+        :options="options"
+        :props="{ checkStrictly: true }"
+        clearable></el-cascader>
+    </div>
+    <div class="block">
+      <span class="demonstration">多选选择任意一级选项</span>
+      <el-cascader
+        :options="options"
+        :props="{ multiple: true, checkStrictly: true }"
+        clearable></el-cascader>
+    </div>
   </div>
 </template>
 <script>
