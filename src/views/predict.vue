@@ -22,6 +22,9 @@
         <el-col span=5 push=10>
           <el-button type="primary" v-on:click="searchClicked">显示</el-button>
         </el-col>
+        <el-col span=5>
+          <el-button type="primary" v-on:click="addCompare">添加对比</el-button>
+        </el-col>
       </el-row>
     </el-card>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
@@ -43,17 +46,21 @@
                 factory: '',
                 line: '',
                 device: '',
-                measurePoint:'',
+                measurePoint: '',
                 algorithm: '',
                 date: '',
                 trueData: '',
                 predictData: '',
                 metaDataTree: '',
                 selectedMetaData: '',
-                allMeasurePoint:[]
+                allMeasurePoint: [],
+                chartOption: {}
             }
         },
         methods: {
+            addCompare:function(){
+                console.log("add compare")
+            },
             handleChange: function () {
                 this.factory = this.selectedMetaData[0];
                 this.line = this.selectedMetaData[1];
@@ -66,7 +73,7 @@
                 });
                 console.log(this.metaDataTree)
             },
-            getAllMeasurePoint:function(){
+            getAllMeasurePoint: function () {
                 let that = this;
                 axios.post("/api/getAllMeasurePoint").then(function (response) {
                     that.allMeasurePoint = response.data
@@ -114,7 +121,7 @@
                             type: 'category',
                             data: Array.from({length: 3835}, (a, i) => i)
                         },
-                        yAxis: {scale:true},
+                        yAxis: {scale: true},
                         // Declare several bar series, each will be mapped
                         // to a column of dataset.source by default.
                         series: [
