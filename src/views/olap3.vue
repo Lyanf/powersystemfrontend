@@ -2,7 +2,7 @@
   <MyFrame>
     <el-card>
       <div slot="header">
-        <span>OLAP-钻取</span>
+        <span>OLAP-旋转</span>
       </div>
       <el-row>
         <el-col span=5>
@@ -26,6 +26,9 @@
         </el-col>
         <el-col span=3 push=4>
           <el-button type="primary" v-on:click="newSearchClicked">查询</el-button>
+        </el-col>
+        <el-col span=3 push=3>
+          <el-button type="primary">旋转</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -143,7 +146,7 @@
     }
 
     export default {
-        name: "olap",
+        name: "olap3",
         components: {MyFrame, Sidebar, Navmenu},
         data() {
             return {

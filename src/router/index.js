@@ -21,6 +21,8 @@ import usageComparision from "../views/usageComparision"
 import cluster from "../views/cluster"
 import baseLine from "../views/baseLine"
 import olap from "../views/olap"
+import olap2 from "../views/olap2"
+import olap3  from "../views/olap3";
 Vue.use(Router)
 
 export default new Router({
@@ -130,6 +132,16 @@ export default new Router({
       path:'/olap',
       name: 'olap',
       component:olap
+    },
+    {
+      path:'/olap2',
+      name: 'olap2',
+      component:olap2
+    },
+    {
+      path:'/olap3',
+      name: 'olap3',
+      component:olap3
     },
     {
       path:'/testapp',

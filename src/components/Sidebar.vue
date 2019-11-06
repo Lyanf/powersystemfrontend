@@ -87,11 +87,11 @@
           <i class="el-icon-view"></i>
           <span slot="title">钻取</span>
         </el-menu-item>
-        <el-menu-item index="/olap">
+        <el-menu-item index="/olap2">
           <i class="el-icon-view"></i>
           <span slot="title">切片</span>
         </el-menu-item>
-        <el-menu-item index="/olap">
+        <el-menu-item index="/olap3">
           <i class="el-icon-view"></i>
           <span slot="title">旋转</span>
         </el-menu-item>

@@ -2,7 +2,7 @@
   <MyFrame>
     <el-card>
       <div slot="header">
-        <span>OLAP-钻取</span>
+        <span>OLAP-切片</span>
       </div>
       <el-row>
         <el-col span=5>
@@ -10,7 +10,7 @@
             v-model="selectedMetaData"
             :options="metaDataTree"
             :props="{ 'checkStrictly': 'true' }"
-            expandTrigger = "hover"
+            expandTrigger="hover"
             @change="handleChange" clearable="true">
             <!--            placeholder="请选择设备" clearable-->
           </el-cascader>
@@ -26,6 +26,9 @@
         </el-col>
         <el-col span=3 push=4>
           <el-button type="primary" v-on:click="newSearchClicked">查询</el-button>
+        </el-col>
+        <el-col span=3 push=3>
+          <el-button type="primary">切片</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -143,7 +146,7 @@
     }
 
     export default {
-        name: "olap",
+        name: "olap2",
         components: {MyFrame, Sidebar, Navmenu},
         data() {
             return {
@@ -357,154 +360,270 @@
                 }]
             };
         }
-    ,
-    methods: {
-        exportExcel: function () {
-            /* generate workbook object from table */
-            var wb = XLSX.utils.table_to_book(document.getElementById('showTable'))
-            /* get binary string as output */
-            var wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'array'})
-            try {
-                FileSaver.saveAs(new Blob([wbout], {type: 'application/octet-stream'}), '示例表格.xlsx')
-            } catch (e) {
-                if (typeof console !== 'undefined') console.log(e, wbout)
-            }
-            return wbout
-        }
-    ,
-        fixDateFormat: function (oriDate) {
-            return oriDate.slice(0, 4) + "-" + oriDate.slice(4, 6) + "-" + oriDate.slice(6, 8)
-        }
-    ,
-        getValueByMeasurePoint: function (imeasure) {
-            let allValue = [];
-            for (let i of this.tableData) {
-                if (i.measurePoint === imeasure) {
-                    allValue.push(i.value)
+        ,
+        methods: {
+            exportExcel: function () {
+                /* generate workbook object from table */
+                var wb = XLSX.utils.table_to_book(document.getElementById('showTable'))
+                /* get binary string as output */
+                var wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'array'})
+                try {
+                    FileSaver.saveAs(new Blob([wbout], {type: 'application/octet-stream'}), '示例表格.xlsx')
+                } catch (e) {
+                    if (typeof console !== 'undefined') console.log(e, wbout)
                 }
+                return wbout
             }
-            return allValue
-        }
-    ,
-        getAllDate: function () {
-            let allDate = new Set();
-            for (let i of this.tableData) {
-                allDate.add(i.date)
+            ,
+            fixDateFormat: function (oriDate) {
+                return oriDate.slice(0, 4) + "-" + oriDate.slice(4, 6) + "-" + oriDate.slice(6, 8)
             }
-            return Array.from(allDate)
-        }
-    ,
-        searchClicked: function () {
-            let that = this;
-            axios.post('/api/getSpecificData',
-                {
-                    factory: that.factory,
-                    line: that.line,
-                    device: that.device,
-                    timestamp: that.date
-
-                }).then(function (response) {
-                that.tableData = response.data;
-            })
-        }
-    ,
-        generateChart: function () {
-            let date = this.getAllDate();
-            let value = this.getValueByMeasurePoint(this.measurePoint1);
-            let option = {
-                title: {
-                    text: '电气量曲线'
-                    // subtext: '单'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                legend: {},
-                toolbox: {
-                    show: true,
-                    feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
-                        dataView: {readOnly: false},
-                        magicType: {type: ['line', 'bar']},
-                        restore: {},
-                        saveAsImage: {}
+            ,
+            getValueByMeasurePoint: function (imeasure) {
+                let allValue = [];
+                for (let i of this.tableData) {
+                    if (i.measurePoint === imeasure) {
+                        allValue.push(i.value)
                     }
-                },
-                xAxis: {
-                    type: 'category',
-                    data: fixDateFormat(this.getAllDate())
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: value,
-                    type: 'line',
-                    name: this.measurePoint1
-                }],
-            };
-            let chart = echarts.init(document.getElementById("chart"));
-            chart.setOption(option, true)
-        }
-    ,
-        compareChart: function () {
-            let date = this.getAllDate();
-            let value1 = this.getValueByMeasurePoint(this.measurePoint1);
-            let value2 = this.getValueByMeasurePoint(this.measurePoint2);
-            let option = {
-                title: {
-                    text: '电气量曲线',
-                    // subtext: '单'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                legend: {
-                    // data: ['电气量1', '电气量2']
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        dataZoom: {
-                            yAxisIndex: 'none'
-                        },
-                        dataView: {readOnly: false},
-                        magicType: {type: ['line', 'bar']},
-                        restore: {},
-                        saveAsImage: {}
-                    }
-                },
-                xAxis: {
-                    type: 'category',
-                    data: fixDateFormat(this.getAllDate())
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [
+                }
+                return allValue
+            }
+            ,
+            getAllDate: function () {
+                let allDate = new Set();
+                for (let i of this.tableData) {
+                    allDate.add(i.date)
+                }
+                return Array.from(allDate)
+            }
+            ,
+            searchClicked: function () {
+                let that = this;
+                axios.post('/api/getSpecificData',
                     {
-                        data: value1,
+                        factory: that.factory,
+                        line: that.line,
+                        device: that.device,
+                        timestamp: that.date
+
+                    }).then(function (response) {
+                    that.tableData = response.data;
+                })
+            }
+            ,
+            generateChart: function () {
+                let date = this.getAllDate();
+                let value = this.getValueByMeasurePoint(this.measurePoint1);
+                let option = {
+                    title: {
+                        text: '电气量曲线'
+                        // subtext: '单'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {},
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: fixDateFormat(this.getAllDate())
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: value,
                         type: 'line',
                         name: this.measurePoint1
+                    }],
+                };
+                let chart = echarts.init(document.getElementById("chart"));
+                chart.setOption(option, true)
+            }
+            ,
+            compareChart: function () {
+                let date = this.getAllDate();
+                let value1 = this.getValueByMeasurePoint(this.measurePoint1);
+                let value2 = this.getValueByMeasurePoint(this.measurePoint2);
+                let option = {
+                    title: {
+                        text: '电气量曲线',
+                        // subtext: '单'
                     },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        // data: ['电气量1', '电气量2']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: fixDateFormat(this.getAllDate())
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            data: value1,
+                            type: 'line',
+                            name: this.measurePoint1
+                        },
+                        {
+                            data: value2,
+                            type: 'line',
+                            name: this.measurePoint2
+                        }
+                    ]
+                };
+                let chart = echarts.init(document.getElementById("chart"));
+                chart.setOption(option, true)
+            }
+            ,
+            clearChart: function () {
+                this.measurePoint1 = '';
+                this.measurePoint2 = '';
+                var chart = echarts.init(document.getElementById("chart"));
+                this.$chart = chart;
+                var option = {
+                    title: {
+                        text: '电气量曲线',
+                        subtext: '初始案例'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['电气量1', '电气量2']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    },
+                    series: [
+                        {
+                            name: '电气量1',
+                            type: 'line',
+                            data: [11, 11, 15, 13, 12, 13, 10],
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
+                                ]
+                            }
+                        },
+                        {
+                            name: '电气量2',
+                            type: 'line',
+                            data: [1, -2, 2, 5, 3, 2, 0],
+                            markPoint: {
+                                data: [
+                                    {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'},
+                                    [{
+                                        symbol: 'none',
+                                        x: '90%',
+                                        yAxis: 'max'
+                                    }, {
+                                        symbol: 'circle',
+                                        label: {
+                                            normal: {
+                                                position: 'start',
+                                                formatter: '最大值'
+                                            }
+                                        },
+                                        type: 'max',
+                                        name: '最高点'
+                                    }]
+                                ]
+                            }
+                        }
+                    ]
+                };
+
+                chart.setOption(option, true)
+            }
+            ,
+            getMetaData: function () {
+                let that = this;
+                axios.post("/api/getMetaDataTree").then(function (response) {
+                    that.metaDataTree = response.data
+                });
+            }
+            ,
+            handleChange: function () {
+                this.factory = this.selectedMetaData[0];
+                this.line = this.selectedMetaData[1];
+                this.device = this.selectedMetaData[2];
+            }
+            ,
+            newSearchClicked: function () {
+                let that = this;
+                axios.post('/api/getSpecificData',
                     {
-                        data: value2,
-                        type: 'line',
-                        name: this.measurePoint2
-                    }
-                ]
-            };
-            let chart = echarts.init(document.getElementById("chart"));
-            chart.setOption(option, true)
+                        factory: this.factory,
+                        line: this.line,
+                        device: this.device,
+                        timestamp: this.date
+                    }).then(function (response) {
+                    that.tableData = response.data
+                })
+            }
         }
-    ,
-        clearChart: function () {
-            this.measurePoint1 = '';
-            this.measurePoint2 = '';
+        ,
+        mounted() {
             var chart = echarts.init(document.getElementById("chart"));
-            this.$chart = chart;
             var option = {
                 title: {
                     text: '电气量曲线',
@@ -590,125 +709,8 @@
             };
 
             chart.setOption(option, true)
+            this.getMetaData()
         }
-    ,
-        getMetaData: function () {
-            let that = this;
-            axios.post("/api/getMetaDataTree").then(function (response) {
-                that.metaDataTree = response.data
-            });
-        }
-    ,
-        handleChange: function () {
-            this.factory = this.selectedMetaData[0];
-            this.line = this.selectedMetaData[1];
-            this.device = this.selectedMetaData[2];
-        }
-    ,
-        newSearchClicked: function () {
-            let that = this;
-            axios.post('/api/getSpecificData',
-                {
-                    factory: this.factory,
-                    line: this.line,
-                    device: this.device,
-                    timestamp: this.date
-                }).then(function (response) {
-                that.tableData = response.data
-            })
-        }
-    }
-    ,
-    mounted()
-    {
-        var chart = echarts.init(document.getElementById("chart"));
-        var option = {
-            title: {
-                text: '电气量曲线',
-                subtext: '初始案例'
-            },
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data: ['电气量1', '电气量2']
-            },
-            toolbox: {
-                show: true,
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
-                    dataView: {readOnly: false},
-                    magicType: {type: ['line', 'bar']},
-                    restore: {},
-                    saveAsImage: {}
-                }
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-            },
-            yAxis: {
-                type: 'value',
-                axisLabel: {
-                    formatter: '{value}'
-                }
-            },
-            series: [
-                {
-                    name: '电气量1',
-                    type: 'line',
-                    data: [11, 11, 15, 13, 12, 13, 10],
-                    markPoint: {
-                        data: [
-                            {type: 'max', name: '最大值'},
-                            {type: 'min', name: '最小值'}
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            {type: 'average', name: '平均值'}
-                        ]
-                    }
-                },
-                {
-                    name: '电气量2',
-                    type: 'line',
-                    data: [1, -2, 2, 5, 3, 2, 0],
-                    markPoint: {
-                        data: [
-                            {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
-                        ]
-                    },
-                    markLine: {
-                        data: [
-                            {type: 'average', name: '平均值'},
-                            [{
-                                symbol: 'none',
-                                x: '90%',
-                                yAxis: 'max'
-                            }, {
-                                symbol: 'circle',
-                                label: {
-                                    normal: {
-                                        position: 'start',
-                                        formatter: '最大值'
-                                    }
-                                },
-                                type: 'max',
-                                name: '最高点'
-                            }]
-                        ]
-                    }
-                }
-            ]
-        };
-
-        chart.setOption(option, true)
-        this.getMetaData()
-    }
     }
 </script>
 
