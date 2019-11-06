@@ -2,7 +2,7 @@
   <my-frame>
     <el-card>
       <div slot="header">
-        <span>筛选</span>
+        <span>能耗基线提取</span>
       </div>
       <el-row>
         <el-col span=5>
