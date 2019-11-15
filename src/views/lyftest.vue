@@ -1,28 +1,43 @@
 <template>
   <div>
-  <p>123123123</p>
-    <el-select v-model="selectData" v-on:change="myOn" placeholder="请选择啊">
-      <el-option value="1"></el-option>
-      <el-option value="2"></el-option>
-    </el-select>
+    <div class="block">
+      <span class="demonstration">单选选择任意一级选项</span>
+      <el-cascader
+        :options="options"
+        :props="{ checkStrictly: true, label:'value' }"
+        clearable></el-cascader>
+    </div>
   </div>
 </template>
 
 <script>
+    import * as echarts from 'echarts';
+    import Navmenu from "../components/NavMenu";
+    import Sidebar from "../components/Sidebar"
+    import axios from "axios"
+    import MyFrame from "../components/Frame";
+
     export default {
         name: "lyftest",
-      data:function () {
-        return {
-          selectData:''
+        data: function () {
+            return {
+                options: []
+            }
+        },
+        methods: {
+            myOn: function (event) {
+                console.log(event)
+                console.log("-------------------")
+                console.log(this)
+            }
+        },
+        created() {
+            let that = this
+          axios.post("/api/metadataTreeJson").then(function (response) {
+              that.options = response.data
+              console.log(response.data)
+          })
         }
-      },
-      methods:{
-          myOn:function (event) {
-            console.log(event)
-            console.log("-------------------")
-            console.log(this)
-          }
-      }
     }
 </script>
 
