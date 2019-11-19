@@ -78,6 +78,10 @@
         <i class="el-icon-view"></i>
         <span slot="title">用能模式挖掘</span>
       </el-menu-item>
+      <el-menu-item index="/profileFeature">
+        <i class="el-icon-view"></i>
+        <span slot="title">行为画像特性</span>
+      </el-menu-item>
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-location"></i>

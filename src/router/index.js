@@ -23,6 +23,7 @@ import baseLine from "../views/baseLine"
 import olap from "../views/olap"
 import olap2 from "../views/olap2"
 import olap3  from "../views/olap3";
+import profileFeature from "../views/profileFeature";
 Vue.use(Router)
 
 export default new Router({
@@ -142,6 +143,11 @@ export default new Router({
       path:'/olap3',
       name: 'olap3',
       component:olap3
+    },
+    {
+      path:'/profileFeature',
+      name:'profileFeature',
+      component:profileFeature
     },
     {
       path:'/testapp',
