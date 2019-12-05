@@ -5,30 +5,30 @@
     <!--<el-breadcrumb-item>远端上传</el-breadcrumb-item>-->
     <!--</el-breadcrumb>-->
     <div id="input_area">
-      <el-row :gutter="10">
-        <el-col :span="5">
+      <el-row :gutter=10>
+        <el-col :span=5>
           <el-select v-model="selectedMethod" placeholder="请选择方案">
             <el-option  label="天合公司-kafka">
             </el-option>
           </el-select>
         </el-col>
-        <el-col :span="3">
+        <el-col :span=3>
           <el-button v-on:click="startDownload">开始</el-button>
         </el-col>
-        <!--<el-col :span="5">-->
+        <!--<el-col :span=5>-->
         <!--<el-input v-model="input1"-->
         <!--placeholder="请输入地址"-->
         <!--&gt;-->
         <!--</el-input>-->
         <!--</el-col>-->
-        <!--<el-col :span="3">-->
+        <!--<el-col :span=3>-->
         <!--<el-input v-model="input2"-->
         <!--placeholder="请输入topic"-->
         <!--&gt;-->
         <!--</el-input>-->
         <!--</el-col>-->
       </el-row>
-      <el-row :gutter="2">
+      <el-row :gutter=2>
         <el-table :data="tablaData">
           <el-table-column label="名称" prop="name"></el-table-column>
           <el-table-column label="ip地址" prop="ip"></el-table-column>

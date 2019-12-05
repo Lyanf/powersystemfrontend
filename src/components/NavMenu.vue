@@ -1,8 +1,8 @@
 <template>
 	<el-row type="flex" justify="space-between" class="header">
-		<el-col :span="6"><div class="grid-content brand"> <router-link to="/">能源大数据采集管理系统</router-link></div></el-col>
-		
-		<el-col :span="6">
+		<el-col :span=6><div class="grid-content brand"> <router-link to="/">能源大数据采集管理系统</router-link></div></el-col>
+
+		<el-col :span=6>
 			<div class="grid-content lgout-options">
 				<div v-if="loginOrNot" >
 					<el-button type="text" @click="logout"><i class="el-icon-back "></i> 退出</el-button>
@@ -11,10 +11,10 @@
 					<router-link to="/login">登录</router-link>
 					<router-link to="/register">注册</router-link>
 				</div>
-				
+
 			</div>
 		</el-col>
-		
+
 	</el-row>
 </template>
 <script>
@@ -32,8 +32,8 @@
   			this.loginOrNot = false
   			this.$router.push({path:'/login'})
   		}else{
-  			this.loginOrNot = true	
-  		} 
+  			this.loginOrNot = true
+  		}
   	},
   	methods:{
   		logout(){
@@ -41,7 +41,7 @@
 			this.$router.push({path:'/login'})
   		}
   	}
-    
+
   }
 </script>
 
@@ -60,7 +60,7 @@
 	.lgout-options{
 	  	text-align: right;
 	  	padding-right: 20px;
-	  	
+
 	}
   	.el-row {
       margin-bottom: 20px;
@@ -68,7 +68,7 @@
         margin-bottom: 0;
       }
     }
-    
+
 	.grid-content {
 	  height: 60px;
 	  line-height: 60px;
@@ -87,5 +87,5 @@
 	}
 
 
-   
+
 </style>

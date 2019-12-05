@@ -8,13 +8,13 @@
           <el-col span=4>
 <!--          <div class="block">-->
 <!--            <span class="demonstration">选择进线</span>-->
-              <el-cascader
-                v-model="value"
-                :options="options"
-                :props="{ expandTrigger: 'hover' }"
-                @change="handleChange"
-                placeholder="请选择进线"
-              ></el-cascader>
+            <el-cascader
+              v-model="value"
+              :options="options"
+              :props="{ expandTrigger: 'hover' }"
+              @change="handleChange"
+              placeholder="请选择进线"
+            />
 <!--          </div>-->
           </el-col>
           <el-col span=4 push=2>
@@ -32,7 +32,7 @@
         </el-row>
         </el-card>
         <el-row style="margin-top: 20px">
-          <el-col span="11">
+          <el-col span=11>
             <el-card style="width: 100%;">
               <div slot="header">
                 <span>1#配电400V进电</span>
@@ -40,7 +40,7 @@
               <div id="bar1" style="height: 400px;width: 100%;"></div>
             </el-card>
           </el-col>
-          <el-col span="11" push="1">
+          <el-col span=11 push=1>
             <el-card style="width: 100%;">
               <div slot="header">
                 <span>2#配电400V进电</span>
@@ -50,7 +50,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col span="24">
+          <el-col span=24>
             <el-table
               :data="tableData"
               style="width: 100%"

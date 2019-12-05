@@ -1,7 +1,7 @@
 <template>
   <MyFrame>
-    <el-row :gutter="10">
-      <el-col :span="9">
+    <el-row :gutter=10>
+      <el-col :span=9>
         <el-date-picker
           v-model="date"
           type="daterange"
@@ -10,10 +10,10 @@
           end-placeholder="结束日期">
         </el-date-picker>
       </el-col>
-      <el-col :span="6">
+      <el-col :span=6>
         <el-input placeholder="测点" v-model="measurePoint"></el-input>
       </el-col>
-      <el-col :span="6">
+      <el-col :span=6>
         <el-input placeholder="位置" v-model="location"></el-input>
       </el-col>
     </el-row>

@@ -2,15 +2,15 @@
   <div style="min-height: 100vh">
     <el-container>
       <el-header>
-        <Navmenu></Navmenu>
+        <Navmenu/>
       </el-header>
     </el-container>
     <el-container style="height: 100%;position: relative">
       <el-aside width="170px" style="min-height: 100vh">
-        <Sidebar></Sidebar>
+        <Sidebar/>
       </el-aside>
       <el-main>
-        <slot></slot>
+        <slot/>
       </el-main>
     </el-container>
   </div>

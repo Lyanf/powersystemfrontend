@@ -24,6 +24,10 @@ import olap from "../views/olap"
 import olap2 from "../views/olap2"
 import olap3  from "../views/olap3";
 import profileFeature from "../views/profileFeature";
+import zuanqu from "../views/zuanqu"
+import qiepian from "../views/qiepian"
+import xuanzhuan from "../views/xuanzhuan"
+
 Vue.use(Router)
 
 export default new Router({
@@ -153,6 +157,21 @@ export default new Router({
       path:'/testapp',
       name:'lyftest',
       component:lyftest
+    },
+    {
+      path:'/zuanqu',
+      name:'zuanqu',
+      component:zuanqu
+    },
+    {
+      path:'/qiepian',
+      name:'qiepian',
+      component:qiepian
+    },
+    {
+      path:'/xuanzhuan',
+      name:'xuanzhuan',
+      component:xuanzhuan
     }
   ]
 })

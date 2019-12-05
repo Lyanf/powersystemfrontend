@@ -43,89 +43,88 @@
       <!--        <span slot="title">处理入库</span>-->
       <!--      </el-menu-item>-->
       <el-menu-item index="/inquire">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view"/>
         <span slot="title">查询数据</span>
       </el-menu-item>
       <el-menu-item index="/needAnalyse">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view"/>
         <span slot="title">需量分析</span>
       </el-menu-item>
       <el-menu-item index="/newSearch">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view"/>
         <span slot="title">用能查询</span>
       </el-menu-item>
       <el-menu-item index="/usageSurvey">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view"/>
         <span slot="title">分项用能概况</span>
       </el-menu-item>
       <el-menu-item index="/usageStatistics">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view"/>
         <span slot="title">分项用能统计</span>
       </el-menu-item>
       <el-menu-item index="/usageComparision">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view"/>
         <span slot="title">时空相关性分析</span>
       </el-menu-item>
       <el-menu-item index="/predict">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view"/>
         <span slot="title">能耗预测</span>
       </el-menu-item>
       <el-menu-item index="/baseLine">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view"/>
         <span slot="title">能耗基线提取</span>
       </el-menu-item>
       <el-menu-item index="/cluster">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view"/>
         <span slot="title">用能模式挖掘</span>
       </el-menu-item>
       <el-menu-item index="/profileFeature">
-        <i class="el-icon-view"></i>
+        <i class="el-icon-view"/>
         <span slot="title">行为画像特性</span>
       </el-menu-item>
-      <el-submenu index="1">
+      <el-submenu index=1>
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-location"/>
           <span>olap时空分析</span>
         </template>
-        <el-menu-item index="/olap">
-          <i class="el-icon-view"></i>
-          <span slot="title">钻取</span>
-        </el-menu-item>
-        <el-menu-item index="/olap2">
-          <i class="el-icon-view"></i>
+        <el-menu-item index="/qiepian">
+          <i class="el-icon-view"/>
           <span slot="title">切片</span>
         </el-menu-item>
-        <el-menu-item index="/olap3">
-          <i class="el-icon-view"></i>
+        <el-menu-item index="/zuanqu">
+          <i class="el-icon-view"/>
+          <span slot="title">钻取</span>
+        </el-menu-item>
+
+        <el-menu-item index="/xuanzhuan">
+          <i class="el-icon-view"/>
           <span slot="title">旋转</span>
         </el-menu-item>
       </el-submenu>
 
-            <el-menu-item index="/testapp">
-              <i class="el-icon-view"></i>
-              <span slot="title">测试模块</span>
-            </el-menu-item>
+      <el-menu-item index="/testapp">
+        <i class="el-icon-view"/>
+        <span slot="title">测试模块</span>
+      </el-menu-item>
 
 
     </el-menu>
   </div>
 </template>
 <script type="text/javascript">
-    import * as lgn from '@/api/link'
-    import {setCookie, getCookie, delCookie} from '@/api/util'
 
-    export default {
-        name: 'sidebar',
-        data() {
-            return {
-                isActive: true,
+  export default {
+    name: 'sidebar',
+    data() {
+      return {
+        isActive: true,
 
-            }
-        },
-        created() {
+      }
+    },
+    created() {
 
-        },
-    }
+    },
+  }
 </script>
 <style type="text/css" scoped>
   /*a {*/

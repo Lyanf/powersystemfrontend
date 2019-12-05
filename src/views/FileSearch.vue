@@ -1,8 +1,8 @@
 <template>
   <MyFrame>
     <div id="input_area">
-      <el-row :gutter="10">
-        <el-col :span="10">
+      <el-row :gutter=10>
+        <el-col :span=10>
           <!--<el-input-->
           <!--placeholder="时间范围"-->
           <!--suffix-icon="el-icon-date"-->
@@ -16,14 +16,14 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-col>
-        <el-col :span="5">
+        <el-col :span=5>
           <el-input
             placeholder="上传人"
             suffix-icon="el-icon-date"
             v-model="input2">
           </el-input>
         </el-col>
-        <el-col :span="5">
+        <el-col :span=5>
           <el-input
             placeholder="文件名"
             suffix-icon="el-icon-date"

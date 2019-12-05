@@ -11,10 +11,10 @@
 			    <el-input v-model="login.password" type="password"></el-input>
 			  </el-form-item>
 			  <!--  <el-row type="flex" justify="space-between">
-			  	<el-col :span="12">
+			  	<el-col :span=12>
 			  		<router-link to="/forgetPwd" class="text">忘记密码</router-link>
 			  	</el-col>
-			  	<el-col :span="12" class="text-right">	
+			  	<el-col :span=12 class="text-right">
 			  		<span class="text">没有账号 <router-link to="/Register" class="text">前往注册</router-link></span>
 			  	</el-col>
 			  </el-row> -->
