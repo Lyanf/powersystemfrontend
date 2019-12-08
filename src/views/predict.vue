@@ -23,7 +23,7 @@
           <el-button type="primary" v-on:click="searchClicked">显示</el-button>
         </el-col>
         <el-col span=5>
-          <el-button type="primary" v-on:click="addCompare">添加对比</el-button>
+<!--          <el-button type="primary" v-on:click="addCompare">添加对比</el-button>-->
         </el-col>
       </el-row>
     </el-card>
