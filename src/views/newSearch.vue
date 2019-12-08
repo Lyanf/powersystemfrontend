@@ -73,34 +73,12 @@
               </div>
               <el-row style="margin-top: 10px">
                 <el-select value="" v-model="measurePoint1" placeholder="请选择电气量1">
-                  <el-option value="线电流Ia"></el-option>
-                  <el-option value="线电流Ib"></el-option>
-                  <el-option value="线电流Ic"></el-option>
-                  <el-option value="A相电压"></el-option>
-                  <el-option value="C相电压"></el-option>
-                  <el-option value="AB线电压"></el-option>
-                  <el-option value="BC线电压"></el-option>
-                  <el-option value="CA线电压"></el-option>
-                  <el-option value="反向有功电度"></el-option>
-                  <el-option value="正向有功电度"></el-option>
-                  <el-option value="反向无功电度"></el-option>
-                  <el-option value="正向无功电度"></el-option>
+                  <el-option v-for="item in allMeasurePoint" :value="item"/>
                 </el-select>
               </el-row>
               <el-row style="margin-top: 10px">
                 <el-select value="" v-model="measurePoint2" placeholder="请选择电气量2">
-                  <el-option value="线电流Ia"></el-option>
-                  <el-option value="线电流Ib"></el-option>
-                  <el-option value="线电流Ic"></el-option>
-                  <el-option value="A相电压"></el-option>
-                  <el-option value="C相电压"></el-option>
-                  <el-option value="AB线电压"></el-option>
-                  <el-option value="BC线电压"></el-option>
-                  <el-option value="CA线电压"></el-option>
-                  <el-option value="反向有功电度"></el-option>
-                  <el-option value="正向有功电度"></el-option>
-                  <el-option value="反向无功电度"></el-option>
-                  <el-option value="正向无功电度"></el-option>
+                  <el-option v-for="item in allMeasurePoint" :value="item"/>
                 </el-select>
               </el-row>
               <el-row style="margin-top: 100px;">
@@ -151,6 +129,7 @@
         factory: '',
         line: '',
         device: '',
+        allMeasurePoint:'',
         measurePoint: '',
         measurePoint1: '',
         measurePoint2: '',
@@ -162,6 +141,13 @@
       }
     },
     methods: {
+      getAllMeasurePoint: function () {
+        let that = this;
+        axios.post("/api/getAllMeasurePoint").then(function (response) {
+          that.allMeasurePoint = response.data
+        });
+        console.log(this.allMeasurePoint)
+      },
       exportExcel: function () {
         /* generate workbook object from table */
         var wb = XLSX.utils.table_to_book(document.getElementById('showTable'))
@@ -499,6 +485,7 @@
 
       chart.setOption(option, true)
       this.getMetaData()
+      this.getAllMeasurePoint()
     }
   }
 </script>
