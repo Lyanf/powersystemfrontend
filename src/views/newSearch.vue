@@ -1,103 +1,112 @@
 <template>
-<MyFrame>
-        <el-card>
+  <MyFrame>
+    <el-card>
+      <div slot="header">
+        <span>筛选</span>
+      </div>
+      <el-row>
+        <el-col span=5>
+          <el-cascader
+            v-model="selectedMetaData"
+            :options="metaDataTree"
+            :props="{ expandTrigger: 'hover' }"
+            @change="handleChange"
+            placeholder="请选择设备"
+          ></el-cascader>
+        </el-col>
+        <el-col span=10 push=3>
+          <el-date-picker
+            v-model="date"
+            type="daterange"
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期">
+          </el-date-picker>
+        </el-col>
+        <el-col span=3 push=4>
+          <el-button type="primary" v-on:click="newSearchClicked">查询</el-button>
+        </el-col>
+      </el-row>
+    </el-card>
+    <el-row>
+      <el-col span=24>
+        <el-table id="showTable"
+                  :data="tableData"
+                  border
+                  stripe
+                  height="300"
+                  max-height="300"
+        >
+          <!--              max-height="400px"-->
+          <el-table-column
+            type="index"
+            width="50">
+          </el-table-column>
+          <el-table-column
+            prop="date"
+            label="日期"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="measurePoint"
+            label="测点"
+          >
+          </el-table-column>
+          <!--              <el-table-column-->
+          <!--                prop="location"-->
+          <!--                label="设备"-->
+          <!--                width="180">-->
+          <!--              </el-table-column>-->
+          <el-table-column
+            prop="value"
+            label="值"
+          >
+          </el-table-column>
+        </el-table>
+      </el-col>
+    </el-row>
+    <!--  <el-row>-->
+    <!--    <olap-table v-bind:table-data="tableData"/>-->
+    <!--  </el-row>-->
+    <el-row>
+      <el-col span=5>
+        <el-card style="height: 400px;">
           <div slot="header">
-            <span>筛选</span>
+            <span>其他功能</span>
           </div>
-          <el-row>
-            <el-col span=5>
-              <el-cascader
-                v-model="selectedMetaData"
-                :options="metaDataTree"
-                :props="{ expandTrigger: 'hover' }"
-                @change="handleChange"
-                placeholder="请选择设备"
-              ></el-cascader>
+          <el-row style="margin-top: 10px">
+            <el-select value="" v-model="measurePoint1" placeholder="请选择电气量1">
+              <el-option v-for="item in allMeasurePoint" :value="item"/>
+            </el-select>
+          </el-row>
+          <el-row style="margin-top: 10px">
+            <el-select value="" v-model="measurePoint2" placeholder="请选择电气量2">
+              <el-option v-for="item in allMeasurePoint" :value="item"/>
+            </el-select>
+          </el-row>
+          <el-row style="margin-top: 100px;" gutter=30>
+            <el-col :span=11>
+              <el-button type="primary" v-on:click="exportExcel">导出表格</el-button>
             </el-col>
-            <el-col span=10 push=3>
-              <el-date-picker
-                v-model="date"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期">
-              </el-date-picker>
+            <el-col :span=11>
+              <el-button type="primary" v-on:click="generateChart">生成图表</el-button>
             </el-col>
-            <el-col span=3 push=4>
-              <el-button type="primary" v-on:click="newSearchClicked">查询</el-button>
+          </el-row>
+          <el-row gutter=30>
+            <el-col :span=11>
+              <el-button type="primary" v-on:click="clearChart">重置图表</el-button>
+            </el-col>
+            <el-col :span=11>
+              <el-button type="primary" v-on:click="compareChart">数据对比</el-button>
             </el-col>
           </el-row>
         </el-card>
-        <el-row>
-          <el-col span=24>
-            <el-table id="showTable"
-                      :data="tableData"
-                      border
-                      stripe
-                      height="300"
-                      max-height="300"
-            >
-              <!--              max-height="400px"-->
-              <el-table-column
-                type="index"
-                width="50">
-              </el-table-column>
-              <el-table-column
-                prop="date"
-                label="日期"
-              >
-              </el-table-column>
-              <el-table-column
-                prop="measurePoint"
-                label="测点"
-              >
-              </el-table-column>
-              <!--              <el-table-column-->
-              <!--                prop="location"-->
-              <!--                label="设备"-->
-              <!--                width="180">-->
-              <!--              </el-table-column>-->
-              <el-table-column
-                prop="value"
-                label="值"
-              >
-              </el-table-column>
-            </el-table>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col span=5>
-            <el-card style="height: 400px;">
-              <div slot="header">
-                <span>其他功能</span>
-              </div>
-              <el-row style="margin-top: 10px">
-                <el-select value="" v-model="measurePoint1" placeholder="请选择电气量1">
-                  <el-option v-for="item in allMeasurePoint" :value="item"/>
-                </el-select>
-              </el-row>
-              <el-row style="margin-top: 10px">
-                <el-select value="" v-model="measurePoint2" placeholder="请选择电气量2">
-                  <el-option v-for="item in allMeasurePoint" :value="item"/>
-                </el-select>
-              </el-row>
-              <el-row style="margin-top: 100px;">
-                <el-button type="primary" v-on:click="exportExcel">导出表格</el-button>
-                <el-button type="primary" v-on:click="generateChart">生成图表</el-button>
-              </el-row>
-              <el-row>
-                <el-button type="primary" v-on:click="clearChart">重置图表</el-button>
-
-                <el-button type="primary" v-on:click="compareChart">数据对比</el-button>
-
-              </el-row>
-            </el-card>
-          </el-col>
-          <el-col span=18 push=1>
-            <div id="chart" style="height: 400px ;"></div>
-          </el-col>
-        </el-row>
-</MyFrame>
+      </el-col>
+      <el-col span=18 push=1>
+        <div id="chart" style="height: 400px ;"></div>
+      </el-col>
+    </el-row>
+  </MyFrame>
 </template>
 
 <script>
@@ -108,6 +117,7 @@
   import FileSaver from 'file-saver'
   import XLSX from 'xlsx'
   import MyFrame from "../components/Frame";
+  import OlapTable from "../components/olapTable";
 
   function fixDateFormat(oriDates) {
     let newDates = [];
@@ -121,7 +131,7 @@
 
   export default {
     name: "newSearch",
-    components: {MyFrame, Sidebar, Navmenu},
+    components: {OlapTable, MyFrame, Sidebar, Navmenu},
     data() {
       return {
         date: '',
@@ -129,7 +139,7 @@
         factory: '',
         line: '',
         device: '',
-        allMeasurePoint:'',
+        allMeasurePoint: '',
         measurePoint: '',
         measurePoint1: '',
         measurePoint2: '',
@@ -183,8 +193,8 @@
         let that = this;
         axios.post('/api/getSpecificData',
           {
-            factory:that.factory,
-            line:that.line,
+            factory: that.factory,
+            line: that.line,
             device: that.device,
             timestamp: that.date
 
@@ -218,7 +228,7 @@
           },
           xAxis: {
             type: 'category',
-            data: fixDateFormat(this.getAllDate())
+            data: (this.getAllDate())
           },
           yAxis: {
             type: 'value'
@@ -261,7 +271,7 @@
           },
           xAxis: {
             type: 'category',
-            data: fixDateFormat(this.getAllDate())
+            data: (this.getAllDate())
           },
           yAxis: {
             type: 'value'
@@ -391,7 +401,7 @@
             factory: this.factory,
             line: this.line,
             device: this.device,
-            timestamp:this.date
+            timestamp: this.date
           }).then(function (response) {
           that.tableData = response.data
         })

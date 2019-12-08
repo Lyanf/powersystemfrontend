@@ -42,10 +42,10 @@
       <!--        <i class="el-icon-printer"></i>-->
       <!--        <span slot="title">处理入库</span>-->
       <!--      </el-menu-item>-->
-      <el-menu-item index="/inquire">
-        <i class="el-icon-view"/>
-        <span slot="title">查询数据</span>
-      </el-menu-item>
+<!--      <el-menu-item index="/inquire">-->
+<!--        <i class="el-icon-view"/>-->
+<!--        <span slot="title">查询数据</span>-->
+<!--      </el-menu-item>-->
       <el-menu-item index="/needAnalyse">
         <i class="el-icon-view"/>
         <span slot="title">需量分析</span>

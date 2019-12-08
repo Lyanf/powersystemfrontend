@@ -57,12 +57,12 @@
           </el-col>
           <el-col :span=4 push=5>
             <el-button type="primary" v-on:click="collectClicked">切片</el-button>
-            <el-button type="primary">旋转</el-button>
+            <el-button type="primary" v-on:click="rotateClicked">旋转</el-button>
           </el-col>
         </el-row>
       </el-row>
     </el-card>
-
+    <olap-table :table-data="allTableData"/>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
   </MyFrame>
 </template>
@@ -72,10 +72,11 @@
   import Sidebar from "../components/Sidebar"
   import axios from "axios"
   import MyFrame from "../components/Frame";
+  import OlapTable from "../components/olapTable";
 
   export default {
     name: "xuanzhuan",
-    components: {MyFrame, Sidebar},
+    components: {OlapTable, MyFrame, Sidebar},
     data: function () {
       return {
         factory: '',
@@ -86,8 +87,13 @@
         collectContent: '',
         collectMethod: '',
         date: '',
+        p1:'',
+        p2:'',
+        p3:'',
+        p4:'',
+        p5:'',
 
-
+        allTableData: [],
         trueData: '',
         predictData: '',
         metaDataTree: '',
@@ -97,6 +103,19 @@
       }
     },
     methods: {
+      rotateClicked:function(){
+        let that = this;
+        axios.post("/api/xuanzhuan", {
+          p1: that.p1,
+          p2: that.p2,
+          p3: that.p3,
+          p4: that.p4,
+          p5: that.p5,
+          p6: that.p6
+        }).then(function (response) {
+          that.allTableData = response.data
+        });
+      },
       handleChange: function () {
         this.factory = this.selectedMetaData[0];
         this.line = this.selectedMetaData[1];
@@ -124,65 +143,15 @@
 
         chart1 = echarts.init(chart1);
         let that = this;
-        axios.post("/api/predict", {
-          factory: that.factory,
-          line: that.line,
-          device: that.device,
-          measurePoint: that.measurePoint
+        axios.post("/api/qiepian", {
+          p1: that.p1,
+          p2: that.p2,
+          p3: that.p3,
+          p4: that.p4,
+          p5: that.p5,
+          p6: that.p6
         }).then(function (response) {
-          let data = response.data;
-          that.trueData = data['y_true'];
-          that.predictData = data['y_pred'];
-          console.log(that.trueData)
-          console.log(that.predictData)
-          console.log([Array.from({length: 4000}, (a, i) => i)])
-          var option1 = {
-            toolbox: {
-              show: true,
-              feature: {
-                dataZoom: {
-                  yAxisIndex: 'none'
-                },
-                dataView: {readOnly: false},
-                magicType: {type: ['line', 'bar']},
-                restore: {},
-                saveAsImage: {}
-              }
-            },
-            title: {
-              text: "厂商用能预测图"
-            },
-            legend: {},
-            tooltip: {
-              trigger: 'axis'
-            },
-            xAxis: {
-              type: 'category',
-              data: Array.from({length: 3835}, (a, i) => i)
-            },
-            yAxis: {scale: true},
-            // Declare several bar series, each will be mapped
-            // to a column of dataset.source by default.
-            series: [
-              {
-                name: '真实值',
-                type: 'line',
-                smooth: 'true',
-                data: that.trueData
-              },
-              {
-                name: '预测值',
-                type: 'line',
-                smooth: 'true',
-                lineStyle: {
-                  type: 'dashed'
-                },
-                data: that.predictData
-              },
-            ],
-          };
-          chart1.setOption(option1);
-
+          that.allTableData = response.data
         });
       },
     },
