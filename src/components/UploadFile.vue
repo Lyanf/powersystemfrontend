@@ -9,7 +9,7 @@
     <el-upload
       class="upload-demo"
       ref="upload"
-      action="http://localhost:8080/api/uploadFile/"
+      action="http://dclab.club:8080/api/uploadFile/"
       border="true"
       :on-preview="handlePreview"
       :on-remove="handleRemove"

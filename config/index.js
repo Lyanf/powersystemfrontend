@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/api':{
-            target: 'http://localhost:8080/api',
+            target: 'http://dclab.club:18080/api',
             changeOrigin: true,
             pathRewrite: {
                 '^/api':''
@@ -26,7 +26,7 @@ module.exports = {
         }
       },
       '/algorithm':{
-        target: 'http://localhost:5000/algorithm',
+        target: 'http://dclab.club:15000/algorithm',
         changeOrigin: true,
         pathRewrite: {
           '^/algorithm':''
@@ -42,7 +42,7 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
