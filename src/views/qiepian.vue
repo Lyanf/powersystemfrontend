@@ -124,7 +124,18 @@
         console.log(this.allMeasurePoint)
       },
       collectClicked: function () {
-
+          console.log("test")
+          let that = this;
+          axios.post("/api/qiepian", {
+          p1: that.factory,
+          p2: that.p2,
+          p3: that.p3,
+          p4: that.p4,
+          p5: that.p5,
+          p6: that.p6
+        }).then(function (response) {
+          that.allTableData = response.data
+        });
       },
       searchClicked: function () {
         var chart1 = document.getElementById("chart1");
