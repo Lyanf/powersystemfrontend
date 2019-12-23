@@ -61,7 +61,7 @@
         </el-row>
       </el-row>
     </el-card>
-    <olap-table :table-data="allTableData"/>
+    <olap-table  :table-label="allTableLabel"  :table-data="allTableData"/>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
   </MyFrame>
 </template>
@@ -81,11 +81,11 @@
         factory: '',
         line: '',
         device: '',
-        measurePoint: '',
+        measurePoint: [],
         algorithm: '',
         collectContent: '',
         collectMethod: '',
-        date: '',
+        date: [],
         p1:'',
         p2:'',
         p3:'',
@@ -96,10 +96,11 @@
         trueData: '',
         predictData: '',
         metaDataTree: '',
-        selectedMetaData: '',
+        selectedMetaData: [],
         allMeasurePoint: [],
         chartOption: {},
-        allTableData:[]
+        allTableData:[],
+        allTableLabel: []
       }
     },
     methods: {
@@ -107,21 +108,21 @@
         this.factory = this.selectedMetaData[0];
         this.line = this.selectedMetaData[1];
         this.device = this.selectedMetaData[2];
-        console.log(this.selectedMetaData)
+        // console.log(this.selectedMetaData)
       },
       getMetaData: function () {
         let that = this;
         axios.post("/api/getMetaDataTree").then(function (response) {
           that.metaDataTree = response.data
         });
-        console.log(this.metaDataTree)
+        // console.log(this.metaDataTree)
       },
       getAllMeasurePoint: function () {
         let that = this;
         axios.post("/api/getAllMeasurePoint").then(function (response) {
           that.allMeasurePoint = response.data
         });
-        console.log(this.allMeasurePoint)
+        // console.log(this.allMeasurePoint)
       },
       collectClicked: function () {
 
@@ -140,7 +141,11 @@
           p4: that.collectContent,
           p5: that.collectMethod,
         }).then(function (response) {
-          that.allTableData = response.data
+          
+          that.allTableLabel = response.data[0]["header"]
+
+          that.allTableData = response.data[0]["content"]
+          
         });
       },
     },

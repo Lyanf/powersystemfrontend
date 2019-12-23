@@ -6,7 +6,18 @@
       tooltip-effect="dark"
       style="width: 100%"
       >
-      <el-table-column
+      
+        <el-table-column
+          v-for="(item,index) in tableLabel"
+          :key= "index"
+          :prop = "item.prop"
+          :label="item.label"
+          :index = "item.index"
+          v-if="item.prop != 'id'"
+          >
+        </el-table-column>
+    
+      <!-- <el-table-column
         prop="date"
         label="时间"
         width="220">
@@ -35,7 +46,7 @@
         prop="value"
         label="值"
         width="220">
-      </el-table-column>
+      </el-table-column> -->
     </el-table>
     <div style="text-align: center;margin-top: 30px;">
       <el-pagination
@@ -58,7 +69,23 @@
         currentPage: 1
       }
     },
-    props:['tableData'],
+    // props:['tableData','tableLabel'],
+    props:{
+        tableData:{
+          type: Array,
+          default: function () {
+            return []
+          }
+        },
+        tableLabel:{
+          type: Array,
+          default: function () {
+            return []
+          },
+          required: true
+          
+        }
+    },
     methods: {
       current_change: function (currentPage) {
         this.currentPage = currentPage;
@@ -69,8 +96,12 @@
     watch:{
       tableData(val){
         this.total = val.length
-      }
-    }
+        
+
+      },
+      
+    },
+   
   }
 </script>
 

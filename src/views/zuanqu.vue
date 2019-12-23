@@ -60,7 +60,7 @@
         </el-row>
       </el-row>
     </el-card>
-    <olap-table :table-data="allTableData"/>
+    <olap-table :table-data="allTableData" :table-label="allTableLabel"/>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
   </MyFrame>
 </template>
@@ -80,11 +80,11 @@
         factory: '',
         line: '',
         device: '',
-        measurePoint: '',
+        measurePoint: [],
         algorithm: '',
         collectContent: '',
         collectMethod: '',
-        date: '',
+        date: [],
         p1:'',
         p2:'',
         p3:'',
@@ -95,9 +95,10 @@
         trueData: '',
         predictData: '',
         metaDataTree: '',
-        selectedMetaData: '',
+        selectedMetaData: [],
         allMeasurePoint: [],
-        chartOption: {}
+        chartOption: {},
+        allTableLabel: []
       }
     },
     methods: {
@@ -135,7 +136,9 @@
           p4: that.collectContent,
           p5: that.collectMethod,
         }).then(function (response) {
-          that.allTableData = response.data
+           that.allTableLabel = response.data[0]["header"]
+
+          that.allTableData = response.data[0]["content"]
         });
       },
     },
