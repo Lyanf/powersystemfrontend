@@ -93,8 +93,8 @@
                     
                     that.allTableData = []
                     that.allTableData.push(response.data.static)
-                    that.allTableData[0]["entropyh"]  = temp1.dynamic.entropyh
-                    that.allTableData[0]["entropyd"] = temp1.dynamic.entropyd
+                    that.allTableData[0]["entropyh"]  = response.data.dynamic.entropyh
+                    that.allTableData[0]["entropyd"] = response.data.dynamic.entropyd
                     // let obj = response.data
                     // show.innerHTML = JSON.stringify(obj,null,2);
                     that.generateChart(response.data)
