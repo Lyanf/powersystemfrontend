@@ -24,19 +24,24 @@
         </el-col>
       </el-row>
     </el-card>
+    <ProfileTable :table-data = "allTableData"></ProfileTable>
     <pre id="show"></pre>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
+    <div id="chart2" style="height: 600px;width: 100%;"></div>
+    <div id="chart3" style="height: 600px;width: 100%;"></div>
+    <div id="chart4" style="height: 600px;width: 100%;"></div>
   </my-frame>
 </template>
 
 <script>
     import MyFrame from "../components/Frame";
+    import ProfileTable from "../components/profileTable"
     import axios from "axios"
     import * as echarts from 'echarts';
 
     export default {
         name: "profileFeature",
-        components: {MyFrame},
+        components: {MyFrame, ProfileTable},
         data: function () {
             return {
                 factory: '',
@@ -52,6 +57,7 @@
                 dayX: '',
                 hourList: [],
                 dayList: [],
+                allTableData: [],
             }
         },
         methods: {
@@ -75,9 +81,8 @@
                 console.log(this.allMeasurePoint)
             },
             searchClicked: function () {
-                var chart1 = document.getElementById("chart1");
+                
                 let show = document.getElementById("show")
-                chart1 = echarts.init(chart1);
                 let that = this;
                 axios.post("/api/profileFeature", {
                     factory: that.factory,
@@ -85,18 +90,249 @@
                     device: that.device,
                     measurePoint: that.measurePoint
                 }).then(function (response) {
-                    console.log(response);
-                    console.log(response.data)
-                    let obj = response.data
-                    show.innerHTML = JSON.stringify(obj,null,2);
-                    // console.log(response.data['staticFeatures'])
-                    // for (let i of obj){
-                    //     for (let j of i){
-                    //
-                    //     }
-                    // }
+                    
+                    that.allTableData = []
+                    that.allTableData.push(response.data.static)
+                    that.allTableData[0]["entropyh"]  = response.data.dynamic.entropyh
+                    that.allTableData[0]["entropyd"] = response.data.dynamic.entropyd
+                    // let obj = response.data
+                    // show.innerHTML = JSON.stringify(obj,null,2);
+                    that.generateChart(response.data)
                 });
             },
+            generateChart: function (data) {
+                let generateSeries = []
+                let i = 0
+                let arrlen = 0
+                for (let tableElement in data.static.featurelineh) {
+                    i = i +1
+                    let tempSeries = {}
+                    tempSeries.name = "典型特征模式曲线" +i+"（小时尺度)"
+                    tempSeries.type = 'line'
+                    tempSeries.smooth = 'true'
+                    tempSeries.data = data.static.featurelineh[tableElement]
+                    generateSeries.push(tempSeries)
+                    arrlen = data.static.featurelineh[tableElement].length
+                }
+                console.log(generateSeries)
+                var option1 = {
+                    title: {
+                        text: "典型特征模式曲线（小时尺度）"
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: function() {
+                            var list = [];
+                            for (var i = 1; i <= arrlen; i++) {
+                                list.push(i)
+                            }
+                            return list;
+                        }()
+                    },
+                    yAxis: {
+                        scale: true,
+                        "min": "dataMin",
+                        type: 'value',
+                        minInterval: 0.01,
+                        
+                    },
+                    // Declare several bar series, each will be mapped
+                    // to a column of dataset.source by default.
+                    series: generateSeries,
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    }
+                }
+                let chart1 = echarts.init(document.getElementById("chart1"));
+                chart1.setOption(option1)
+
+                 generateSeries = []
+                 i = 0
+                 arrlen = 0
+                for (let tableElement in data.static.linearfeaturelined) {
+                    i = i +1
+                    let tempSeries = {}
+                    tempSeries.name = "典型特征模式曲线" +i+"（天尺度)"
+                    tempSeries.type = 'line'
+                    tempSeries.smooth = 'true'
+                    tempSeries.data = data.static.linearfeaturelined[tableElement]
+                    generateSeries.push(tempSeries)
+                    arrlen = data.static.linearfeaturelined[tableElement].length
+                }
+                console.log(generateSeries)
+                var option2 = {
+                    title: {
+                        text: "典型特征模式曲线（小时尺度）"
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: function() {
+                            var list = [];
+                            for (var i = 1; i <= arrlen; i++) {
+                                list.push(i)
+                            }
+                            return list;
+                        }()
+                    },
+                    yAxis: {
+                        scale: true,
+                        "min": "dataMin",
+                        type: 'value',
+                        minInterval: 0.01,
+                        
+                    },
+                    // Declare several bar series, each will be mapped
+                    // to a column of dataset.source by default.
+                    series: generateSeries,
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    }
+                }
+                let chart2 = echarts.init(document.getElementById("chart2"));
+                
+                chart2.setOption(option2)
+
+                 generateSeries = []
+                let tempSeries = {}
+                tempSeries.name = "温度曲线"
+                tempSeries.type = 'line'
+                tempSeries.smooth = 'true'
+                tempSeries.data = data.temp
+                generateSeries.push(tempSeries)
+                    
+                
+                console.log(generateSeries)
+                var option3 = {
+                    title: {
+                        text: "温度曲线"
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: function() {
+                            var list = [];
+                            for (var i = 1; i <= 200; i++) {
+                                list.push(i)
+                            }
+                            return list;
+                        }()
+                    },
+                    yAxis: {
+                        scale: true,
+                        "min": "dataMin",
+                        type: 'value',
+                        
+                        
+                    },
+                    // Declare several bar series, each will be mapped
+                    // to a column of dataset.source by default.
+                    series: generateSeries,
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    }
+                }
+                let chart3 = echarts.init(document.getElementById("chart3"));
+                
+                chart3.setOption(option3)
+
+                 generateSeries = []
+                tempSeries = {}
+                tempSeries.name = "负荷曲线"
+                tempSeries.type = 'line'
+                tempSeries.smooth = 'true'
+                tempSeries.data = data.load
+                generateSeries.push(tempSeries)
+                    
+                
+                console.log(generateSeries)
+                var option4 = {
+                    title: {
+                        text: "负荷曲线"
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: function() {
+                            var list = [];
+                            for (var i = 1; i <= 200; i++) {
+                                list.push(i)
+                            }
+                            return list;
+                        }()
+                    },
+                    yAxis: {
+                        scale: true,
+                        "min": "dataMin",
+                        type: 'value',
+                        
+                        
+                    },
+                    // Declare several bar series, each will be mapped
+                    // to a column of dataset.source by default.
+                    series: generateSeries,
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    }
+                }
+                let chart4 = echarts.init(document.getElementById("chart4"));
+                
+                chart4.setOption(option4)
+            },
+
 
         },
         mounted() {

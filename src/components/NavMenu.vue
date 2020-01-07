@@ -1,6 +1,6 @@
 <template>
 	<el-row type="flex" justify="space-between" class="header">
-		<el-col :span=6><div class="grid-content brand"> <router-link to="/">能源大数据采集管理系统</router-link></div></el-col>
+		<el-col :span=6><div class="grid-content brand"> <router-link to="/">典型用户精细化能耗建模分析软件</router-link></div></el-col>
 
 		<el-col :span=6>
 			<div class="grid-content lgout-options">
