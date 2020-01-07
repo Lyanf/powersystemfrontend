@@ -35,6 +35,7 @@
     </el-card>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
     <div id="chart2" style="height: 600px;width: 100%;"></div>
+    <div id="chart3" style="height: 600px;width: 100%;"></div>
   </MyFrame>
 </template>
 
@@ -130,35 +131,6 @@
               }
             },
             title: {
-              text: "多时间尺度用能模式挖掘（小时）"
-            },
-            legend: {},
-            tooltip: {
-              trigger: 'axis'
-            },
-            xAxis: {
-              type: 'category',
-              data: that.hourX
-            },
-            yAxis: {scale: true},
-            // Declare several bar series, each will be mapped
-            // to a column of dataset.source by default.
-            series: that.generateSeries(that.hourList)
-          };
-          let option2 = {
-            toolbox: {
-              show: true,
-              feature: {
-                dataZoom: {
-                  yAxisIndex: 'none'
-                },
-                dataView: {readOnly: false},
-                magicType: {type: ['line', 'bar']},
-                restore: {},
-                saveAsImage: {}
-              }
-            },
-            title: {
               text: "多时间尺度用能模式挖掘（天）"
             },
             legend: {},
@@ -174,9 +146,67 @@
             // to a column of dataset.source by default.
             series: that.generateSeries(that.dayList)
           };
+          let option2 = {
+            toolbox: {
+              show: true,
+              feature: {
+                dataZoom: {
+                  yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+              }
+            },
+            title: {
+              text: "多时间尺度用能模式挖掘（月）"
+            },
+            legend: {},
+            tooltip: {
+              trigger: 'axis'
+            },
+            xAxis: {
+              type: 'category',
+              data: that.dayX
+            },
+            yAxis: {scale: true},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
+            series: that.generateSeries(that.dayList)
+          }
+          let option3 = {
+            toolbox: {
+              show: true,
+              feature: {
+                dataZoom: {
+                  yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+              }
+            },
+            title: {
+              text: "多时间尺度用能模式挖掘（年）"
+            },
+            legend: {},
+            tooltip: {
+              trigger: 'axis'
+            },
+            xAxis: {
+              type: 'category',
+              data: that.dayX
+            },
+            yAxis: {scale: true},
+            // Declare several bar series, each will be mapped
+            // to a column of dataset.source by default.
+            series: that.generateSeries(that.dayList)
+          }
           chart1.setOption(option1);
           chart2.setOption(option2);
-
+          chart3.setOption(option3);
         });
       },
     },

@@ -33,7 +33,6 @@
         <el-table id="showTable"
                   :data="showData"
                   border
-                  stripe
                   height="300"
                   max-height="300"
         >
@@ -273,7 +272,7 @@
             name: this.measurePoint1
           }],
         };
-        let chart = echarts.init(document.getElementById("chart"));
+        let chart = echarts.init(document.getElementById("chart"),'halloween');
         chart.setOption(option, true)
       }
       ,
@@ -327,14 +326,14 @@
             }
           ]
         };
-        let chart = echarts.init(document.getElementById("chart"));
+        let chart = echarts.init(document.getElementById("chart"),'halloween');
         chart.setOption(option, true)
       }
       ,
       clearChart: function () {
         this.measurePoint1 = '';
         this.measurePoint2 = '';
-        var chart = echarts.init(document.getElementById("chart"));
+        var chart = echarts.init(document.getElementById("chart"),'halloween');
         this.$chart = chart;
         var option = {
           title: {
@@ -452,7 +451,7 @@
       }
     },
     mounted() {
-      var chart = echarts.init(document.getElementById("chart"));
+      var chart = echarts.init(document.getElementById("chart"),'halloween');
       var option = {
         title: {
           text: '电气量曲线',

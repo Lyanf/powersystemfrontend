@@ -5,13 +5,24 @@
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  export default {
+    name: 'App'
+  }
 </script>
 
 <style>
-html,body,#app{
-  height: 100%;
-}
+  /*body{*/
+  /*  width: 100%;*/
+  /*  height: 100%;*/
+  /*}*/
+  /*html, body, #app {*/
+  /*  height: 100%;*/
+  /*  width: 100%;*/
+  /*}*/
+  body{
+    margin: 0;
+  }
+  input{
+    background-color: #26207c;
+  }
 </style>

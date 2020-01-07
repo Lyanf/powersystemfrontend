@@ -49,7 +49,7 @@
 	.header{
 	  	height: 60px;
 	  	line-height: 60px;
-	  	background-color: rgb(6,108,154);
+	  	background-color: #26207c;
 	 }
 	.brand,.lgout-options {
 	  	color: white;

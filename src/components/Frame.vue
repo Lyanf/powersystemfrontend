@@ -1,12 +1,12 @@
 <template>
-  <div style="min-height: 100vh">
+  <div style="min-height: 100vh;background-color: #26207c">
     <el-container>
       <el-header>
         <Navmenu/>
       </el-header>
     </el-container>
-    <el-container style="height: 100%;position: relative">
-      <el-aside  style="min-height: 100vh">
+    <el-container style="height: 100%;position: relative;">
+      <el-aside  style="min-height: 100vh;">
         <Sidebar/>
       </el-aside>
       <el-main>
