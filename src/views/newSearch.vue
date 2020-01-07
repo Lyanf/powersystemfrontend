@@ -2,7 +2,7 @@
   <MyFrame>
     <el-card>
       <div slot="header">
-        <span>筛选</span>
+        <span>用能查询</span>
       </div>
       <el-row>
         <el-col span=5>
@@ -12,7 +12,7 @@
             :props="{ expandTrigger: 'hover' }"
             @change="handleChange"
             placeholder="请选择设备"
-          ></el-cascader>
+          />
         </el-col>
         <el-col span=10 push=3>
           <el-date-picker
@@ -31,7 +31,7 @@
     <el-row>
       <el-col span=24>
         <el-table id="showTable"
-                  :data="tableData"
+                  :data="showData"
                   border
                   stripe
                   height="300"
@@ -44,7 +44,7 @@
           </el-table-column>
           <el-table-column
             prop="date"
-            label="日期"
+            label="时间"
           >
           </el-table-column>
           <el-table-column
@@ -63,6 +63,14 @@
           >
           </el-table-column>
         </el-table>
+        <div class="block">
+          <el-pagination style="left: auto;right: auto"
+                         layout="prev, pager, next"
+                         :total="tableData.length" :page-size="100"
+                         @current-change="this.handleCurrentChange"
+          >
+          </el-pagination>
+        </div>
       </el-col>
     </el-row>
     <!--  <el-row>-->
@@ -118,6 +126,9 @@
   import XLSX from 'xlsx'
   import MyFrame from "../components/Frame";
   import OlapTable from "../components/olapTable";
+  import {getUnit} from "../tool/toolFunc"
+
+
 
   function fixDateFormat(oriDates) {
     let newDates = [];
@@ -147,17 +158,31 @@
         tableData: '',
         chartRef: '',
         metaDataTree: '',
-        selectedMetaData: ''
+        selectedMetaData: '',
+
+        showData: '',
       }
     },
     methods: {
+      handleCurrentChange: function (val) {
+        console.log(val)
+        let that = this
+        let len = that.tableData.length
+        let start = (val - 1) * 100
+        let end = val * 100
+        if (end > len) {
+          end = len
+        }
+        that.showData = that.tableData.slice(start, end)
+      },
       getAllMeasurePoint: function () {
         let that = this;
         axios.post("/api/getAllMeasurePoint").then(function (response) {
           that.allMeasurePoint = response.data
         });
         console.log(this.allMeasurePoint)
-      },
+      }
+      ,
       exportExcel: function () {
         /* generate workbook object from table */
         var wb = XLSX.utils.table_to_book(document.getElementById('showTable'))
@@ -169,10 +194,12 @@
           if (typeof console !== 'undefined') console.log(e, wbout)
         }
         return wbout
-      },
+      }
+      ,
       fixDateFormat: function (oriDate) {
         return oriDate.slice(0, 4) + "-" + oriDate.slice(4, 6) + "-" + oriDate.slice(6, 8)
-      },
+      }
+      ,
       getValueByMeasurePoint: function (imeasure) {
         let allValue = [];
         for (let i of this.tableData) {
@@ -181,14 +208,16 @@
           }
         }
         return allValue
-      },
+      }
+      ,
       getAllDate: function () {
         let allDate = new Set();
         for (let i of this.tableData) {
           allDate.add(i.date)
         }
         return Array.from(allDate)
-      },
+      }
+      ,
       searchClicked: function () {
         let that = this;
         axios.post('/api/getSpecificData',
@@ -201,7 +230,8 @@
           }).then(function (response) {
           that.tableData = response.data;
         })
-      },
+      }
+      ,
       generateChart: function () {
         let date = this.getAllDate();
         let value = this.getValueByMeasurePoint(this.measurePoint1);
@@ -228,10 +258,14 @@
           },
           xAxis: {
             type: 'category',
-            data: (this.getAllDate())
+            data: (this.getAllDate()),
+            name:'时间',
+
           },
           yAxis: {
-            type: 'value'
+            type: 'value',
+            scale: true,
+            name: getUnit(this.measurePoint1)
           },
           series: [{
             data: value,
@@ -241,7 +275,8 @@
         };
         let chart = echarts.init(document.getElementById("chart"));
         chart.setOption(option, true)
-      },
+      }
+      ,
       compareChart: function () {
         let date = this.getAllDate();
         let value1 = this.getValueByMeasurePoint(this.measurePoint1);
@@ -271,10 +306,13 @@
           },
           xAxis: {
             type: 'category',
-            data: (this.getAllDate())
+            data: (this.getAllDate()),
+            name:'时间',
           },
           yAxis: {
-            type: 'value'
+            type: 'value',
+            scale: true,
+            name: getUnit(this.measurePoint2)
           },
           series: [
             {
@@ -291,7 +329,8 @@
         };
         let chart = echarts.init(document.getElementById("chart"));
         chart.setOption(option, true)
-      },
+      }
+      ,
       clearChart: function () {
         this.measurePoint1 = '';
         this.measurePoint2 = '';
@@ -329,7 +368,7 @@
             type: 'value',
             axisLabel: {
               formatter: '{value}'
-            }
+            },
           },
           series: [
             {
@@ -382,18 +421,21 @@
         };
 
         chart.setOption(option, true)
-      },
+      }
+      ,
       getMetaData: function () {
         let that = this;
         axios.post("/api/getMetaDataTree").then(function (response) {
           that.metaDataTree = response.data
         });
-      },
+      }
+      ,
       handleChange: function () {
         this.factory = this.selectedMetaData[0];
         this.line = this.selectedMetaData[1];
         this.device = this.selectedMetaData[2];
-      },
+      }
+      ,
       newSearchClicked: function () {
         let that = this;
         axios.post('/api/getSpecificData',
@@ -404,6 +446,8 @@
             timestamp: this.date
           }).then(function (response) {
           that.tableData = response.data
+        }).then(function () {
+          that.handleCurrentChange(1)
         })
       }
     },
@@ -441,7 +485,8 @@
           type: 'value',
           axisLabel: {
             formatter: '{value}'
-          }
+          },
+          scale: true,
         },
         series: [
           {

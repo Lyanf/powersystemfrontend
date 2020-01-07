@@ -133,7 +133,7 @@
                         },
                         xAxis: {
                             type: 'category',
-                            data: Array.from({length: that.trueData.length + that.trueData.length / 3}, (a, i) => i)
+                            data: Array.from({length: that.trueData.length}, (a, i) => i)
                         },
                         yAxis: {scale: true},
                         // Declare several bar series, each will be mapped

@@ -11,15 +11,15 @@
     >
 
       <el-menu-item index="/uploadfile">
-        <i class="el-icon-upload2"></i>
+        <i class="el-icon-upload2"/>
         <span slot="title">本地上传</span>
       </el-menu-item>
       <el-menu-item index="/remotedownload">
-        <i class="el-icon-upload"></i>
+        <i class="el-icon-upload"/>
         <span slot="title">远端上传</span>
       </el-menu-item>
       <el-menu-item index="/filesearch">
-        <i class="el-icon-message"></i>
+        <i class="el-icon-message"/>
         <span slot="title">文件查看</span>
       </el-menu-item>
       <!--<el-menu-item index="/metadata">-->
@@ -42,63 +42,74 @@
       <!--        <i class="el-icon-printer"></i>-->
       <!--        <span slot="title">处理入库</span>-->
       <!--      </el-menu-item>-->
-<!--      <el-menu-item index="/inquire">-->
-<!--        <i class="el-icon-view"/>-->
-<!--        <span slot="title">查询数据</span>-->
-<!--      </el-menu-item>-->
-      <el-menu-item index="/needAnalyse">
-        <i class="el-icon-view"/>
-        <span slot="title">需量分析</span>
-      </el-menu-item>
+      <!--      <el-menu-item index="/inquire">-->
+      <!--        <i class="el-icon-view"/>-->
+      <!--        <span slot="title">查询数据</span>-->
+      <!--      </el-menu-item>-->
+      <!--      <el-menu-item index="/needAnalyse">-->
+      <!--        <i class="el-icon-view"/>-->
+      <!--        <span slot="title">需量分析</span>-->
+      <!--      </el-menu-item>-->
       <el-menu-item index="/newSearch">
         <i class="el-icon-view"/>
         <span slot="title">用能查询</span>
       </el-menu-item>
-      <el-menu-item index="/usageSurvey">
-        <i class="el-icon-view"/>
-        <span slot="title">分项用能概况</span>
-      </el-menu-item>
-      <el-menu-item index="/usageStatistics">
-        <i class="el-icon-view"/>
-        <span slot="title">分项用能统计</span>
-      </el-menu-item>
-      <el-menu-item index="/usageComparision">
-        <i class="el-icon-view"/>
-        <span slot="title">时空相关性分析</span>
-      </el-menu-item>
-      <el-menu-item index="/predict">
-        <i class="el-icon-view"/>
-        <span slot="title">能耗预测</span>
-      </el-menu-item>
-      <el-menu-item index="/baseLine">
-        <i class="el-icon-view"/>
-        <span slot="title">能耗基线提取</span>
-      </el-menu-item>
-      <el-menu-item index="/cluster">
-        <i class="el-icon-view"/>
-        <span slot="title">用能模式挖掘</span>
-      </el-menu-item>
-      <el-menu-item index="/profileFeature">
-        <i class="el-icon-view"/>
-        <span slot="title">行为画像特性</span>
-      </el-menu-item>
       <el-submenu index=1>
         <template slot="title">
           <i class="el-icon-location"/>
-          <span>olap时空分析</span>
+          <span>olap分析</span>
         </template>
         <el-menu-item index="/qiepian">
           <i class="el-icon-view"/>
-          <span slot="title">切片</span>
+          <span slot="title">切片与切块</span>
         </el-menu-item>
         <el-menu-item index="/zuanqu">
           <i class="el-icon-view"/>
           <span slot="title">钻取</span>
         </el-menu-item>
-
         <el-menu-item index="/xuanzhuan">
           <i class="el-icon-view"/>
           <span slot="title">旋转</span>
+        </el-menu-item>
+      </el-submenu>
+      <el-submenu index=2>
+        <template slot="title">
+          <i class="el-icon-location"/>
+          <span>多维度时空分析</span>
+        </template>
+        <el-menu-item index="/usageComparision">
+          <i class="el-icon-view"/>
+          <span slot="title">时空相关性分析</span>
+        </el-menu-item>
+        <el-menu-item index="/profileFeature">
+          <i class="el-icon-view"/>
+          <span slot="title">行为画像特性分析  </span>
+        </el-menu-item>
+      </el-submenu>
+      <!--      <el-menu-item index="/usageSurvey">-->
+      <!--        <i class="el-icon-view"/>-->
+      <!--        <span slot="title">分项用能概况</span>-->
+      <!--      </el-menu-item>-->
+      <!--      <el-menu-item index="/usageStatistics">-->
+      <!--        <i class="el-icon-view"/>-->
+      <!--        <span slot="title">分项用能统计</span>-->
+      <!--      </el-menu-item>-->
+      <el-menu-item index="/baseLine">
+        <i class="el-icon-view"/>
+        <span slot="title">能耗基线提取</span>
+      </el-menu-item>
+      <el-submenu index=3>
+        <template slot="title">
+          <i class="el-icon-location"/>
+          <span>模式挖掘与建模预测</span>
+        </template>
+        <el-menu-item index="/cluster">
+          <i class="el-icon-view"/>
+          <span slot="title">用电模式挖掘</span>
+        </el-menu-item>
+        <el-menu-item index="/predict">
+          <i class="el-icon-view"/>
+          <span slot="title">短期负荷预测  </span>
         </el-menu-item>
       </el-submenu>
 
