@@ -26,10 +26,11 @@
     </el-card>
     <ProfileTable :table-data = "allTableData"></ProfileTable>
     <pre id="show"></pre>
-    <div id="chart1" style="height: 600px;width: 100%;"></div>
+    <!-- <div id="chart1" style="height: 600px;width: 100%;"></div> -->
     <div id="chart2" style="height: 600px;width: 100%;"></div>
     <div id="chart3" style="height: 600px;width: 100%;"></div>
     <div id="chart4" style="height: 600px;width: 100%;"></div>
+    <div id="chart5" style="height: 600px;width: 100%;"></div>
   </my-frame>
 </template>
 
@@ -114,7 +115,7 @@
                     generateSeries.push(tempSeries)
                     arrlen = data.static.featurelineh[tableElement].length
                 }
-                console.log(generateSeries)
+                
                 var option1 = {
                     title: {
                         text: "典型特征模式曲线（小时尺度）"
@@ -157,8 +158,8 @@
                         }
                     }
                 }
-                let chart1 = echarts.init(document.getElementById("chart1"));
-                chart1.setOption(option1)
+                // let chart1 = echarts.init(document.getElementById("chart1"));
+                // chart1.setOption(option1)
 
                  generateSeries = []
                  i = 0
@@ -176,7 +177,7 @@
                 console.log(generateSeries)
                 var option2 = {
                     title: {
-                        text: "典型特征模式曲线（小时尺度）"
+                        text: "典型特征模式曲线（天尺度）"
                     },
                     legend: {},
                     tooltip: {
@@ -228,8 +229,7 @@
                 tempSeries.data = data.temp
                 generateSeries.push(tempSeries)
                     
-                
-                console.log(generateSeries)
+               
                 var option3 = {
                     title: {
                         text: "温度曲线"
@@ -284,8 +284,6 @@
                 tempSeries.data = data.load
                 generateSeries.push(tempSeries)
                     
-                
-                console.log(generateSeries)
                 var option4 = {
                     title: {
                         text: "负荷曲线"
@@ -307,7 +305,6 @@
                     },
                     yAxis: {
                         scale: true,
-                        "min": "dataMin",
                         type: 'value',
                         
                         
@@ -331,8 +328,52 @@
                 let chart4 = echarts.init(document.getElementById("chart4"));
                 
                 chart4.setOption(option4)
-            },
 
+                 generateSeries = []
+                tempSeries = {}
+                tempSeries.name = "温度负荷散点图"
+                tempSeries.type = 'scatter'
+                // tempSeries.symbolSize = 20
+                tempSeries.data = data.scatter
+                generateSeries.push(tempSeries)
+                    
+                var option5 = {
+                    title: {
+                        text: "温度负荷散点图"
+                    },
+                    legend: {},
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    xAxis: {
+                        name: "温度(℃)"
+                    },
+                    yAxis: {
+                        name: "负荷(KW)",
+                        scale: true,
+                        type: 'value',        
+                       
+                    },
+                    // Declare several bar series, each will be mapped
+                    // to a column of dataset.source by default.
+                    series: generateSeries,
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    }
+                }
+                let chart5 = echarts.init(document.getElementById("chart5"));
+                
+                chart5.setOption(option5)
+            },
 
         },
         mounted() {
