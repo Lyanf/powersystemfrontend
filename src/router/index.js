@@ -20,9 +20,6 @@ import usageStatistics from "../views/usageStatistics"
 import usageComparision from "../views/usageComparision"
 import cluster from "../views/cluster"
 import baseLine from "../views/baseLine"
-import olap from "../views/olap"
-import olap2 from "../views/olap2"
-import olap3  from "../views/olap3";
 import profileFeature from "../views/profileFeature";
 import zuanqu from "../views/zuanqu"
 import qiepian from "../views/qiepian"
@@ -132,21 +129,6 @@ export default new Router({
       path:'/cluster',
       name:'cluster',
       component:cluster
-    },
-    {
-      path:'/olap',
-      name: 'olap',
-      component:olap
-    },
-    {
-      path:'/olap2',
-      name: 'olap2',
-      component:olap2
-    },
-    {
-      path:'/olap3',
-      name: 'olap3',
-      component:olap3
     },
     {
       path:'/profileFeature',

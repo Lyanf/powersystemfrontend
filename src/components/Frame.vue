@@ -6,7 +6,7 @@
       </el-header>
     </el-container>
     <el-container style="height: 100%;position: relative">
-      <el-aside width="170px" style="min-height: 100vh">
+      <el-aside  style="min-height: 100vh">
         <Sidebar/>
       </el-aside>
       <el-main>

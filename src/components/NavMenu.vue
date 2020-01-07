@@ -1,11 +1,11 @@
 <template>
 	<el-row type="flex" justify="space-between" class="header">
-		<el-col :span=6><div class="grid-content brand"> <router-link to="/">典型用户精细化能耗建模分析软件</router-link></div></el-col>
+		<el-col :span=6><div class="grid-content brand"> <router-link to="/">精细化用能分析系统</router-link></div></el-col>
 
 		<el-col :span=6>
 			<div class="grid-content lgout-options">
 				<div v-if="loginOrNot" >
-					<el-button type="text" @click="logout"><i class="el-icon-back "></i> 退出</el-button>
+					<el-button type="text" @click="logout"><i class="el-icon-back "/> 退出</el-button>
 				</div>
 				<div v-else>
 					<router-link to="/login">登录</router-link>
