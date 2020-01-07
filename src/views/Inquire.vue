@@ -181,7 +181,7 @@
         let arrayDimensions = changeResponse[0];
         this.tableData = changeResponse[1]
         console.log(arrayDimensions)
-        var chart1 = echarts.init(document.getElementById("chart1"))
+        var chart1 = echarts.init(document.getElementById("chart1"),'halloween')
         var option = {
           legend: {},
           tooltip: {

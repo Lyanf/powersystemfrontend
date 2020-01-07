@@ -30,11 +30,11 @@
               end-placeholder="结束日期">
             </el-date-picker>
           </el-col>
-          
+
         </el-row>
       </el-row>
       <el-row>
-        
+
         <el-row :gutter=20>
           <el-col :span=4>
             <el-select value="" v-model="collectContent" placeholder="请选择聚合对象">
@@ -131,7 +131,7 @@
         let that = this;
         that.text  = "计算中";
         that.flag = true;
-                
+
         axios.post("/api/qiepian", {
           p1: that.selectedMetaData,
           p2: that.measurePoint,
@@ -140,8 +140,8 @@
           p5: that.collectMethod,
           count: count
         }).then(function (response) {
-          
-          
+
+
           that.allTableLabel = response.data.header
           that.allTableData = response.data.content
 
@@ -149,7 +149,7 @@
           that.generateChart(response.data)
           that.text = "切片"
           that.flag = false
-          
+
         }).catch(function (error) {
           if(count >= 10){
             that.text = "切片"
@@ -159,14 +159,14 @@
 
           }else{
             count+=1;
-            myst = setTimeout(function(){that.searchClicked(count)}, 10000);  
+            myst = setTimeout(function(){that.searchClicked(count)}, 10000);
           }
-          
+
 
         });
       },
       generateChart: function (data) {
-        
+
         let generateSeries = []
         var plot1 = data["plot1"]
         var xlist = plot1.x
@@ -175,7 +175,7 @@
         var xlist2 = plot2.x
         var ylist2 = plot2.y
 
-        
+
         var legendlist = []
         for(var key in ylist){
           let tempSeries = {}
@@ -186,9 +186,9 @@
           tempSeries.barMaxWidth = 30
           generateSeries.push(tempSeries)
         }
-        
-        
-        
+
+
+
         // console.log(generateSeries)
         var option1 = {
             title: {
@@ -211,8 +211,8 @@
             },
             yAxis: {
                 scale: true,
-                type: 'value',               
-                
+                type: 'value',
+
             },
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
@@ -230,7 +230,7 @@
                 }
             }
         }
-        let chart1 = echarts.init(document.getElementById("chart1"));
+        let chart1 = echarts.init(document.getElementById("chart1"),'halloween');
         chart1.setOption(option1)
         legendlist = []
         generateSeries = []
@@ -243,8 +243,8 @@
           tempSeries.barMaxWidth = 30
           generateSeries.push(tempSeries)
         }
-        
-        
+
+
         // console.log(generateSeries)
         var option2 = {
             title: {
@@ -267,8 +267,8 @@
             },
             yAxis: {
                 scale: true,
-                type: 'value',               
-                
+                type: 'value',
+
             },
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
@@ -286,7 +286,7 @@
                 }
             }
         }
-        let chart2 = echarts.init(document.getElementById("chart2"));
+        let chart2 = echarts.init(document.getElementById("chart2"),'halloween');
         chart2.setOption(option2)
       }
 

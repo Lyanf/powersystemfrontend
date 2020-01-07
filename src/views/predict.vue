@@ -92,7 +92,7 @@
       searchClicked: function () {
         var chart1 = document.getElementById("chart1");
 
-        chart1 = echarts.init(chart1);
+        chart1 = echarts.init(chart1,'halloween');
         let that = this;
         axios.post("/api/predict", {
           factory: that.factory,

@@ -125,7 +125,7 @@
           count: count
         }).then(function (response) {
           // that.allTableData = response.data
-         
+
           that.allTableLabel = response.data.header
           that.allTableData = response.data.content
           that.generateChart(response.data)
@@ -140,9 +140,9 @@
 
           }else{
             count+=1;
-            myst = setTimeout(function(){that.handleRotate(count)}, 2000);  
+            myst = setTimeout(function(){that.handleRotate(count)}, 2000);
           }
-          
+
 
         });
       },
@@ -182,7 +182,7 @@
           count: count
         }).then(function (response) {
           // that.allTableData = response.data
-          
+
           that.allTableLabel = response.data.header
           that.allTableData = response.data.content
           that.generateChart(response.data)
@@ -197,14 +197,14 @@
 
           }else{
             count+=1;
-            myst1 = setTimeout(function(){that.searchClicked(count)}, 2000);  
+            myst1 = setTimeout(function(){that.searchClicked(count)}, 2000);
           }
-          
+
 
         });
       },
       generateChart: function (data) {
-        
+
         let generateSeries = []
         var plot1 = data["plot1"]
         var xlist = plot1.x
@@ -213,7 +213,7 @@
         var xlist2 = plot2.x
         var ylist2 = plot2.y
 
-        
+
         var legendlist = []
         for(var key in ylist){
           let tempSeries = {}
@@ -224,9 +224,9 @@
           tempSeries.barMaxWidth = 30
           generateSeries.push(tempSeries)
         }
-        
-        
-        
+
+
+
         // console.log(generateSeries)
         var option1 = {
             title: {
@@ -249,8 +249,8 @@
             },
             yAxis: {
                 scale: true,
-                type: 'value',               
-                
+                type: 'value',
+
             },
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
@@ -268,7 +268,7 @@
                 }
             }
         }
-        let chart1 = echarts.init(document.getElementById("chart1"));
+        let chart1 = echarts.init(document.getElementById("chart1"),'halloween');
         chart1.setOption(option1)
         legendlist = []
         generateSeries = []
@@ -281,8 +281,8 @@
           tempSeries.barMaxWidth = 30
           generateSeries.push(tempSeries)
         }
-        
-        
+
+
         // console.log(generateSeries)
         var option2 = {
             title: {
@@ -305,8 +305,8 @@
             },
             yAxis: {
                 scale: true,
-                type: 'value',               
-                
+                type: 'value',
+
             },
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
@@ -324,7 +324,7 @@
                 }
             }
         }
-        let chart2 = echarts.init(document.getElementById("chart2"));
+        let chart2 = echarts.init(document.getElementById("chart2"),'halloween');
         chart2.setOption(option2)
       }
     },

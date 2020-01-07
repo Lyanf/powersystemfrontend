@@ -247,8 +247,8 @@
         },
       };
 
-      let bar1 = echarts.init(document.getElementById("bar1"));
-      let bar2 = echarts.init(document.getElementById("bar2"));
+      let bar1 = echarts.init(document.getElementById("bar1"),'halloween');
+      let bar2 = echarts.init(document.getElementById("bar2"),'halloween');
 
       bar1.setOption(option1);
       bar2.setOption(option1)

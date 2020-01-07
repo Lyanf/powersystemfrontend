@@ -168,8 +168,8 @@
 	  		}
 	  	  },
 	  	}
-	     
-	  	
+
+
 	  	// let chart1 = echarts.init(document.getElementById("chart1"));
 	  	// chart1.setOption(option1)
 
@@ -211,7 +211,7 @@
 	  			"min": "dataMin",
 	  			type: 'value',
 	  			minInterval: 0.01,
-	  			
+
 	  		},
 	  		// Declare several bar series, each will be mapped
 	  		// to a column of dataset.source by default.
@@ -229,8 +229,8 @@
 	  			}
 	  		}
 	  	}
-	  	let chart2 = echarts.init(document.getElementById("chart2"));
-	  	
+	  	let chart2 = echarts.init(document.getElementById("chart2"),'halloween');
+
 	  	chart2.setOption(option2)
 
 	  	 generateSeries = []
@@ -240,8 +240,8 @@
 	  	tempSeries.smooth = 'true'
 	  	tempSeries.data = data.temp
 	  	generateSeries.push(tempSeries)
-	  		
-	     
+
+
 	  	var option3 = {
 	  		title: {
 	  			text: "温度曲线"
@@ -265,8 +265,8 @@
 	  			scale: true,
 	  			"min": "dataMin",
 	  			type: 'value',
-	  			
-	  			
+
+
 	  		},
 	  		// Declare several bar series, each will be mapped
 	  		// to a column of dataset.source by default.
@@ -284,8 +284,8 @@
 	  			}
 	  		}
 	  	}
-	  	let chart3 = echarts.init(document.getElementById("chart3"));
-	  	
+	  	let chart3 = echarts.init(document.getElementById("chart3"),'halloween');
+
 	  	chart3.setOption(option3)
 
 	  	 generateSeries = []
@@ -295,7 +295,7 @@
 	  	tempSeries.smooth = 'true'
 	  	tempSeries.data = data.load
 	  	generateSeries.push(tempSeries)
-	  		
+
 	  	var option4 = {
 	  		title: {
 	  			text: "负荷曲线"
@@ -318,8 +318,8 @@
 	  		yAxis: {
 	  			scale: true,
 	  			type: 'value',
-	  			
-	  			
+
+
 	  		},
 	  		// Declare several bar series, each will be mapped
 	  		// to a column of dataset.source by default.
@@ -337,8 +337,8 @@
 	  			}
 	  		}
 	  	}
-	  	let chart4 = echarts.init(document.getElementById("chart4"));
-	  	
+	  	let chart4 = echarts.init(document.getElementById("chart4"),'halloween');
+
 	  	chart4.setOption(option4)
 
 
@@ -349,7 +349,7 @@
 	  	// tempSeries.symbolSize = 20
 	  	tempSeries.data = data.scatter
 	  	generateSeries.push(tempSeries)
-	  		
+
 	  	var option5 = {
 	  		title: {
 	  			text: "温度负荷散点图"
@@ -364,8 +364,8 @@
 	  		yAxis: {
 	  			name: "负荷(KW)",
 	  			scale: true,
-	  			type: 'value',        
-	  		   
+	  			type: 'value',
+
 	  		},
 	  		// Declare several bar series, each will be mapped
 	  		// to a column of dataset.source by default.
@@ -383,8 +383,8 @@
 	  			}
 	  		}
 	  	}
-	  	let chart5 = echarts.init(document.getElementById("chart5"));
-	  	
+	  	let chart5 = echarts.init(document.getElementById("chart5"),'halloween');
+
 	  	chart5.setOption(option5)
 	  },
 	},

@@ -101,8 +101,8 @@
         let chart1 = document.getElementById("chart1");
         let chart2 = document.getElementById("chart2");
 
-        chart1 = echarts.init(chart1);
-        chart2 = echarts.init(chart2);
+        chart1 = echarts.init(chart1,'halloween');
+        chart2 = echarts.init(chart2,'halloween');
         let that = this;
         axios.post("/api/cluster", {
           factory: that.factory,

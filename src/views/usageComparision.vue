@@ -174,7 +174,7 @@
             }
           }
         }
-        let chart1 = echarts.init(document.getElementById("chart1"));
+        let chart1 = echarts.init(document.getElementById("chart1"),'halloween');
         console.log(this.correlationData.timestamp)
         chart1.setOption(option1)
       }

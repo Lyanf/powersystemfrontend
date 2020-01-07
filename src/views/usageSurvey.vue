@@ -78,10 +78,10 @@
       var chart3 = document.getElementById("chart3");
       var chart4 = document.getElementById("chart4");
 
-      chart1 = echarts.init(chart1);
-      chart2 = echarts.init(chart2);
-      chart3 = echarts.init(chart3);
-      chart4 = echarts.init(chart4);
+      chart1 = echarts.init(chart1,'halloween');
+      chart2 = echarts.init(chart2,'halloween');
+      chart3 = echarts.init(chart3,'halloween');
+      chart4 = echarts.init(chart4,'halloween');
 
       var option1 = {
         title: {
