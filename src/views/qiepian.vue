@@ -127,10 +127,20 @@
         this.searchClicked()
 
       },
+      loadingButton: function (loading) {
+        if (loading === true)
+        {
+          this.text = '计算中'
+          this.flag = true
+        }
+        else{
+          this.text = '计算'
+          this.flag = false
+        }
+      },
       searchClicked: function (count = 0) {
         let that = this;
-        that.text  = "计算中";
-        that.flag = true;
+        that.loadingButton(true)
 
         axios.post("/api/qiepian", {
           p1: that.selectedMetaData,
@@ -138,31 +148,22 @@
           p3:that.date,
           p4: that.collectContent,
           p5: that.collectMethod,
-          count: count
+          
         }).then(function (response) {
-
+          if (response.data.status === 'error'){
+            throw Error
+          }
 
           that.allTableLabel = response.data.header
           that.allTableData = response.data.content
 
-          // console.log(response.data[0]["plot1"])
           that.generateChart(response.data)
-          that.text = "切片"
-          that.flag = false
+          that.loadingButton(false)
 
         }).catch(function (error) {
-          if(count >= 10){
-            that.text = "切片"
-            that.flag = false
-            clearTimeout(myst)
-            alert("计算失败，请检查数据是否有误")
-
-          }else{
-            count+=1;
-            myst = setTimeout(function(){that.searchClicked(count)}, 10000);
-          }
-
-
+          console.log(error)
+          that.$message.error("计算出现错误，请检查所选参数是否正确！")
+          that.loadingButton(false)
         });
       },
       generateChart: function (data) {

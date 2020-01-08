@@ -273,6 +273,7 @@
           },
           xAxis: {
             type: 'category',
+            name: "温度(℃)",
             boundaryGap: false,
             data: function () {
               var list = [];
@@ -327,6 +328,7 @@
           },
           xAxis: {
             type: 'category',
+            name: "负荷(KW)",
             boundaryGap: false,
             data: function () {
               var list = [];

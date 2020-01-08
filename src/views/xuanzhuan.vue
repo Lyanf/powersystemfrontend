@@ -112,7 +112,7 @@
       rotateClicked:function(){
         this.handleRotate()
       },
-      handleRotate: function(count = 0){
+      handleRotate: function(){
         let that = this;
         that.textr = "计算中"
         that.flagr = true
@@ -122,26 +122,21 @@
           p3:that.date,
           p4: that.collectContent,
           p5: that.collectMethod,
-          count: count
+          
         }).then(function (response) {
           // that.allTableData = response.data
-
+          if (response.data.status === 'error'){
+            throw Error
+          }
           that.allTableLabel = response.data.header
           that.allTableData = response.data.content
           that.generateChart(response.data)
           that.textr = "旋转"
           that.flagr = false
         }).catch(function (error) {
-          if(count >= 10){
-            that.textr = "旋转"
-            that.flagr = false
-            clearTimeout(myst)
-            alert("计算失败，请检查数据是否有误")
-
-          }else{
-            count+=1;
-            myst = setTimeout(function(){that.handleRotate(count)}, 2000);
-          }
+          console.log(error)
+          that.$message.error("计算出现错误，请检查所选参数是否正确！")
+          that.loadingButton(false)
 
 
         });
@@ -169,7 +164,7 @@
         this.searchClicked()
 
       },
-      searchClicked: function (count = 0) {
+      searchClicked: function () {
         let that = this;
         that.textq  = "计算中";
         that.flagq = true;
@@ -179,26 +174,21 @@
           p3:that.date,
           p4: that.collectContent,
           p5: that.collectMethod,
-          count: count
+          
         }).then(function (response) {
           // that.allTableData = response.data
-
+          if (response.data.status === 'error'){
+            throw Error
+          }
           that.allTableLabel = response.data.header
           that.allTableData = response.data.content
           that.generateChart(response.data)
           that.textq = "切片"
           that.flagq = false
         }).catch(function (error) {
-          if(count >= 10){
-            that.textq = "切片"
-            that.flagq = false
-            clearTimeout(myst1)
-            alert("计算失败，请检查数据是否有误")
-
-          }else{
-            count+=1;
-            myst1 = setTimeout(function(){that.searchClicked(count)}, 2000);
-          }
+          console.log(error)
+          that.$message.error("计算出现错误，请检查所选参数是否正确！")
+          that.loadingButton(false)
 
 
         });
