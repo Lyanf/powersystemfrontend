@@ -20,7 +20,7 @@ let obj = {
   ],
     "backgroundColor"
 :
-  "#26207c",
+  "#1b3157",
     "textStyle"
 :
   {
