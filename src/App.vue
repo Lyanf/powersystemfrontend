@@ -23,6 +23,6 @@
     margin: 0;
   }
   input{
-    background-color: #26207c;
+    background-color: #1b3157;
   }
 </style>

@@ -11,7 +11,7 @@
 
 				background:{
 					// backgroundImage:"url("+require("../assets/image/background.jpg")+")",
-          backgroundColor:'#3a3488',
+          backgroundColor:'#1b3157',
 					backgroundRepeat: "no-repeat",
 					backgroundSize: "100% 100%",
 					backgroundPosition: "center",
