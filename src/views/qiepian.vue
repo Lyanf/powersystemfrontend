@@ -246,7 +246,7 @@
         }
 
 
-        // console.log(generateSeries)
+        console.log(generateSeries)
         var option2 = {
             title: {
                 text: "柱状图2"
@@ -288,6 +288,7 @@
             }
         }
         let chart2 = echarts.init(document.getElementById("chart2"),'halloween');
+        chart2.clear()
         chart2.setOption(option2)
       }
 
