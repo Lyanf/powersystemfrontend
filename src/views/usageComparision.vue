@@ -174,7 +174,8 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: this.correlationData.timestamp
+            data: this.correlationData.timestamp,
+            name: '时间'
           },
           yAxis: {scale: true, name: getUnit(this.measurePoint)},
           // Declare several bar series, each will be mapped

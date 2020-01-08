@@ -24,7 +24,7 @@
           </el-date-picker>
         </el-col>
         <el-col span=3 push=4>
-          <el-button type="primary" loading="this.flag" v-on:click="newSearchClicked">{{text}}</el-button>
+          <el-button type="primary" :loading="this.flag" v-on:click="newSearchClicked">{{text}}</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -126,7 +126,6 @@
   import MyFrame from "../components/Frame";
   import OlapTable from "../components/olapTable";
   import {getUnit} from "../tool/toolFunc"
-
 
 
   function fixDateFormat(oriDates) {
@@ -466,98 +465,98 @@
           that.$message.error("计算出现错误，请检查所选参数是否正确！")
           that.loadingButton(false)
         })
-      },
-      mounted() {
-        var chart = echarts.init(document.getElementById("chart"), 'halloween');
-        var option = {
-          title: {
-            text: '电气量曲线',
-            subtext: '初始案例'
-          },
-          tooltip: {
-            trigger: 'axis'
-          },
-          legend: {
-            data: ['电气量1', '电气量2']
-          },
-          toolbox: {
-            show: true,
-            feature: {
-              dataZoom: {
-                yAxisIndex: 'none'
-              },
-              dataView: {readOnly: false},
-              magicType: {type: ['line', 'bar']},
-              restore: {},
-              saveAsImage: {}
-            }
-          },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-          },
-          yAxis: {
-            type: 'value',
-            axisLabel: {
-              formatter: '{value}'
-            },
-            scale: true,
-          },
-          series: [
-            {
-              name: '电气量1',
-              type: 'line',
-              data: [11, 11, 15, 13, 12, 13, 10],
-              markPoint: {
-                data: [
-                  {type: 'max', name: '最大值'},
-                  {type: 'min', name: '最小值'}
-                ]
-              },
-              markLine: {
-                data: [
-                  {type: 'average', name: '平均值'}
-                ]
-              }
-            },
-            {
-              name: '电气量2',
-              type: 'line',
-              data: [1, -2, 2, 5, 3, 2, 0],
-              markPoint: {
-                data: [
-                  {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
-                ]
-              },
-              markLine: {
-                data: [
-                  {type: 'average', name: '平均值'},
-                  [{
-                    symbol: 'none',
-                    x: '90%',
-                    yAxis: 'max'
-                  }, {
-                    symbol: 'circle',
-                    label: {
-                      normal: {
-                        position: 'start',
-                        formatter: '最大值'
-                      }
-                    },
-                    type: 'max',
-                    name: '最高点'
-                  }]
-                ]
-              }
-            }
-          ]
-        };
-
-        chart.setOption(option, true)
-        this.getMetaData()
-        this.getAllMeasurePoint()
       }
+    },
+    mounted() {
+      var chart = echarts.init(document.getElementById("chart"), 'halloween');
+      var option = {
+        title: {
+          text: '电气量曲线',
+          subtext: '初始案例'
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['电气量1', '电气量2']
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            dataZoom: {
+              yAxisIndex: 'none'
+            },
+            dataView: {readOnly: false},
+            magicType: {type: ['line', 'bar']},
+            restore: {},
+            saveAsImage: {}
+          }
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+          type: 'value',
+          axisLabel: {
+            formatter: '{value}'
+          },
+          scale: true,
+        },
+        series: [
+          {
+            name: '电气量1',
+            type: 'line',
+            data: [11, 11, 15, 13, 12, 13, 10],
+            markPoint: {
+              data: [
+                {type: 'max', name: '最大值'},
+                {type: 'min', name: '最小值'}
+              ]
+            },
+            markLine: {
+              data: [
+                {type: 'average', name: '平均值'}
+              ]
+            }
+          },
+          {
+            name: '电气量2',
+            type: 'line',
+            data: [1, -2, 2, 5, 3, 2, 0],
+            markPoint: {
+              data: [
+                {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+              ]
+            },
+            markLine: {
+              data: [
+                {type: 'average', name: '平均值'},
+                [{
+                  symbol: 'none',
+                  x: '90%',
+                  yAxis: 'max'
+                }, {
+                  symbol: 'circle',
+                  label: {
+                    normal: {
+                      position: 'start',
+                      formatter: '最大值'
+                    }
+                  },
+                  type: 'max',
+                  name: '最高点'
+                }]
+              ]
+            }
+          }
+        ]
+      };
+
+      chart.setOption(option, true)
+      this.getMetaData()
+      this.getAllMeasurePoint()
     }
   }
 </script>

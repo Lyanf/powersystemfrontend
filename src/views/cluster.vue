@@ -113,12 +113,14 @@
         return seriesList
       },
       searchClicked: function () {
+        let that = this
         let chart1 = document.getElementById("chart1");
         let chart2 = document.getElementById("chart2");
+        let chart3 = document.getElementById("chart3");
         that.loadingButton(true)
         chart1 = echarts.init(chart1,'halloween');
         chart2 = echarts.init(chart2,'halloween');
-        let that = this;
+        chart3 = echarts.init(chart3,'halloween');
         axios.post("/api/cluster", {
           factory: that.factory,
           line: that.line,
@@ -127,10 +129,14 @@
           date: that.date
         }).then(function (response) {
           let data = response.data;
-          that.hourX = data['hourX'];
-          that.dayX = data['dayX'];
+          that.hourX = data.hourX;
+          that.dayX = data.dayX;
           that.dayList = data['dayList'];
           that.hourList = data['hourList'];
+          if (data.status === 'error'){
+            throw Error
+          }
+          console.log(data)
 
           let option1 = {
             toolbox: {
@@ -154,9 +160,10 @@
             },
             xAxis: {
               type: 'category',
-              data: that.dayX
+              data: that.dayX,
+              name:'数据点'
             },
-            yAxis: {scale: true},
+            yAxis: {scale: true,name:that.measurePoint},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: that.generateSeries(that.dayList)
@@ -175,7 +182,7 @@
               }
             },
             title: {
-              text: "多时间尺度用能模式挖掘（月）"
+              text: "多时间尺度用能模式挖掘（月）（保留功能）"
             },
             legend: {},
             tooltip: {
@@ -204,7 +211,7 @@
               }
             },
             title: {
-              text: "多时间尺度用能模式挖掘（年）"
+              text: "多时间尺度用能模式挖掘（年）（保留功能）"
             },
             legend: {},
             tooltip: {

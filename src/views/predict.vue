@@ -46,6 +46,7 @@
   import Sidebar from "../components/Sidebar"
   import axios from "axios"
   import MyFrame from "../components/Frame";
+  import {getUnit} from "../tool/toolFunc";
 
   export default {
     name: "predict",
@@ -105,10 +106,10 @@
         console.log(this.allMeasurePoint)
       },
       searchClicked: function () {
+        let that = this
         var chart1 = document.getElementById("chart1");
         that.loadingButton(true)
         chart1 = echarts.init(chart1,'halloween');
-        let that = this;
         axios.post("/api/predict", {
           factory: that.factory,
           line: that.line,
@@ -144,9 +145,10 @@
             },
             xAxis: {
               type: 'category',
-              data: Array.from({length: that.trueData.length}, (a, i) => i)
+              data: Array.from({length: that.trueData.length}, (a, i) => i),
+              name:'数据点'
             },
-            yAxis: {scale: true},
+            yAxis: {scale: true,name:getUnit(that.measurePoint)},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: [
