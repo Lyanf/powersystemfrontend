@@ -2,7 +2,7 @@
   <MyFrame>
     <el-card>
       <div slot="header">
-        <span>切片</span>
+        <span>切片与切块</span>
       </div>
       <el-row>
 

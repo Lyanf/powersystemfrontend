@@ -54,7 +54,6 @@
             <el-table
               :data="tableData"
               style="width: 100%"
-              stripe
             >
               <el-table-column
                 prop="a1"

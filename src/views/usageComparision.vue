@@ -37,7 +37,6 @@
     <el-table id="showTable"
               :data="tableData"
               border
-              stripe
               height="300"
               max-height="300"
     >
