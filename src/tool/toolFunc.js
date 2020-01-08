@@ -13,7 +13,6 @@ function getUnit(originSelect) {
   }
   return dict[originSelect]
 }
-
 export {
   getUnit
 }

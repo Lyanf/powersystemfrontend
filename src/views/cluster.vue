@@ -29,7 +29,7 @@
           </el-date-picker>
         </el-col>
         <el-col span=4>
-          <el-button type="primary" v-on:click="searchClicked">显示</el-button>
+          <el-button type="primary" :loading="this.flag" v-on:click="searchClicked">{{text}}</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -62,9 +62,24 @@
         dayX: '',
         hourList: [],
         dayList: [],
+
+
+        text: '计算',
+        flag: false
       }
     },
     methods: {
+      loadingButton: function (loading) {
+        if (loading === true)
+        {
+          this.text = '计算中'
+          this.flag = true
+        }
+        else{
+          this.text = '计算'
+          this.flag = false
+        }
+      },
       handleChange: function () {
         this.factory = this.selectedMetaData[0];
         this.line = this.selectedMetaData[1];
@@ -100,7 +115,7 @@
       searchClicked: function () {
         let chart1 = document.getElementById("chart1");
         let chart2 = document.getElementById("chart2");
-
+        that.loadingButton(true)
         chart1 = echarts.init(chart1,'halloween');
         chart2 = echarts.init(chart2,'halloween');
         let that = this;
@@ -207,6 +222,12 @@
           chart1.setOption(option1);
           chart2.setOption(option2);
           chart3.setOption(option3);
+          that.loadingButton(false)
+
+        }).catch(function (error) {
+          console.log(error)
+          that.$message.error("计算出现错误，请检查所选参数是否正确！")
+          that.loadingButton(false)
         });
       },
     },

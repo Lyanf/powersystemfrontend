@@ -24,7 +24,7 @@
           </el-date-picker>
         </el-col>
         <el-col span=3 push=4>
-          <el-button type="primary" v-on:click="newSearchClicked">查询</el-button>
+          <el-button type="primary" loading="this.flag" v-on:click="newSearchClicked">{{text}}</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -160,9 +160,21 @@
         selectedMetaData: '',
 
         showData: '',
+
+        text: '计算',
+        flag: false
       }
     },
     methods: {
+      loadingButton: function (loading) {
+        if (loading === true) {
+          this.text = '计算中'
+          this.flag = true
+        } else {
+          this.text = '计算'
+          this.flag = false
+        }
+      },
       handleCurrentChange: function (val) {
         console.log(val)
         let that = this
@@ -258,7 +270,7 @@
           xAxis: {
             type: 'category',
             data: (this.getAllDate()),
-            name:'时间',
+            name: '时间',
 
           },
           yAxis: {
@@ -272,7 +284,7 @@
             name: this.measurePoint1
           }],
         };
-        let chart = echarts.init(document.getElementById("chart"),'halloween');
+        let chart = echarts.init(document.getElementById("chart"), 'halloween');
         chart.setOption(option, true)
       }
       ,
@@ -306,7 +318,7 @@
           xAxis: {
             type: 'category',
             data: (this.getAllDate()),
-            name:'时间',
+            name: '时间',
           },
           yAxis: {
             type: 'value',
@@ -326,14 +338,14 @@
             }
           ]
         };
-        let chart = echarts.init(document.getElementById("chart"),'halloween');
+        let chart = echarts.init(document.getElementById("chart"), 'halloween');
         chart.setOption(option, true)
       }
       ,
       clearChart: function () {
         this.measurePoint1 = '';
         this.measurePoint2 = '';
-        var chart = echarts.init(document.getElementById("chart"),'halloween');
+        var chart = echarts.init(document.getElementById("chart"), 'halloween');
         this.$chart = chart;
         var option = {
           title: {
@@ -437,6 +449,7 @@
       ,
       newSearchClicked: function () {
         let that = this;
+        that.loadingButton(true)
         axios.post('/api/getSpecificData',
           {
             factory: this.factory,
@@ -447,99 +460,104 @@
           that.tableData = response.data
         }).then(function () {
           that.handleCurrentChange(1)
+          that.loadingButton(false)
+        }).catch(function (error) {
+          console.log(error)
+          that.$message.error("计算出现错误，请检查所选参数是否正确！")
+          that.loadingButton(false)
         })
-      }
-    },
-    mounted() {
-      var chart = echarts.init(document.getElementById("chart"),'halloween');
-      var option = {
-        title: {
-          text: '电气量曲线',
-          subtext: '初始案例'
-        },
-        tooltip: {
-          trigger: 'axis'
-        },
-        legend: {
-          data: ['电气量1', '电气量2']
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            dataZoom: {
-              yAxisIndex: 'none'
-            },
-            dataView: {readOnly: false},
-            magicType: {type: ['line', 'bar']},
-            restore: {},
-            saveAsImage: {}
-          }
-        },
-        xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-        },
-        yAxis: {
-          type: 'value',
-          axisLabel: {
-            formatter: '{value}'
+      },
+      mounted() {
+        var chart = echarts.init(document.getElementById("chart"), 'halloween');
+        var option = {
+          title: {
+            text: '电气量曲线',
+            subtext: '初始案例'
           },
-          scale: true,
-        },
-        series: [
-          {
-            name: '电气量1',
-            type: 'line',
-            data: [11, 11, 15, 13, 12, 13, 10],
-            markPoint: {
-              data: [
-                {type: 'max', name: '最大值'},
-                {type: 'min', name: '最小值'}
-              ]
-            },
-            markLine: {
-              data: [
-                {type: 'average', name: '平均值'}
-              ]
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {
+            data: ['电气量1', '电气量2']
+          },
+          toolbox: {
+            show: true,
+            feature: {
+              dataZoom: {
+                yAxisIndex: 'none'
+              },
+              dataView: {readOnly: false},
+              magicType: {type: ['line', 'bar']},
+              restore: {},
+              saveAsImage: {}
             }
           },
-          {
-            name: '电气量2',
-            type: 'line',
-            data: [1, -2, 2, 5, 3, 2, 0],
-            markPoint: {
-              data: [
-                {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
-              ]
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+          },
+          yAxis: {
+            type: 'value',
+            axisLabel: {
+              formatter: '{value}'
             },
-            markLine: {
-              data: [
-                {type: 'average', name: '平均值'},
-                [{
-                  symbol: 'none',
-                  x: '90%',
-                  yAxis: 'max'
-                }, {
-                  symbol: 'circle',
-                  label: {
-                    normal: {
-                      position: 'start',
-                      formatter: '最大值'
-                    }
-                  },
-                  type: 'max',
-                  name: '最高点'
-                }]
-              ]
+            scale: true,
+          },
+          series: [
+            {
+              name: '电气量1',
+              type: 'line',
+              data: [11, 11, 15, 13, 12, 13, 10],
+              markPoint: {
+                data: [
+                  {type: 'max', name: '最大值'},
+                  {type: 'min', name: '最小值'}
+                ]
+              },
+              markLine: {
+                data: [
+                  {type: 'average', name: '平均值'}
+                ]
+              }
+            },
+            {
+              name: '电气量2',
+              type: 'line',
+              data: [1, -2, 2, 5, 3, 2, 0],
+              markPoint: {
+                data: [
+                  {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+                ]
+              },
+              markLine: {
+                data: [
+                  {type: 'average', name: '平均值'},
+                  [{
+                    symbol: 'none',
+                    x: '90%',
+                    yAxis: 'max'
+                  }, {
+                    symbol: 'circle',
+                    label: {
+                      normal: {
+                        position: 'start',
+                        formatter: '最大值'
+                      }
+                    },
+                    type: 'max',
+                    name: '最高点'
+                  }]
+                ]
+              }
             }
-          }
-        ]
-      };
+          ]
+        };
 
-      chart.setOption(option, true)
-      this.getMetaData()
-      this.getAllMeasurePoint()
+        chart.setOption(option, true)
+        this.getMetaData()
+        this.getAllMeasurePoint()
+      }
     }
   }
 </script>

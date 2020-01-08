@@ -29,7 +29,7 @@
           </el-date-picker>
         </el-col>
         <el-col span=4>
-          <el-button type="primary" v-on:click="searchClicked">显示</el-button>
+          <el-button type="primary" :loading="this.flag" v-on:click="searchClicked">{{text}}</el-button>
         </el-col>
         <el-col span=5>
           <!--          <el-button type="primary" v-on:click="addCompare">添加对比</el-button>-->
@@ -63,10 +63,25 @@
         metaDataTree: '',
         selectedMetaData: '',
         allMeasurePoint: [],
-        chartOption: {}
+        chartOption: {},
+
+
+        text: '计算',
+        flag: false
       }
     },
     methods: {
+      loadingButton: function (loading) {
+        if (loading === true)
+        {
+          this.text = '计算中'
+          this.flag = true
+        }
+        else{
+          this.text = '计算'
+          this.flag = false
+        }
+      },
       addCompare: function () {
         console.log("add compare")
       },
@@ -91,7 +106,7 @@
       },
       searchClicked: function () {
         var chart1 = document.getElementById("chart1");
-
+        that.loadingButton(true)
         chart1 = echarts.init(chart1,'halloween');
         let that = this;
         axios.post("/api/predict", {
@@ -153,7 +168,11 @@
             ],
           };
           chart1.setOption(option1);
-
+          that.loadingButton(false)
+        }).catch(function (error) {
+          console.log(error)
+          that.$message.error("计算出现错误，请检查所选参数是否正确！")
+          that.loadingButton(false)
         });
       },
     },

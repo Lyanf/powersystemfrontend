@@ -30,7 +30,7 @@
           </el-date-picker>
         </el-col>
         <el-col span=4>
-          <el-button type="primary" v-on:click="searchClicked">显示</el-button>
+          <el-button type="primary" :loading="this.flag"  v-on:click="searchClicked"  >{{text}}</el-button>
         </el-col>
       </el-row>
     </el-card>
@@ -82,10 +82,24 @@
         selectedMetaData: '',
         tableData: [],
         allMeasurePoint: [],
-        correlationData: []
+        correlationData: [],
+
+        text: '计算',
+        flag: false
       }
     },
     methods: {
+      loadingButton: function (loading) {
+        if (loading === true)
+        {
+          this.text = '计算中'
+          this.flag = true
+        }
+        else{
+          this.text = '计算'
+          this.flag = false
+        }
+      },
       handleChange: function () {
         this.factory = this.selectedMetaData[0];
         this.line = this.selectedMetaData[1];
@@ -107,12 +121,13 @@
       },
       searchClicked: function () {
         let that = this;
+        that.loadingButton(true)
         axios.post("/api/correlation", {
           'factory': this.factory,
           'line': this.line,
           'device': this.device,
           'measurePoint': this.measurePoint,
-          'date':this.date
+          'date': this.date
         }).then(function (response) {
           let correlationValue = JSON.parse(response.data.correlationValue);
           let correlationData = JSON.parse(response.data['correlationData']);
@@ -126,6 +141,11 @@
           that.tableData = tableData;
           that.correlationData = correlationData
           that.generateChart()
+          that.loadingButton(false)
+        }).catch(function (error) {
+          console.log(error)
+          that.$message.error("计算出现错误，请检查所选参数是否正确！")
+          that.loadingButton(false)
         })
       },
       generateChart: function () {
@@ -173,7 +193,7 @@
             }
           }
         }
-        let chart1 = echarts.init(document.getElementById("chart1"),'halloween');
+        let chart1 = echarts.init(document.getElementById("chart1"), 'halloween');
         console.log(this.correlationData.timestamp)
         chart1.setOption(option1)
       }
