@@ -1,9 +1,9 @@
 <template>
 	<el-container>
-		<el-header>	
+		<el-header>
 			<NavMenu></NavMenu>
 		</el-header>
-    <el-main>
+    <el-main >
 		    <Login></Login>
     </el-main>
 	</el-container>
@@ -19,7 +19,7 @@
 			if(getCookie('username') != ''){
 				this.$router.push({path: '/'})
 			}
-  			    
+
 		}
 	}
 </script>
