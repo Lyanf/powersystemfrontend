@@ -3,9 +3,11 @@
 		<el-header>
 			<NavMenu></NavMenu>
 		</el-header>
-    <el-main >
-		    <Login></Login>
-    </el-main>
+	    <el-main id=main>
+			    <Login></Login>
+
+	    </el-main>
+	    <el-footer>Copyright@上海交通大学</el-footer>
 	</el-container>
 </template>
 <script type="text/javascript">
@@ -27,4 +29,16 @@
 	.el-header{
 		padding: 0px;
 	}
+	
+  	.el-footer {
+	    background-color: rgb(27,49,87);
+	    color: white;
+	    text-align: center;
+	    line-height: 60px;
+	    position: absolute;
+	    bottom: 0;
+	    width: 100%;
+	    border-top: 1px solid;
+	    border-color: white;
+  	}
 </style>

@@ -4,7 +4,7 @@
 		<div id="login">
 			<h2 class="login-title">用户登录</h2>
 			<el-form :label-position="labelPosition" label-width="80px" :model="login" :rules="rules" ref="login">
-			  <el-form-item label="用户名" prop="username">
+			  <el-form-item  label="用户名" prop="username">
 			    <el-input v-model="login.username" clearable></el-input>
 			  </el-form-item>
 			  <el-form-item label="密码" prop="password">
@@ -103,6 +103,7 @@
 	.login-wrap >>> label {
 		font-size: 3px;
 		font-weight: 200;
+		color: black;
 	}
 	#login {
 	    background-color: #ffffff;
