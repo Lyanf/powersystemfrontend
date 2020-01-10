@@ -1,7 +1,7 @@
 <template>
 	<div class="login-wrap">
 		<Background></Background>
-		<div id="login">
+		<div id="login"  v-on:keyup.enter="loginByEnter" tabindex="0">
 			<h2 class="login-title">用户登录</h2>
 			<el-form :label-position="labelPosition" label-width="80px" :model="login" :rules="rules" ref="login">
 			  <el-form-item  label="用户名" prop="username">
@@ -76,6 +76,9 @@
 	      			return false;
 	      		}
 	      	})
+	      },
+	      loginByEnter: function(event){
+	      	this.onSubmit('login')
 	      }
 	    }
 	}
