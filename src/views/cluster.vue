@@ -1,38 +1,6 @@
 <template>
   <MyFrame>
-    <el-card>
-      <div slot="header">
-        <span>用电模式挖掘</span>
-      </div>
-      <el-row>
-        <el-col span=5>
-          <el-cascader
-            v-model="selectedMetaData"
-            :options="metaDataTree"
-            :props="{ expandTrigger: 'hover' }"
-            @change="handleChange"
-            placeholder="请选择设备"
-          />
-        </el-col>
-        <el-col span=5>
-          <el-select value="" v-model="measurePoint" placeholder="测点选择">
-            <el-option v-for="item in allMeasurePoint" :value="item"/>
-          </el-select>
-        </el-col>
-        <el-col span=10>
-          <el-date-picker
-            v-model="date"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
-          </el-date-picker>
-        </el-col>
-        <el-col span=4>
-          <el-button type="primary" :loading="this.flag" v-on:click="searchClicked">{{text}}</el-button>
-        </el-col>
-      </el-row>
-    </el-card>
+    <BaseSelectInput :loading="this.loading" title="用电模式挖掘" @searchClicked="searchClicked"/>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
     <div id="chart2" style="height: 600px;width: 100%;"></div>
     <div id="chart3" style="height: 600px;width: 100%;"></div>
@@ -43,62 +11,24 @@
   import MyFrame from "../components/Frame";
   import * as echarts from 'echarts';
   import axios from "axios"
+  import BaseSelectInput from "../components/BaseSelectInput";
+  import {loadingButton} from "../tool/toolFunc";
 
   export default {
     name: "cluster",
-    components: {MyFrame},
+    components: {BaseSelectInput, MyFrame},
     data: function () {
       return {
-        factory: '',
-        line: '',
-        device: '',
-        measurePoint: '',
-        algorithm: '',
-        date: '',
-        metaDataTree: '',
-        selectedMetaData: '',
-        allMeasurePoint: [],
         hourX: '',
         dayX: '',
         hourList: [],
         dayList: [],
 
 
-        text: '计算',
-        flag: false
+        loading:false
       }
     },
     methods: {
-      loadingButton: function (loading) {
-        if (loading === true)
-        {
-          this.text = '计算中'
-          this.flag = true
-        }
-        else{
-          this.text = '计算'
-          this.flag = false
-        }
-      },
-      handleChange: function () {
-        this.factory = this.selectedMetaData[0];
-        this.line = this.selectedMetaData[1];
-        this.device = this.selectedMetaData[2];
-      },
-      getMetaData: function () {
-        let that = this;
-        axios.post("/api/getMetaDataTree").then(function (response) {
-          that.metaDataTree = response.data
-        });
-        console.log(this.metaDataTree)
-      },
-      getAllMeasurePoint: function () {
-        let that = this;
-        axios.post("/api/getAllMeasurePoint").then(function (response) {
-          that.allMeasurePoint = response.data
-        });
-        console.log(this.allMeasurePoint)
-      },
       generateSeries: function (dataList) {
         let seriesList = []
         for (let i in dataList) {
@@ -112,22 +42,16 @@
         }
         return seriesList
       },
-      searchClicked: function () {
+      searchClicked: function (data) {
         let that = this
         let chart1 = document.getElementById("chart1");
         let chart2 = document.getElementById("chart2");
         let chart3 = document.getElementById("chart3");
-        that.loadingButton(true)
+        loadingButton(true,that)
         chart1 = echarts.init(chart1,'halloween');
         chart2 = echarts.init(chart2,'halloween');
         chart3 = echarts.init(chart3,'halloween');
-        axios.post("/api/cluster", {
-          factory: that.factory,
-          line: that.line,
-          device: that.device,
-          measurePoint: that.measurePoint,
-          date: that.date
-        }).then(function (response) {
+        axios.post("/api/cluster", data).then(function (response) {
           let data = response.data;
           that.hourX = data.hourX;
           that.dayX = data.dayX;
@@ -229,18 +153,18 @@
           chart1.setOption(option1);
           chart2.setOption(option2);
           chart3.setOption(option3);
-          that.loadingButton(false)
+
 
         }).catch(function (error) {
           console.log(error)
           that.$message.error("计算出现错误，请检查所选参数是否正确！")
-          that.loadingButton(false)
+        }).finally(function () {
+          loadingButton(false,that)
         });
       },
     },
     mounted() {
-      this.getMetaData();
-      this.getAllMeasurePoint()
+
     }
   }
 </script>

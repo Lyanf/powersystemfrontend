@@ -1,61 +1,28 @@
 <template>
   <MyFrame>
-    <el-card>
-      <div slot="header">
-        <span>时空相关性分析</span>
-      </div>
-      <el-row>
-        <el-col span=5>
-          <el-cascader
-            v-model="selectedMetaData"
-            :options="metaDataTree"
-            :props="{ expandTrigger: 'hover' }"
-            @change="handleChange"
-            placeholder="请选择设备"
-          />
-        </el-col>
-        <el-col span=5>
-          <el-select value="" v-model="measurePoint" placeholder="测点选择">
-            <el-option v-for="item in allMeasurePoint" :value="item"/>
-          </el-select>
-        </el-col>
-
-        <el-col span=10>
-          <el-date-picker
-            v-model="date"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
-          </el-date-picker>
-        </el-col>
-        <el-col span=4>
-          <el-button type="primary" :loading="this.flag"  v-on:click="searchClicked"  >{{text}}</el-button>
-        </el-col>
-      </el-row>
-    </el-card>
-    <el-table id="showTable"
-              :data="tableData"
-              border
-              height="300"
-              max-height="300"
-    >
-      <el-table-column
-        type="index"
+    <BaseSelectInput :loading="this.loading"  title="时空相关性分析" @searchClicked="searchClicked"/>
+      <el-table id="showTable"
+                :data="tableData"
+                border
+                height="300"
+                max-height="300"
       >
-      </el-table-column>
-      <el-table-column
-        prop="device"
-        label="设备"
-      >
-      </el-table-column>
-      <el-table-column
-        prop="value"
-        label="相关性"
-      >
-      </el-table-column>
-    </el-table>
-    <div id="chart1" style="height: 600px;width: 100%;"></div>
+        <el-table-column
+          type="index"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="device"
+          label="设备"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="value"
+          label="相关性"
+        >
+        </el-table-column>
+      </el-table>
+      <div id="chart1" style="height: 600px;width: 100%;"></div>
   </MyFrame>
 </template>
 
@@ -65,70 +32,23 @@
   import Sidebar from "../components/Sidebar"
   import MyFrame from "../components/Frame";
   import axios from "axios"
-  import {getUnit} from "../tool/toolFunc"
-
+  import {getUnit, loadingButton} from "../tool/toolFunc"
+  import BaseSelectInput from "../components/BaseSelectInput";
   export default {
     name: "usageStatistics",
-    components: {MyFrame, Navmenu, Sidebar},
+    components: {BaseSelectInput, MyFrame, Navmenu, Sidebar},
     data: function () {
       return {
-        factory: '',
-        line: '',
-        device: '',
-        measurePoint: '',
-        algorithm: '',
-        date: '',
-        metaDataTree: '',
-        selectedMetaData: '',
-        tableData: [],
-        allMeasurePoint: [],
-        correlationData: [],
-
-        text: '计算',
-        flag: false
+        loading: false,
+        allData: '',
       }
     },
     methods: {
-      loadingButton: function (loading) {
-        if (loading === true)
-        {
-          this.text = '计算中'
-          this.flag = true
-        }
-        else{
-          this.text = '计算'
-          this.flag = false
-        }
-      },
-      handleChange: function () {
-        this.factory = this.selectedMetaData[0];
-        this.line = this.selectedMetaData[1];
-        this.device = this.selectedMetaData[2];
-      },
-      getMetaData: function () {
+      searchClicked: function (data) {
         let that = this;
-        axios.post("/api/getMetaDataTree").then(function (response) {
-          that.metaDataTree = response.data
-        });
-        console.log(this.metaDataTree)
-      },
-      getAllMeasurePoint: function () {
-        let that = this;
-        axios.post("/api/getAllMeasurePoint").then(function (response) {
-          that.allMeasurePoint = response.data
-        });
-        console.log(this.allMeasurePoint)
-      },
-      searchClicked: function () {
-        let that = this;
-        that.loadingButton(true)
-        axios.post("/api/correlation", {
-          'factory': this.factory,
-          'line': this.line,
-          'device': this.device,
-          'measurePoint': this.measurePoint,
-          'date': this.date
-        }).then(function (response) {
+        this.allData = data
+        loadingButton(true, that)
+        axios.post("/api/correlation", data).then(function (response) {
           let correlationValue = JSON.parse(response.data.correlationValue);
           let correlationData = JSON.parse(response.data['correlationData']);
           let tableData = [];
@@ -141,11 +61,11 @@
           that.tableData = tableData;
           that.correlationData = correlationData
           that.generateChart()
-          that.loadingButton(false)
         }).catch(function (error) {
           console.log(error)
           that.$message.error("计算出现错误，请检查所选参数是否正确！")
-          that.loadingButton(false)
+        }).finally(function () {
+          loadingButton(false,that)
         })
       },
       generateChart: function () {
@@ -177,7 +97,7 @@
             data: this.correlationData.timestamp,
             name: '时间'
           },
-          yAxis: {scale: true, name: getUnit(this.measurePoint)},
+          yAxis: {scale: true, name: getUnit(this.allData.measurePoint)},
           // Declare several bar series, each will be mapped
           // to a column of dataset.source by default.
           series: generateSeries,
@@ -200,8 +120,6 @@
       }
     },
     mounted() {
-      this.getAllMeasurePoint()
-      this.getMetaData();
     }
   }
 </script>

@@ -1,38 +1,6 @@
 <template>
   <my-frame>
-    <el-card>
-      <div slot="header">
-        <span>行为画像特性分析</span>
-      </div>
-      <el-row>
-        <el-col span=5>
-          <el-cascader
-            v-model="selectedMetaData"
-            :options="metaDataTree"
-            :props="{ expandTrigger: 'hover' }"
-            @change="handleChange"
-            placeholder="请选择设备"
-          />
-        </el-col>
-        <el-col span=5>
-          <el-select value="" v-model="measurePoint" placeholder="测点选择">
-            <el-option v-for="item in allMeasurePoint" :value="item"/>
-          </el-select>
-        </el-col>
-        <el-col span=10>
-          <el-date-picker
-            v-model="date"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期">
-          </el-date-picker>
-        </el-col>
-        <el-col span=4>
-          <el-button type="primary" :loading="this.flag" v-on:click="searchClicked">{{text}}</el-button>
-        </el-col>
-      </el-row>
-    </el-card>
+    <BaseSelectInput title="行为画像特性分析" :loading="this.loading" @searchClicked="searchClicked" />
     <ProfileTable :table-data="allTableData"/>
     <pre id="show"/>
     <!-- <div id="chart1" style="height: 600px;width: 100%;"></div> -->
@@ -48,74 +16,31 @@
   import ProfileTable from "../components/profileTable"
   import axios from "axios"
   import * as echarts from 'echarts';
+  import BaseSelectInput from "../components/BaseSelectInput";
+  import {loadingButton} from "../tool/toolFunc";
 
   export default {
     name: "profileFeature",
-    components: {MyFrame, ProfileTable},
+    components: {BaseSelectInput, MyFrame, ProfileTable},
     data: function () {
       return {
-        factory: '',
-        line: '',
-        device: '',
-        measurePoint: '',
-        algorithm: '',
-        date: '',
-        metaDataTree: '',
-        selectedMetaData: '',
-        allMeasurePoint: [],
         hourX: '',
         dayX: '',
         hourList: [],
         dayList: [],
         allTableData: [],
 
-        text: '计算',
-        flag: false
+        loading: false,
+        allData: '',
       }
     },
     methods: {
-      loadingButton: function (loading) {
-        if (loading === true)
-        {
-          this.text = '计算中'
-          this.flag = true
-        }
-        else{
-          this.text = '计算'
-          this.flag = false
-        }
-      },
-      handleChange: function () {
-        this.factory = this.selectedMetaData[0];
-        this.line = this.selectedMetaData[1];
-        this.device = this.selectedMetaData[2];
-      },
-      getMetaData: function () {
-        let that = this;
-        axios.post("/api/getMetaDataTree").then(function (response) {
-          that.metaDataTree = response.data
-        });
-        console.log(this.metaDataTree)
-      },
-      getAllMeasurePoint: function () {
-        let that = this;
-        axios.post("/api/getAllMeasurePoint").then(function (response) {
-          that.allMeasurePoint = response.data
-        });
-        console.log(this.allMeasurePoint)
-      },
-      searchClicked: function () {
-
+      searchClicked: function (data) {
         let show = document.getElementById("show")
         let that = this;
-        that.loadingButton(true)
-        axios.post("/api/profileFeature", {
-          factory: that.factory,
-          line: that.line,
-          device: that.device,
-          measurePoint: that.measurePoint,
-          date: that.date
-        }).then(function (response) {
+        that.allData = data
+        loadingButton(true,that)
+        axios.post("/api/profileFeature",data).then(function (response) {
 
           that.allTableData = []
           that.allTableData.push(response.data.static)
@@ -124,12 +49,11 @@
           // let obj = response.data
           // show.innerHTML = JSON.stringify(obj,null,2);
           that.generateChart(response.data)
-          that.loadingButton(false)
-
         }).catch(function (error) {
           console.log(error)
           that.$message.error("计算出现错误，请检查所选参数是否正确！")
-          that.loadingButton(false)
+        }).finally(function () {
+          loadingButton(false,that)
         });
       },
       generateChart: function (data) {
@@ -412,8 +336,6 @@
       },
     },
     mounted() {
-      this.getMetaData();
-      this.getAllMeasurePoint()
     }
   }
 

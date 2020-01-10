@@ -135,11 +135,11 @@ export default new Router({
       name:'profileFeature',
       component:profileFeature
     },
-    {
-      path:'/testapp',
-      name:'lyftest',
-      component:lyftest
-    },
+    // {
+    //   path:'/testapp',
+    //   name:'BaseSelectInput',
+    //   component:lyftest
+    // },
     {
       path:'/zuanqu',
       name:'zuanqu',

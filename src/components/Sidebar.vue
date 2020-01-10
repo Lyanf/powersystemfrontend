@@ -8,19 +8,24 @@
       active-text-color="#ffd04b"
       :router="isActive"
     >
-
-      <el-menu-item index="/uploadfile">
-        <i class="el-icon-upload2"/>
-        <span slot="title">本地上传</span>
-      </el-menu-item>
-      <el-menu-item index="/remotedownload">
-        <i class="el-icon-upload"/>
-        <span slot="title">远端上传</span>
-      </el-menu-item>
-      <el-menu-item index="/filesearch">
-        <i class="el-icon-message"/>
-        <span slot="title">文件查看</span>
-      </el-menu-item>
+      <el-submenu index=4>
+        <template slot="title">
+          <i class="el-icon-location"/>
+          <span>上传文件</span>
+        </template>
+        <el-menu-item index="/uploadfile">
+          <i class="el-icon-upload2"/>
+          <span slot="title">本地上传</span>
+        </el-menu-item>
+        <el-menu-item index="/remotedownload">
+          <i class="el-icon-upload"/>
+          <span slot="title">远端上传</span>
+        </el-menu-item>
+        <el-menu-item index="/filesearch">
+          <i class="el-icon-message"/>
+          <span slot="title">文件查看</span>
+        </el-menu-item>
+      </el-submenu>
       <!--<el-menu-item index="/metadata">-->
       <!--<i class="el-icon-tickets"></i>-->
       <!--<span slot="title">元数据管理</span>-->

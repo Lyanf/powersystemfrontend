@@ -1,37 +1,6 @@
 <template>
   <my-frame>
-    <el-card>
-      <div slot="header">
-        <span>能耗基线提取</span>
-      </div>
-      <el-row>
-        <el-col span=5>
-          <el-cascader
-            v-model="selectedMetaData"
-            :options="metaDataTree"
-            :props="{ expandTrigger: 'hover' }"
-            @change="handleChange"
-            placeholder="请选择设备"
-          />
-        </el-col>
-        <el-col span=5>
-          <el-select value="" v-model="measurePoint" placeholder="测点选择">
-            <el-option v-for="item in allMeasurePoint" :value="item"/>
-          </el-select>
-        </el-col>
-        <el-col span=5>
-          <el-date-picker
-            v-model="date"
-            type="date"
-            placeholder="日期选择"
-          >
-          </el-date-picker>
-        </el-col>
-        <el-col span=5>
-          <el-button :loading="this.flag" type="primary" v-on:click="searchClicked">{{text}}</el-button>
-        </el-col>
-      </el-row>
-    </el-card>
+    <BaseSelectInput title="能耗基线提取" :loading="this.loading" @searchClicked="searchClicked"/>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
   </my-frame>
 </template>
@@ -40,63 +9,26 @@
   import MyFrame from "../components/Frame";
   import axios from "axios"
   import * as echarts from 'echarts';
-  import {getUnit} from "../tool/toolFunc";
+  import {getUnit,loadingButton} from "../tool/toolFunc";
+  import BaseSelectInput from "../components/BaseSelectInput";
 
   export default {
     name: "baseLine",
-    components: {MyFrame},
+    components: {BaseSelectInput, MyFrame},
     data: function () {
       return {
-        factory: '',
-        line: '',
-        device: '',
-        measurePoint: '',
-        algorithm: '',
-        date: '',
-        metaDataTree: '',
-        selectedMetaData: '',
-        allMeasurePoint: [],
+
         hourX: '',
         dayX: '',
         hourList: [],
         dayList: [],
 
 
-        text: '计算',
-        flag: false
+        loading:false,
+        allData:''
       }
     },
     methods: {
-      loadingButton: function (loading) {
-        if (loading === true)
-        {
-          this.text = '计算中'
-          this.flag = true
-        }
-        else{
-          this.text = '计算'
-          this.flag = false
-        }
-      },
-      handleChange: function () {
-        this.factory = this.selectedMetaData[0];
-        this.line = this.selectedMetaData[1];
-        this.device = this.selectedMetaData[2];
-      },
-      getMetaData: function () {
-        let that = this;
-        axios.post("/api/getMetaDataTree").then(function (response) {
-          that.metaDataTree = response.data
-        });
-        console.log(this.metaDataTree)
-      },
-      getAllMeasurePoint: function () {
-        let that = this;
-        axios.post("/api/getAllMeasurePoint").then(function (response) {
-          that.allMeasurePoint = response.data
-        });
-        console.log(this.allMeasurePoint)
-      },
       generateSeries: function (dataList) {
         let seriesList = []
         for (let i in dataList) {
@@ -110,20 +42,13 @@
         }
         return seriesList
       },
-      searchClicked: function () {
+      searchClicked: function (data) {
         let that = this
+        that.allData = data
         var chart1 = document.getElementById("chart1");
-        that.loadingButton(true)
+        loadingButton(true,that)
         chart1 = echarts.init(chart1, 'halloween');
-        axios.post("/api/baseline", {
-          factory: that.factory,
-          line: that.line,
-          device: that.device,
-          measurePoint: that.measurePoint,
-          year: that.date.getFullYear(),
-          month: that.date.getMonth(),
-          day: that.date.getDate()
-        }).then(function (response) {
+        axios.post("/api/baseline",data).then(function (response) {
           let data = response.data;
           that.trueData = data.trueValue;
           that.predictData = data.baseValue;
@@ -155,7 +80,7 @@
               data: Array.from({length: that.trueData.length}, (a, i) => i),
               name:'数据点'
             },
-            yAxis: {scale: true,name:getUnit(that.measurePoint)},
+            yAxis: {scale: true,name:getUnit(that.allData.measurePoint)},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: [
@@ -177,19 +102,17 @@
             ],
           };
           chart1.setOption(option1);
-          that.loadingButton(false)
 
         }).catch(function (error) {
           console.log(error)
           that.$message.error("计算出现错误，请检查所选参数是否正确！")
-          that.loadingButton(false)
+        }).finally(function () {
+          loadingButton(false,that)
         });
       },
 
     },
     mounted() {
-      this.getMetaData();
-      this.getAllMeasurePoint()
     }
   }
 

@@ -13,6 +13,18 @@ function getUnit(originSelect) {
   }
   return dict[originSelect]
 }
+
+function loadingButton (loading,that) {
+  if (loading === true)
+  {
+    // that.buttonText = '计算中'
+    that.loading = true
+  }
+  else{
+    // that.buttonText = '计算'
+    that.loading = false
+  }
+}
 export {
-  getUnit
+  getUnit, loadingButton
 }
