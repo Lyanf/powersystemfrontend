@@ -14,7 +14,12 @@
             placeholder="请选择设备"
           />
         </el-col>
-        <el-col span=10 push=3>
+        <el-col span=5>
+          <el-select value="" v-model="measurePoint" placeholder="测点选择">
+            <el-option v-for="item in allMeasurePoint" :value="item"/>
+          </el-select>
+        </el-col>
+        <el-col span=10>
           <el-date-picker
             v-model="date"
             type="daterange"
@@ -23,7 +28,7 @@
             end-placeholder="结束日期">
           </el-date-picker>
         </el-col>
-        <el-col span=3 push=4>
+        <el-col span=3>
           <el-button type="primary" :loading="this.flag" v-on:click="newSearchClicked">{{text}}</el-button>
         </el-col>
       </el-row>

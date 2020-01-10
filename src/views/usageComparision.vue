@@ -1,6 +1,6 @@
 <template>
   <MyFrame>
-    <BaseSelectInput :loading="this.loading"  title="时空相关性分析" @searchClicked="searchClicked"/>
+    <BaseSelectInput :loading="this.loading" :showMul="false"  title="时空相关性分析"  @searchClicked="searchClicked"/>
       <el-table id="showTable"
                 :data="tableData"
                 border

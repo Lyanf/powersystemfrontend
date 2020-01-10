@@ -8,9 +8,8 @@
         <el-cascader
           v-model="selectedMetaData"
           :options="metaDataTree"
-          :props="{ expandTrigger: 'hover', multiple: 'true'  }"
-          @change="handleChange"
-          placeholder="请选择设备"
+          :props="{ expandTrigger: 'hover', multiple: this.showMul  }"
+          placeholder="请选择设备或用户"
         />
       </el-col>
       <el-col span=5>
@@ -42,7 +41,14 @@
 
   export default {
     name: "BaseSelectInput",
-    props: ['title', 'loading'],
+    props: {
+      title:String,
+      loading:String,
+      showMul:{
+        type:Boolean,
+        default:true
+      }
+    },
     data: function () {
       return {
         selectedMetaData: '',
@@ -53,9 +59,6 @@
       }
     },
     methods: {
-      handleChange: function () {
-        console(this.selectedMetaData)
-      },
       getMetaData: function () {
         let that = this;
         axios.post("/api/getMetaDataTree").then(function (response) {
@@ -73,7 +76,7 @@
       searchClicked: function () {
         let data = {
           'measurePoint': this.measurePoint,
-          'selectedMetaData': this.selectedMetaData,
+          'selectedMetaData': this.computedSelectedMetaData,
           'date': this.date
         }
         this.$emit('searchClicked', data)
@@ -91,6 +94,16 @@
         }
         else{
           return '计算中'
+        }
+      },
+      computedSelectedMetaData:function () {
+        if (this.showMul === false){
+          let temp = []
+          temp[0] = this.selectedMetaData
+          return temp
+        }
+        else{
+          return this.selectedMetaData
         }
       }
     }
