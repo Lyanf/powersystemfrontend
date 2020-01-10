@@ -117,10 +117,10 @@
         </el-menu-item>
       </el-submenu>
 
-      <el-menu-item index="/testapp">
-        <i class="el-icon-view"/>
-        <span slot="title">测试模块</span>
-      </el-menu-item>
+<!--      <el-menu-item index="/testapp">-->
+<!--        <i class="el-icon-view"/>-->
+<!--        <span slot="title">测试模块</span>-->
+<!--      </el-menu-item>-->
 
 
     </el-menu>
