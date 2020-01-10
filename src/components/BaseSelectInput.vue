@@ -8,8 +8,8 @@
         <el-cascader
           v-model="selectedMetaData"
           :options="metaDataTree"
-          :props="{ expandTrigger: 'hover', multiple: this.showMul  }"
-          placeholder="请选择设备或用户"
+          :props="{ expandTrigger: 'hover', multiple: this.showMul  } "
+          placeholder="请选择设备或用户" collapse-tags
         />
       </el-col>
       <el-col span=5>
