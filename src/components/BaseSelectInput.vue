@@ -3,21 +3,29 @@
     <div slot="header">
       <span>{{title}}</span>
     </div>
-    <el-row>
-      <el-col span=5>
+    <el-row gutter=20>
+      <el-col span=4>
         <el-cascader
           v-model="selectedMetaData"
           :options="metaDataTree"
           :props="{ expandTrigger: 'hover', multiple: this.showMul  } "
-          placeholder="请选择设备或用户" collapse-tags
+          placeholder="请选择用户" collapse-tags
         />
       </el-col>
-      <el-col span=5>
+      <el-col span=4>
+        <el-cascader
+          v-model="selectedMetaData"
+          :options="metaDataTree"
+          :props="{ expandTrigger: 'hover', multiple: this.showMul  } "
+          placeholder="请选择设备" collapse-tags
+        />
+      </el-col>
+      <el-col span=4>
         <el-select value="" v-model="measurePoint" placeholder="测点选择">
           <el-option v-for="item in allMeasurePoint" :value="item"/>
         </el-select>
       </el-col>
-      <el-col span=10>
+      <el-col span=8>
         <el-date-picker
           v-model="date"
           type="daterange"
@@ -28,9 +36,6 @@
       </el-col>
       <el-col span=4>
         <el-button type="primary" :loading="this.loading" v-on:click="searchClicked">{{buttonText}}</el-button>
-      </el-col>
-      <el-col span=5>
-        <!--          <el-button type="primary" v-on:click="addCompare">添加对比</el-button>-->
       </el-col>
     </el-row>
   </el-card>
