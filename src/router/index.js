@@ -24,6 +24,7 @@ import profileFeature from "../views/profileFeature";
 import zuanqu from "../views/zuanqu"
 import qiepian from "../views/qiepian"
 import xuanzhuan from "../views/xuanzhuan"
+import newSearch2 from "../views/newSearch2";
 
 Vue.use(Router)
 
@@ -154,6 +155,11 @@ export default new Router({
       path:'/xuanzhuan',
       name:'xuanzhuan',
       component:xuanzhuan
+    },
+    {
+      path:'/newSearch2',
+      name:'newSearch2',
+      component:newSearch2
     }
   ]
 })

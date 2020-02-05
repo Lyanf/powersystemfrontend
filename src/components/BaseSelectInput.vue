@@ -8,7 +8,7 @@
         <el-cascader
           v-model="selectedMetaData"
           :options="metaDataTree"
-          :props="{ expandTrigger: 'hover', multiple: this.showMul  } "
+          :props="{ expandTrigger: 'hover', multiple: showMul,checkStrictly: true    } "
           placeholder="请选择设备或用户" collapse-tags
         />
       </el-col>
@@ -46,7 +46,7 @@
       loading:String,
       showMul:{
         type:Boolean,
-        default:true
+        default:false
       }
     },
     data: function () {

@@ -56,7 +56,11 @@
       <!--      </el-menu-item>-->
       <el-menu-item index="/newSearch">
         <i class="el-icon-view"/>
-        <span slot="title">用能查询</span>
+        <span slot="title">用能查询（多测点）</span>
+      </el-menu-item>
+      <el-menu-item index="/newSearch2">
+        <i class="el-icon-view"/>
+        <span slot="title">用能查询（多用户）</span>
       </el-menu-item>
       <el-submenu index=1>
         <template slot="title">
