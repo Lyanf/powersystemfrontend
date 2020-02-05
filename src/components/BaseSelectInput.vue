@@ -20,7 +20,7 @@
       <el-col span=10>
         <el-date-picker
           v-model="date"
-          type="daterange"
+          :type="this.dateSelect"
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期">
@@ -42,11 +42,15 @@
   export default {
     name: "BaseSelectInput",
     props: {
-      title:String,
-      loading:String,
-      showMul:{
-        type:Boolean,
-        default:false
+      title: String,
+      loading: String,
+      showMul: {
+        type: Boolean,
+        default: false
+      },
+      dateSelect: {
+        type: String,
+        default: "daterange"
       }
     },
     data: function () {
@@ -88,21 +92,18 @@
     },
     computed: {
       buttonText: function () {
-        if (this.loading === false)
-        {
+        if (this.loading === false) {
           return '计算'
-        }
-        else{
+        } else {
           return '计算中'
         }
       },
-      computedSelectedMetaData:function () {
-        if (this.showMul === false){
+      computedSelectedMetaData: function () {
+        if (this.showMul === false) {
           let temp = []
           temp[0] = this.selectedMetaData
           return temp
-        }
-        else{
+        } else {
           return this.selectedMetaData
         }
       }

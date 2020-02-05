@@ -1,6 +1,6 @@
 <template>
   <my-frame>
-    <BaseSelectInput title="能耗基线提取" :loading="this.loading" @searchClicked="searchClicked"/>
+    <BaseSelectInput title="能耗基线提取" :loading="this.loading" @searchClicked="searchClicked" date-select="date"/>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
   </my-frame>
 </template>
