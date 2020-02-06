@@ -229,7 +229,7 @@
           },
           xAxis: {
             type: 'category',
-            data: x,
+            data: this.x,
             name: '时间',
 
           },
