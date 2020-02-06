@@ -114,6 +114,7 @@
         allPace: '',
         tableData: '',
         lineData: '',
+        x:'',
 
         chartOption: '',
 
@@ -181,14 +182,7 @@
         }
         return allValue
       }
-      ,
-      getAllDate: function () {
-        let allDate = new Set();
-        for (let i of this.tableData) {
-          allDate.add(i.date)
-        }
-        return Array.from(allDate)
-      }
+
       ,
       searchClicked: function (data) {
         this.clearChart()
@@ -201,6 +195,7 @@
           that.tableData = response.data.tableData
           that.lineData = response.data.lineData
           that.allPlace = response.data.allPlace
+          that.x = response.data.x
           that.handleCurrentChange(1)
         }).catch(function (error) {
           console.log(error)
@@ -234,7 +229,7 @@
           },
           xAxis: {
             type: 'category',
-            // data: (this.getAllDate()),
+            data: x,
             name: '时间',
 
           },
