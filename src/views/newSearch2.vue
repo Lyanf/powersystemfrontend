@@ -1,6 +1,6 @@
 <template>
   <MyFrame>
-    <BaseSelectInput title="用能查询" :show-mul="true" :loading="flag" @searchClicked="searchClicked"/>
+    <BaseSelectInput title="用能查询" :show-mul="true" :loading="this.loading" @searchClicked="searchClicked"/>
     <el-row>
       <el-col span=24>
         <el-table id="showTable"
@@ -47,7 +47,7 @@
             <span>其他功能</span>
           </div>
           <el-row style="margin-top: 10px">
-            <el-select value="" v-model="this.newAddLine" placeholder="请选择要的用户/设备">
+            <el-select value=""  v-model="newAddLine" placeholder="请选择要的用户/设备">
               <el-option v-for="item in this.allPlace" :value="item"/>
             </el-select>
           </el-row>
@@ -56,7 +56,7 @@
               <el-button type="primary" v-on:click="generateChart">添加曲线</el-button>
             </el-col>
             <el-col :span=11>
-              <el-button type="primary" v-on:click="exportExcel">导出表格</el-button>
+              <el-button type="primary" v-on:click="exportExcel2(tableData)">导出表格</el-button>
             </el-col>
           </el-row>
           <el-row gutter=30>
@@ -118,19 +118,10 @@
         chartOption: '',
 
         text: '计算',
-        flag: false
+        loading: false
       }
     },
     methods: {
-      loadingButton: function (loading) {
-        if (loading === true) {
-          this.text = '计算中'
-          this.flag = true
-        } else {
-          this.text = '计算'
-          this.flag = false
-        }
-      },
       handleCurrentChange: function (val) {
         console.log(val)
         let that = this
@@ -149,11 +140,32 @@
         /* get binary string as output */
         var wbout = XLSX.write(wb, {bookType: 'xlsx', bookSST: true, type: 'array'})
         try {
-          FileSaver.saveAs(new Blob([wbout], {type: 'application/octet-stream'}), '示例表格.xlsx')
+          FileSaver.saveAs(new Blob([wbout], {type: 'application/octet-stream'}), '数据表格.xlsx')
         } catch (e) {
           if (typeof console !== 'undefined') console.log(e, wbout)
         }
         return wbout
+      }
+      ,
+      exportExcel2:function(jsonData){
+        let str = `时间,用户/设备,值\n`;
+        //增加\t为了不让表格显示科学计数法或者其他格式
+        for(let i = 0 ; i < jsonData.length ; i++ ){
+          for(let item in jsonData[i]){
+            str+=`${jsonData[i][item] + '\t'},`;
+          }
+          str+='\n';
+        }
+        //encodeURIComponent解决中文乱码
+        let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+        //通过创建a标签实现
+        let link = document.createElement("a");
+        link.href = uri;
+        //对下载的文件命名
+        link.download =  "json数据表.csv";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
       ,
       fixDateFormat: function (oriDate) {
@@ -205,13 +217,11 @@
             name: this.newAddLine
           })
         chart.setOption(this.chartOption, true)
+        console.log(this.chartOption)
       }
       ,
       clearChart: function () {
-        this.measurePoint1 = '';
-        this.measurePoint2 = '';
         var chart = echarts.init(document.getElementById("chart"), 'halloween');
-        this.$chart = chart;
         var option = {
           title: {
             text: '电气量曲线',
@@ -295,30 +305,45 @@
             }
           ]
         };
+        this.chartOption = {
+          title: {
+            text: '电气量曲线'
+            // subtext: '单'
+          },
+          tooltip: {
+            trigger: 'axis'
+          },
+          legend: {},
+          toolbox: {
+            show: true,
+            feature: {
+              dataZoom: {
+                yAxisIndex: 'none'
+              },
+              dataView: {readOnly: false},
+              magicType: {type: ['line', 'bar']},
+              restore: {},
+              saveAsImage: {}
+            }
+          },
+          xAxis: {
+            type: 'category',
+            // data: (this.getAllDate()),
+            name: '时间',
+
+          },
+          yAxis: {
+            type: 'value',
+            scale: true,
+            name: getUnit(this.measurePoint)
+          },
+          series: [],
+        }
+
 
         chart.setOption(option, true)
       }
-      ,
-      newSearchClicked: function () {
-        let that = this;
-        that.loadingButton(true)
-        axios.post('/api/getSpecificData',
-          {
-            factory: this.factory,
-            line: this.line,
-            device: this.device,
-            timestamp: this.date
-          }).then(function (response) {
-          that.tableData = response.data
-        }).then(function () {
-          that.handleCurrentChange(1)
-          that.loadingButton(false)
-        }).catch(function (error) {
-          console.log(error)
-          that.$message.error("计算出现错误，请检查所选参数是否正确！")
-          that.loadingButton(false)
-        })
-      }
+
     },
     mounted() {
       var chart = echarts.init(document.getElementById("chart"), 'halloween');
@@ -429,7 +454,7 @@
           }
         },
         xAxis: {
-          type: 'value',
+          type: 'category',
           // data: (this.getAllDate()),
           name: '时间',
 
