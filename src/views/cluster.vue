@@ -12,7 +12,7 @@
   import * as echarts from 'echarts';
   import axios from "axios"
   import BaseSelectInput from "../components/BaseSelectInput";
-  import {loadingButton} from "../tool/toolFunc";
+  import {getUnit, loadingButton} from "../tool/toolFunc";
 
   export default {
     name: "cluster",
@@ -25,7 +25,9 @@
         dayList: [],
 
 
-        loading:false
+        loading:false,
+
+        allData:''
       }
     },
     methods: {
@@ -44,6 +46,7 @@
       },
       searchClicked: function (data) {
         let that = this
+        that.allData = data
         let chart1 = document.getElementById("chart1");
         let chart2 = document.getElementById("chart2");
         let chart3 = document.getElementById("chart3");
@@ -85,9 +88,9 @@
             xAxis: {
               type: 'category',
               data: that.dayX,
-              name:'数据点'
+              // name:'数据点'
             },
-            yAxis: {scale: true,name:that.measurePoint},
+            yAxis: {scale: true,name:getUnit(that.allData.measurePoint)},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: that.generateSeries(that.dayList)
@@ -116,7 +119,7 @@
               type: 'category',
               data: that.dayX
             },
-            yAxis: {scale: true},
+            yAxis: {scale: true,name:getUnit(that.allData.measurePoint)},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: that.generateSeries(that.dayList)
@@ -145,7 +148,7 @@
               type: 'category',
               data: that.dayX
             },
-            yAxis: {scale: true},
+            yAxis: {scale: true,name:getUnit(that.allData.measurePoint)},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: that.generateSeries(that.dayList)

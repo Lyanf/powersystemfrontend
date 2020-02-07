@@ -78,7 +78,7 @@
             xAxis: {
               type: 'category',
               data: Array.from({length: that.trueData.length}, (a, i) => i),
-              name:'数据点'
+              // name:'数据点'
             },
             yAxis: {scale: true,name:getUnit(that.allData.measurePoint)},
             // Declare several bar series, each will be mapped

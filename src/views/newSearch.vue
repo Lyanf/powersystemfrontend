@@ -2,7 +2,7 @@
   <MyFrame>
     <el-card>
       <div slot="header">
-        <span>用能查询</span>
+        <span>用能查询（多测点）</span>
       </div>
       <el-row>
         <el-col span=5>
@@ -14,11 +14,11 @@
             placeholder="请选择设备"
           />
         </el-col>
-        <el-col span=5>
-          <el-select value="" v-model="measurePoint" placeholder="测点选择">
-            <el-option v-for="item in allMeasurePoint" :value="item"/>
-          </el-select>
-        </el-col>
+<!--        <el-col span=5>-->
+<!--          <el-select value="" v-model="measurePoint" placeholder="测点选择">-->
+<!--            <el-option v-for="item in allMeasurePoint" :value="item"/>-->
+<!--          </el-select>-->
+<!--        </el-col>-->
         <el-col span=10>
           <el-date-picker
             v-model="date"

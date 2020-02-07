@@ -1,5 +1,5 @@
 <template>
-  <div style="min-height: 100vh;background-color: #1b3157">
+  <div style="min-height: 100vh;background-color: #4f58db">
     <el-container>
       <el-header>
         <Navmenu/>

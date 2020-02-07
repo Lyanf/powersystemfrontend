@@ -1,6 +1,6 @@
 function getUnit(originSelect) {
   let dict = {
-    'PW':'KWH',
+    'PW':'kWh',
     'AA':'A',
     'BA':'A',
     'CA':'A',

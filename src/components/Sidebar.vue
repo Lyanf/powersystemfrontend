@@ -1,9 +1,9 @@
 <template>
 
-  <div id="aside" style="background-color:#1b3157;height: 100%;">
+  <div id="aside" style="background-color:#4f58db;height: 100%;">
     <el-menu
       class="el-menu-vertical-demo"
-      background-color="#1b3157"
+      background-color="#4f58db"
       text-color="#fff"
       active-text-color="#ffd04b"
       :router="isActive"

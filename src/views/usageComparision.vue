@@ -85,7 +85,7 @@
         console.log(generateSeries)
         var option1 = {
           title: {
-            text: "厂商用能同比分析"
+            text: "用户（设备）用能同比分析"
           },
           legend: {},
           tooltip: {

@@ -1,6 +1,6 @@
 <template>
   <MyFrame>
-    <BaseSelectInput title="用能查询" :show-mul="true" :loading="this.loading" @searchClicked="searchClicked"/>
+    <BaseSelectInput title="用能查询（多用户）" :show-mul="true" :loading="this.loading" @searchClicked="searchClicked"/>
     <el-row>
       <el-col span=24>
         <el-table id="showTable"
@@ -106,6 +106,7 @@
       return {
         allMeasurePoint: '',
         metaDataTree: '',
+        measurePoint:'',
 
 
         showData: '',
@@ -185,9 +186,9 @@
 
       ,
       searchClicked: function (data) {
-        this.clearChart()
         this.newAddLine = ''
-        let show = document.getElementById("show")
+        this.measurePoint = data['measurePoint']
+        this.clearChart()
         let that = this;
         that.allData = data
         loadingButton(true, that)

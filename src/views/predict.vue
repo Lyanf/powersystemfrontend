@@ -1,6 +1,6 @@
 <template>
   <MyFrame>
-    <BaseSelectInput title="短期负荷预测" :loading="this.loading" @searchClicked="searchClicked"/>
+    <BaseSelectInput title="短期负荷预测" :loading="loading" @searchClicked="searchClicked"/>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
   </MyFrame>
 </template>
@@ -33,13 +33,12 @@
         let that = this
         that.allData = data
         var chart1 = document.getElementById("chart1");
-        loadingButton(false, that)
+        loadingButton(true, that)
         chart1 = echarts.init(chart1, 'halloween');
         axios.post("/api/predict", data).then(function (response) {
           let data = response.data;
           that.trueData = data['y_true'];
           that.predictData = data['y_pred'];
-          console.log([Array.from({length: 4000}, (a, i) => i)])
           var option1 = {
             toolbox: {
               show: true,
@@ -54,7 +53,7 @@
               }
             },
             title: {
-              text: "厂商用能预测图"
+              text: "用户（设备）用能预测"
             },
             legend: {},
             tooltip: {
@@ -63,7 +62,7 @@
             xAxis: {
               type: 'category',
               data: Array.from({length: that.trueData.length}, (a, i) => i),
-              name: '数据点'
+              // name: '数据点'
             },
             yAxis: {scale: true, name: getUnit(that.allData.measurePoint)},
             // Declare several bar series, each will be mapped
