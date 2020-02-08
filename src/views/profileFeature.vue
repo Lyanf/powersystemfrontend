@@ -197,7 +197,7 @@
           },
           xAxis: {
             type: 'category',
-            name: "温度(℃)",
+            
             boundaryGap: false,
             data: function () {
               var list = [];
@@ -208,6 +208,7 @@
             }()
           },
           yAxis: {
+          	name: "温度(℃)",
             scale: true,
             "min": "dataMin",
             type: 'value',
@@ -252,7 +253,7 @@
           },
           xAxis: {
             type: 'category',
-            name: "负荷(KW)",
+            
             boundaryGap: false,
             data: function () {
               var list = [];
@@ -263,6 +264,7 @@
             }()
           },
           yAxis: {
+          	name: "负荷(kW)",
             scale: true,
             type: 'value',
 
