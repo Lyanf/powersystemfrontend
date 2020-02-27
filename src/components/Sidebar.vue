@@ -54,10 +54,10 @@
       <!--        <i class="el-icon-view"/>-->
       <!--        <span slot="title">需量分析</span>-->
       <!--      </el-menu-item>-->
-      <el-menu-item index="/newSearch">
-        <i class="el-icon-view"/>
-        <span slot="title">用能查询（多测点）</span>
-      </el-menu-item>
+<!--      <el-menu-item index="/newSearch">-->
+<!--        <i class="el-icon-view"/>-->
+<!--        <span slot="title">用能查询（多测点）</span>-->
+<!--      </el-menu-item>-->
       <el-menu-item index="/newSearch2">
         <i class="el-icon-view"/>
         <span slot="title">用能查询（多用户）</span>
