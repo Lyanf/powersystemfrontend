@@ -38,6 +38,7 @@
 
 <script>
   import axios from "axios";
+  import {changeDateFormat} from '../tool/toolFunc'
 
   export default {
     name: "BaseSelectInput",
@@ -81,7 +82,7 @@
         let data = {
           'measurePoint': this.measurePoint,
           'selectedMetaData': this.computedSelectedMetaData,
-          'date': this.date
+          'date': changeDateFormat(this.date)
         }
         this.$emit('searchClicked', data)
       }

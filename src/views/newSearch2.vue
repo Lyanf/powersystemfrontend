@@ -12,7 +12,7 @@
           <!--              max-height="400px"-->
           <el-table-column
             type="index"
-            width="50">
+            width="50" label="序号">
           </el-table-column>
           <el-table-column
             prop="date"
@@ -26,7 +26,7 @@
           </el-table-column>
           <el-table-column
             prop="value"
-            label="值"
+            :label="tableShowUnit"
           >
           </el-table-column>
         </el-table>
@@ -120,7 +120,10 @@
         chartOption: '',
 
         text: '计算',
-        loading: false
+        loading: false,
+
+        unit:'',
+        tableShowUnit:'值'
       }
     },
     methods: {
@@ -189,6 +192,8 @@
         this.newAddLine = ''
         this.measurePoint = data['measurePoint']
         this.clearChart()
+        this.unit = getUnit(this.measurePoint)
+        this.tableShowUnit = this.measurePoint+'值'+ '('+')'+this.unit
         let that = this;
         that.allData = data
         loadingButton(true, that)
@@ -237,7 +242,7 @@
           yAxis: {
             type: 'value',
             scale: true,
-            name: getUnit(this.measurePoint)
+            name: this.measurePoint + '('+')'+getUnit(this.measurePoint)
           },
           series: [],
         }

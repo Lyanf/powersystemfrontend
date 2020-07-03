@@ -74,6 +74,7 @@
   import axios from "axios"
   import MyFrame from "../components/Frame";
   import OlapTable from "../components/olapTable";
+  import {changeDateFormat} from "../tool/toolFunc";
 
   export default {
     name: "xuanzhuan",
@@ -119,10 +120,10 @@
         axios.post("/api/xuanzhuan", {
           p1: that.selectedMetaData,
           p2: that.measurePoint,
-          p3:that.date,
+          p3: changeDateFormat(that.date),
           p4: that.collectContent,
           p5: that.collectMethod,
-          
+
         }).then(function (response) {
           // that.allTableData = response.data
           if (response.data.status === 'error'){
@@ -174,7 +175,7 @@
           p3:that.date,
           p4: that.collectContent,
           p5: that.collectMethod,
-          
+
         }).then(function (response) {
           // that.allTableData = response.data
           if (response.data.status === 'error'){
