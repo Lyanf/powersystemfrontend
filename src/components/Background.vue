@@ -10,8 +10,8 @@
 			return{
 
 				background:{
-					// backgroundImage:"url("+require("../assets/image/background.jpg")+")",
-          backgroundColor:'#4f58db',
+					backgroundImage:"url("+require("../assets/image/power1.jpg")+")",
+          			backgroundColor:'#4f58db',
 					backgroundRepeat: "no-repeat",
 					backgroundSize: "100% 100%",
 					backgroundPosition: "center",
