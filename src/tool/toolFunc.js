@@ -10,12 +10,12 @@ function getMeasurePointChineseName(measurePointEnglishName) {
 }
 function changeDateFormat(originalDate){
   if (originalDate instanceof Array){
-    let start = moment(originalDatedate[0]).format('YYYY-MM-DD HH:mm:ss');
-    let end = moment(originalDatedate[1]).format('YYYY-MM-DD HH:mm:ss');
+    let start = moment(originalDate[0]).format('YYYY-MM-DD HH:mm:ss');
+    let end = moment(originalDate[1]).format('YYYY-MM-DD HH:mm:ss');
     return [start,end]
   }
   else{
-    return moment(originalDatedate).format('YYYY-MM-DD HH:mm:ss');
+    return moment(originalDate).format('YYYY-MM-DD HH:mm:ss');
   }
 
 }
