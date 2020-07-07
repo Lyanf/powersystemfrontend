@@ -27,7 +27,9 @@
               type="daterange"
               range-separator="至"
               start-placeholder="开始日期"
-              end-placeholder="结束日期">
+              end-placeholder="结束日期"
+              :default-time="defaultTime"
+            >
             </el-date-picker>
           </el-col>
           <!--          <el-col :span=4>-->
@@ -79,6 +81,14 @@
   export default {
     name: "xuanzhuan",
     components: {OlapTable, MyFrame, Sidebar},
+    computed:{
+      defaultTime: function () {
+        let temp = []
+        temp[0] = "00:00:00"
+        temp[1] = "23:59:59"
+        return temp
+      }
+    },
     data: function () {
       return {
         factory: '',
@@ -172,7 +182,7 @@
         axios.post("/api/qiepian", {
           p1: that.selectedMetaData,
           p2: that.measurePoint,
-          p3:that.date,
+          p3: changeDateFormat(that.date),
           p4: that.collectContent,
           p5: that.collectMethod,
 

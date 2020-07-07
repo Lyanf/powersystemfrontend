@@ -27,7 +27,9 @@
               type="daterange"
               range-separator="至"
               start-placeholder="开始日期"
-              end-placeholder="结束日期">
+              end-placeholder="结束日期"
+              :default-time="defaultTime"
+            >
             </el-date-picker>
           </el-col>
 
@@ -73,6 +75,14 @@
   export default {
     name: "qiepian",
     components: {OlapTable, MyFrame, Sidebar},
+    computed:{
+      defaultTime: function () {
+        let temp = []
+        temp[0] = "00:00:00"
+        temp[1] = "23:59:59"
+        return temp
+      }
+    },
     data: function () {
       return {
         factory: '',

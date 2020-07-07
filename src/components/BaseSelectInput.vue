@@ -18,13 +18,23 @@
         </el-select>
       </el-col>
       <el-col span=10>
-        <el-date-picker
-          v-model="date"
-          :type="this.dateSelect"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期">
+
+        <el-date-picker v-if="this.dateSelect=='daterange'"
+                        v-model="date"
+                        :type="this.dateSelect"
+                        range-separator="至"
+                        :default-time="defaultTime"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
         </el-date-picker>
+        <el-date-picker v-else
+                        v-model="date"
+                        :type="this.dateSelect"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
+        </el-date-picker>
+
       </el-col>
       <el-col span=4>
         <el-button type="primary" :loading="this.loading" v-on:click="searchClicked">{{buttonText}}</el-button>
@@ -84,6 +94,9 @@
           'selectedMetaData': this.computedSelectedMetaData,
           'date': changeDateFormat(this.date)
         }
+        console.log(this.defaultTime)
+        console.log(document.getElementById("test"))
+
         this.$emit('searchClicked', data)
       }
     },
@@ -107,6 +120,12 @@
         } else {
           return this.selectedMetaData
         }
+      },
+      defaultTime: function () {
+        let temp = []
+        temp[0] = "00:00:00"
+        temp[1] = "23:59:59"
+        return temp
       }
     }
   }
