@@ -10,7 +10,7 @@ function getMeasurePointChineseName(measurePointEnglishName) {
 }
 function getMeasurePointAndUnit(measurePoint,hasValue){
   let unit = getUnit(measurePoint)
-  if (hasValue.isEqual(0)){
+  if (hasValue === 0){
     return measurePoint+'('+unit+')'
   }
   else{
