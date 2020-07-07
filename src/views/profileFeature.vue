@@ -17,7 +17,7 @@
   import axios from "axios"
   import * as echarts from 'echarts';
   import BaseSelectInput from "../components/BaseSelectInput";
-  import {loadingButton} from "../tool/toolFunc";
+  import {getMeasurePointAndUnit, loadingButton} from "../tool/toolFunc";
 
   export default {
     name: "profileFeature",
@@ -158,6 +158,7 @@
             "min": "dataMin",
             type: 'value',
             minInterval: 0.01,
+            name: getMeasurePointAndUnit(this.measurePoint,0)
 
           },
           // Declare several bar series, each will be mapped

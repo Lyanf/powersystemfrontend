@@ -65,9 +65,13 @@
 
   export default {
     name: "profileTable",
+    computed:{
+      jingtaitexing() {
+        return '静态特性' + '  ' + getMeasurePointAndUnit(this.measurePoint, 0)
+      }
+    },
     data() {
       return {
-        jingtaitexing:'静态特性'+'  '+getMeasurePointAndUnit(this.measurePoint,0),
       }
     },
     // props:['tableData','tableLabel'],
