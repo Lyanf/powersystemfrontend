@@ -85,7 +85,7 @@
   import XLSX from 'xlsx'
   import MyFrame from "../components/Frame";
   import OlapTable from "../components/olapTable";
-  import {getUnit, loadingButton} from "../tool/toolFunc"
+  import {getUnit, loadingButton, getMeasurePointAndUnit} from "../tool/toolFunc"
   import BaseSelectInput from "../components/BaseSelectInput";
 
 
@@ -193,7 +193,7 @@
         this.measurePoint = data['measurePoint']
         this.clearChart()
         this.unit = getUnit(this.measurePoint)
-        this.tableShowUnit = this.measurePoint+'值'+ '('+')'+this.unit
+        this.tableShowUnit = getMeasurePointAndUnit(this.measurePoint,1)
         let that = this;
         that.allData = data
         loadingButton(true, that)
@@ -242,7 +242,7 @@
           yAxis: {
             type: 'value',
             scale: true,
-            name: this.measurePoint + '('+')'+getUnit(this.measurePoint)
+            name: getMeasurePointAndUnit(this.measurePoint,0)
           },
           series: [],
         }

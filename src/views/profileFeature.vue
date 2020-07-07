@@ -1,7 +1,7 @@
 <template>
   <my-frame>
     <BaseSelectInput title="行为画像特性分析" :loading="this.loading" @searchClicked="searchClicked" />
-    <ProfileTable :table-data="allTableData"/>
+    <ProfileTable :table-data="allTableData" :measurePoint="measurePoint"/>
     <pre id="show"/>
     <!-- <div id="chart1" style="height: 600px;width: 100%;"></div> -->
     <div id="chart2" style="height: 600px;width: 100%;"></div>
@@ -32,10 +32,12 @@
 
         loading: false,
         allData: '',
+        measurePoint:'',
       }
     },
     methods: {
       searchClicked: function (data) {
+        this.measurePoint = data.measurePoint
         let show = document.getElementById("show")
         let that = this;
         that.allData = data
@@ -197,7 +199,7 @@
           },
           xAxis: {
             type: 'category',
-            
+
             boundaryGap: false,
             data: function () {
               var list = [];
@@ -253,7 +255,7 @@
           },
           xAxis: {
             type: 'category',
-            
+
             boundaryGap: false,
             data: function () {
               var list = [];

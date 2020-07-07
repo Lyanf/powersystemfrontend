@@ -8,7 +8,7 @@
                 max-height="300"
       >
         <el-table-column
-          type="index"
+          type="index" :label="序号"
         >
         </el-table-column>
         <el-table-column

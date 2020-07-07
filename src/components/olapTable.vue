@@ -6,17 +6,17 @@
       tooltip-effect="dark"
       style="width: 100%"
       >
-      
+
         <el-table-column
           v-for="(item,index) in tableLabel"
           :key= "index"
           :prop = "item.prop"
-          :label="item.label"
+          :label="insideGetMeasurePointAndUnit(item.label,1)"
           :index = "item.index"
           v-if="item.prop != 'id'"
           >
         </el-table-column>
-    
+
       <!-- <el-table-column
         prop="date"
         label="时间"
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+  import {getMeasurePointAndUnit} from '../tool/toolFunc'
   export default {
     name: "olapTable",
     data() {
@@ -83,12 +84,15 @@
             return []
           },
           required: true
-          
+
         }
     },
     methods: {
       current_change: function (currentPage) {
         this.currentPage = currentPage;
+      },
+      insideGetMeasurePointAndUnit(measurePoint,hasValue){
+        return getMeasurePointAndUnit(measurePoint,hasValue)
       },
       mounted: function () {
       }
@@ -96,12 +100,12 @@
     watch:{
       tableData(val){
         this.total = val.length
-        
+
 
       },
-      
+
     },
-   
+
   }
 </script>
 

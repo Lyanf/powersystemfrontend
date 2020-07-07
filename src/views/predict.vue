@@ -11,7 +11,7 @@
   import Sidebar from "../components/Sidebar"
   import axios from "axios"
   import MyFrame from "../components/Frame";
-  import {getUnit, loadingButton} from "../tool/toolFunc";
+  import {getMeasurePointAndUnit, getUnit, loadingButton} from "../tool/toolFunc";
   import BaseSelectInput from "../components/BaseSelectInput";
 
   export default {
@@ -64,7 +64,7 @@
               data: Array.from({length: that.trueData.length}, (a, i) => i),
               // name: '数据点'
             },
-            yAxis: {scale: true, name: getUnit(that.allData.measurePoint)},
+            yAxis: {scale: true, name: getMeasurePointAndUnit(that.allData.measurePoint,0)},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: [

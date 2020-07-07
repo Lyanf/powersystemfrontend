@@ -55,7 +55,7 @@
               <el-option value="求平均"/>
             </el-select>
           </el-col>
-          <el-col :span=4 push=5>
+          <el-col :span=5 push=5>
             <el-button type="primary" :loading="flagq"  v-on:click="collectClicked">{{textq}}</el-button>
             <el-button type="primary" :loading="flagr" v-on:click="rotateClicked">{{ textr }}</el-button>
           </el-col>

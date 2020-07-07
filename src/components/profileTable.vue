@@ -4,7 +4,7 @@
     <el-table
     :data="tableData"
     style="width: 100%">
-    <el-table-column label="静态特性">
+    <el-table-column :label="jingtaitexing">
       <el-table-column
         prop="maxv"
         label="最大值"
@@ -40,7 +40,7 @@
         label="fft频谱标准差"
         >
       </el-table-column>
-      
+
     </el-table-column>
 
     <el-table-column label="动态特性">
@@ -54,18 +54,20 @@
         label="行为信息熵（天尺度）"
         >
       </el-table-column>
-      
+
     </el-table-column>
   </el-table>
   </div>
 </template>
 
 <script>
+  import {getMeasurePointAndUnit} from "../tool/toolFunc";
+
   export default {
     name: "profileTable",
     data() {
       return {
-        
+        jingtaitexing:'静态特性'+'  '+getMeasurePointAndUnit(this.measurePoint,0),
       }
     },
     // props:['tableData','tableLabel'],
@@ -75,19 +77,25 @@
           default: function () {
             return []
           }
+        },
+        measurePoint:{
+          type: String,
+          default:function () {
+            return ''
+          }
         }
-       
+
     },
     methods: {
-      
+
       mounted: function () {
       }
     },
     watch:{
-      
-      
+
+
     },
-   
+
   }
 </script>
 

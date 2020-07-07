@@ -12,7 +12,7 @@
   import * as echarts from 'echarts';
   import axios from "axios"
   import BaseSelectInput from "../components/BaseSelectInput";
-  import {getUnit, loadingButton} from "../tool/toolFunc";
+  import {getMeasurePointAndUnit, getUnit, loadingButton} from "../tool/toolFunc";
 
   export default {
     name: "cluster",
@@ -90,7 +90,7 @@
               data: that.dayX,
               // name:'数据点'
             },
-            yAxis: {scale: true,name:getUnit(that.allData.measurePoint)},
+            yAxis: {scale: true,name:getMeasurePointAndUnit(that.allData.measurePoint,0)},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: that.generateSeries(that.dayList)
@@ -119,7 +119,7 @@
               type: 'category',
               data: that.dayX
             },
-            yAxis: {scale: true,name:getUnit(that.allData.measurePoint)},
+            yAxis: {scale: true,name:getMeasurePointAndUnit(that.allData.measurePoint,0)},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: that.generateSeries(that.dayList)
@@ -148,7 +148,7 @@
               type: 'category',
               data: that.dayX
             },
-            yAxis: {scale: true,name:getUnit(that.allData.measurePoint)},
+            yAxis: {scale: true,name:getMeasurePointAndUnit(that.allData.measurePoint,0)},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: that.generateSeries(that.dayList)
