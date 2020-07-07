@@ -68,8 +68,7 @@
   import axios from "axios"
   import MyFrame from "../components/Frame";
   import OlapTable from "../components/olapTable";
-  import 'changeDateFormat'
-  import {changeDateFormat} from "../tool/toolFunc"; from '../tool/toolFunc';
+  import {changeDateFormat} from "../tool/toolFunc";
 
   export default {
     name: "qiepian",
