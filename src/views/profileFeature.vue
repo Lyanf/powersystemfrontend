@@ -1,13 +1,21 @@
 <template>
   <my-frame>
-    <BaseSelectInput title="行为画像特性分析" :loading="this.loading" @searchClicked="searchClicked" />
+    <BaseSelectInput title="行为画像特性分析" :loading="this.loading" @searchClicked="searchClicked"/>
     <ProfileTable :table-data="allTableData" :measurePoint="measurePoint"/>
     <pre id="show"/>
-    <!-- <div id="chart1" style="height: 600px;width: 100%;"></div> -->
-    <div id="chart2" style="height: 600px;width: 100%;"></div>
-    <div id="chart3" style="height: 600px;width: 100%;"></div>
-    <div id="chart4" style="height: 600px;width: 100%;"></div>
-    <div id="chart5" style="height: 600px;width: 100%;"></div>
+    <el-row>
+      <!-- <div id="chart1" style="height: 600px;width: 100%;"></div> -->
+      <div id="chart2" style="height: 600px;width: 100%;"></div>
+    </el-row>
+    <el-row>
+      <div id="chart3" style="height: 600px;width: 100%;"></div>
+    </el-row>
+    <el-row>
+      <div id="chart4" style="height: 600px;width: 100%;"></div>
+    </el-row>
+    <el-row>
+      <div id="chart5" style="height: 600px;width: 100%;"></div>
+    </el-row>
   </my-frame>
 </template>
 
@@ -32,7 +40,7 @@
 
         loading: false,
         allData: '',
-        measurePoint:'',
+        measurePoint: '',
       }
     },
     methods: {
@@ -41,8 +49,8 @@
         let show = document.getElementById("show")
         let that = this;
         that.allData = data
-        loadingButton(true,that)
-        axios.post("/api/profileFeature",data).then(function (response) {
+        loadingButton(true, that)
+        axios.post("/api/profileFeature", data).then(function (response) {
 
           that.allTableData = []
           that.allTableData.push(response.data.static)
@@ -55,7 +63,7 @@
           console.log(error)
           that.$message.error("计算出现错误，请检查所选参数是否正确！")
         }).finally(function () {
-          loadingButton(false,that)
+          loadingButton(false, that)
         });
       },
       generateChart: function (data) {
@@ -135,10 +143,16 @@
         }
         console.log(generateSeries)
         var option2 = {
+          // backgroundColor: "#1A1835",
           title: {
             text: "典型特征模式曲线（天尺度）"
           },
-          legend: {},
+          legend: {
+            type: 'scroll',
+            left:'300px',
+            right:'200px',
+
+          },
           tooltip: {
             trigger: 'axis'
           },
@@ -154,12 +168,13 @@
             }()
           },
           yAxis: {
-            scale: true,
-            "min": "dataMin",
+            // scale: true,
+            min: function (value) {
+              return value.min;
+            },
             type: 'value',
-            minInterval: 0.01,
-            name: getMeasurePointAndUnit(this.measurePoint,0)
-
+            // minInterval: 0.01,
+            name: getMeasurePointAndUnit(this.measurePoint, 0)
           },
           // Declare several bar series, each will be mapped
           // to a column of dataset.source by default.
@@ -211,7 +226,7 @@
             }()
           },
           yAxis: {
-          	name: "温度(℃)",
+            name: "温度(℃)",
             scale: true,
             "min": "dataMin",
             type: 'value',
@@ -267,7 +282,7 @@
             }()
           },
           yAxis: {
-          	name: "负荷(kW)",
+            name: "负荷(kW)",
             scale: true,
             type: 'value',
 

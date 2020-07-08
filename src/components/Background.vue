@@ -11,7 +11,7 @@
 
 				background:{
 					backgroundImage:"url("+require("../assets/image/power1.jpg")+")",
-          			backgroundColor:'#4f58db',
+          			backgroundColor:'#0013D9',
 					backgroundRepeat: "no-repeat",
 					backgroundSize: "100% 100%",
 					backgroundPosition: "center",
