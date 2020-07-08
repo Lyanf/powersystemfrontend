@@ -35,13 +35,18 @@
                         end-placeholder="结束日期">
         </el-date-picker>
 
+        <el-select style="margin-top:10px" v-if="predict == true" v-model="selectAllTrain" placeholder="训练数据选择">
+          <el-option label="选择全部训练数据" value="true"></el-option>
+          <el-option label="选择时间段内训练数据" value="false"></el-option>
+        </el-select>
+
       </el-col>
       <el-col span=4>
         <el-button type="primary" :loading="this.loading" v-on:click="searchClicked">{{buttonText}}</el-button>
       </el-col>
-      <el-col span=5>
-        <!--          <el-button type="primary" v-on:click="addCompare">添加对比</el-button>-->
-      </el-col>
+<!--      <el-col span=5>-->
+<!--        &lt;!&ndash;          <el-button type="primary" v-on:click="addCompare">添加对比</el-button>&ndash;&gt;-->
+<!--      </el-col>-->
     </el-row>
   </el-card>
 </template>
@@ -62,6 +67,10 @@
       dateSelect: {
         type: String,
         default: "daterange"
+      },
+      predict: {
+        type: Boolean,
+        default: false
       }
     },
     data: function () {
@@ -71,6 +80,7 @@
         measurePoint: '',
         allMeasurePoint: '',
         date: '',
+        selectAllTrain:'',
       }
     },
     methods: {
@@ -93,6 +103,9 @@
           'measurePoint': this.measurePoint,
           'selectedMetaData': this.computedSelectedMetaData,
           'date': changeDateFormat(this.date)
+        }
+        if (this.predict == true){
+          data['selectAllTrain'] = this.selectAllTrain
         }
         console.log(this.defaultTime)
         console.log(document.getElementById("test"))

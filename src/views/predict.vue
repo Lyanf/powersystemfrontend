@@ -1,6 +1,6 @@
 <template>
   <MyFrame>
-    <BaseSelectInput title="短期负荷预测" :loading="loading" @searchClicked="searchClicked"/>
+    <BaseSelectInput title="短期负荷预测" :loading="loading" @searchClicked="searchClicked" :predict="true"/>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
   </MyFrame>
 </template>
