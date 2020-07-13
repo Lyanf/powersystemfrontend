@@ -153,7 +153,7 @@
       }
       ,
       exportExcel2:function(jsonData){
-        let str = `时间,用户/设备,值\n`;
+        let str = `时间,用户/设备,`+this.tableShowUnit+`\n`;
         //增加\t为了不让表格显示科学计数法或者其他格式
         for(let i = 0 ; i < jsonData.length ; i++ ){
           for(let item in jsonData[i]){
@@ -167,7 +167,7 @@
         let link = document.createElement("a");
         link.href = uri;
         //对下载的文件命名
-        link.download =  "json数据表.csv";
+        link.download =  "用能查询导出数据表.csv";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
