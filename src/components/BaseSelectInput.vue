@@ -47,7 +47,7 @@
         <el-button type="primary" :loading="this.loading" v-on:click="searchClicked">{{buttonText}}</el-button>
         </el-row>
         <el-row style="margin-top: 10px">
-        <el-button v-if="predict == true "type="primary" v-on:click="exportClicked">导出</el-button>
+        <el-button v-if="predict == true "type="primary" v-on:click="exportClicked">导出表格</el-button>
         </el-row>
       </el-col>
     </el-row>
