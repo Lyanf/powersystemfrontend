@@ -18,7 +18,7 @@
         </el-select>
       </el-col>
       <el-col span=10>
-
+      <el-row>
         <el-date-picker v-if="this.dateSelect=='daterange'"
                         v-model="date"
                         :type="this.dateSelect"
@@ -34,19 +34,22 @@
                         start-placeholder="开始日期"
                         end-placeholder="结束日期">
         </el-date-picker>
-
-        <el-select style="margin-top:10px" v-if="predict == true" v-model="selectAllTrain" placeholder="训练数据选择">
+      </el-row>
+        <el-row style="margin-top: 10px">
+        <el-select  v-if="predict == true" v-model="selectAllTrain" placeholder="训练数据选择">
           <el-option label="选择全部训练数据" value="true"></el-option>
           <el-option label="选择时间段内训练数据" value="false"></el-option>
         </el-select>
-
+        </el-row>
       </el-col>
       <el-col span=4>
+        <el-row>
         <el-button type="primary" :loading="this.loading" v-on:click="searchClicked">{{buttonText}}</el-button>
+        </el-row>
+        <el-row style="margin-top: 10px">
+        <el-button v-if="predict == true "type="primary" v-on:click="exportClicked">导出</el-button>
+        </el-row>
       </el-col>
-<!--      <el-col span=5>-->
-<!--        &lt;!&ndash;          <el-button type="primary" v-on:click="addCompare">添加对比</el-button>&ndash;&gt;-->
-<!--      </el-col>-->
     </el-row>
   </el-card>
 </template>
@@ -111,6 +114,9 @@
         console.log(document.getElementById("test"))
 
         this.$emit('searchClicked', data)
+      },
+      exportClicked:function () {
+        this.$emit('exportClicked')
       }
     },
     mounted() {
