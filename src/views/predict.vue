@@ -165,7 +165,7 @@
             let temp = {};
             temp['y_true'] = that.trueData[i];
             temp['y_pred'] = that.predictData[i];
-            temp['wucha'] = Math.abs(Number(that.predictData[i] - that.trueData[i]) / Number(that.trueData[i]))*100
+            temp['wucha'] = (Math.abs(Number(that.predictData[i] - that.trueData[i]) / Number(that.trueData[i])) * 100).toFixed(3)
             that.tableData.push(temp);
           }
           that.tableShowUnit1 = '真实' + that.measurePoint + '值' + '(' + getUnit(that.measurePoint) + ')';
