@@ -1,12 +1,13 @@
 <template>
   <MyFrame>
-    <BaseSelectInput title="短期负荷预测" :loading="loading" @exportClicked="exportClicked(tableData)"  @searchClicked="searchClicked" :predict="true"/>
+    <BaseSelectInput title="短期负荷预测" :loading="loading" @exportClicked="exportClicked(tableData)"
+                     @searchClicked="searchClicked" :predict="true"/>
     <el-row>
       <el-col :span="24">
-        <el-table :data="tableData" border  height="300px">
+        <el-table :data="showData" border height="300px">
           <el-table-column
             type="index"
-             label="序号" width="100px">
+            label="序号" width="100px">
           </el-table-column>
           <el-table-column
             prop="y_true"
@@ -19,6 +20,14 @@
           >
           </el-table-column>
         </el-table>
+        <div class="block">
+          <el-pagination style="left: auto;right: auto"
+                         layout="prev, pager, next"
+                         :total="tableData.length" :page-size="100"
+                         @current-change="this.handleCurrentChange"
+          >
+          </el-pagination>
+        </div>
       </el-col>
     </el-row>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
@@ -42,12 +51,12 @@
         trueData: '',
         predictData: '',
         chartOption: {},
-        showData: {},
-        tableData:[],
-        measurePoint:'',
+        showData: [],
+        tableData: [],
+        measurePoint: '',
 
-        tableShowUnit1:'真实值',
-        tableShowUnit2:'预测值',
+        tableShowUnit1: '真实值',
+        tableShowUnit2: '预测值',
 
 
         loading: false,
@@ -55,25 +64,36 @@
       }
     },
     methods: {
-      exportClicked:function(jsonData){
-          let str = this.tableShowUnit1+','+this.tableShowUnit2+'\n';
-          //增加\t为了不让表格显示科学计数法或者其他格式
-          for(let i = 0 ; i < jsonData.length ; i++ ){
-            for(let item in jsonData[i]){
-              str+=`${jsonData[i][item] + '\t'},`;
-            }
-            str+='\n';
+      handleCurrentChange: function (val) {
+        console.log(val)
+        let that = this
+        let len = that.tableData.length
+        let start = (val - 1) * 100
+        let end = val * 100
+        if (end > len) {
+          end = len
+        }
+        that.showData = that.tableData.slice(start, end)
+      },
+      exportClicked: function (jsonData) {
+        let str = this.tableShowUnit1 + ',' + this.tableShowUnit2 + '\n';
+        //增加\t为了不让表格显示科学计数法或者其他格式
+        for (let i = 0; i < jsonData.length; i++) {
+          for (let item in jsonData[i]) {
+            str += `${jsonData[i][item] + '\t'},`;
           }
-          //encodeURIComponent解决中文乱码
-          let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
-          //通过创建a标签实现
-          let link = document.createElement("a");
-          link.href = uri;
-          //对下载的文件命名
-          link.download =  "短期负荷预测导出数据表.csv";
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          str += '\n';
+        }
+        //encodeURIComponent解决中文乱码
+        let uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+        //通过创建a标签实现
+        let link = document.createElement("a");
+        link.href = uri;
+        //对下载的文件命名
+        link.download = "短期负荷预测导出数据表.csv";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       },
       searchClicked: function (data) {
         let that = this
@@ -112,7 +132,7 @@
               data: Array.from({length: that.trueData.length}, (a, i) => i),
               // name: '数据点'
             },
-            yAxis: {scale: true, name: getMeasurePointAndUnit(that.allData.measurePoint,0)},
+            yAxis: {scale: true, name: getMeasurePointAndUnit(that.allData.measurePoint, 0)},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
             series: [
@@ -136,14 +156,15 @@
           chart1.setOption(option1);
 
 
-          for (let i = 0; i < that.trueData.length; i++){
+          for (let i = 0; i < that.trueData.length; i++) {
             let temp = {};
             temp['y_true'] = that.trueData[i];
             temp['y_pred'] = that.predictData[i];
             that.tableData.push(temp);
           }
-          that.tableShowUnit1 = '真实'+that.measurePoint+'值'+'('+getUnit(that.measurePoint)+')';
-          that.tableShowUnit2 = '预测'+that.measurePoint+'值'+'('+getUnit(that.measurePoint)+')';
+          that.tableShowUnit1 = '真实' + that.measurePoint + '值' + '(' + getUnit(that.measurePoint) + ')';
+          that.tableShowUnit2 = '预测' + that.measurePoint + '值' + '(' + getUnit(that.measurePoint) + ')';
+          that.handleCurrentChange(1)
         }).catch(function (error) {
           console.log(error)
           that.$message.error("计算出现错误，请检查所选参数是否正确！")
