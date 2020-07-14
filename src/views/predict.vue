@@ -19,6 +19,11 @@
             :label="tableShowUnit2"
           >
           </el-table-column>
+          <el-table-column
+            prop="wucha"
+            label="预测误差（%）"
+          >
+          </el-table-column>
         </el-table>
         <div class="block">
           <el-pagination style="left: auto;right: auto"
@@ -76,7 +81,7 @@
         that.showData = that.tableData.slice(start, end)
       },
       exportClicked: function (jsonData) {
-        let str = this.tableShowUnit1 + ',' + this.tableShowUnit2 + '\n';
+        let str = this.tableShowUnit1 + ',' + this.tableShowUnit2 + ',' +'预测误差（%）'+ '\n';
         //增加\t为了不让表格显示科学计数法或者其他格式
         for (let i = 0; i < jsonData.length; i++) {
           for (let item in jsonData[i]) {
@@ -160,6 +165,7 @@
             let temp = {};
             temp['y_true'] = that.trueData[i];
             temp['y_pred'] = that.predictData[i];
+            temp['wucha'] = Math.abs(Number(that.predictData[i] - that.trueData[i]) / Number(that.trueData[i]))*100
             that.tableData.push(temp);
           }
           that.tableShowUnit1 = '真实' + that.measurePoint + '值' + '(' + getUnit(that.measurePoint) + ')';
