@@ -112,6 +112,7 @@
           console.log(that.measurePoint)
           that.trueData = data['y_true'];
           that.predictData = data['y_pred'];
+          that.tableData =  []
           var option1 = {
             toolbox: {
               show: true,
