@@ -18,7 +18,7 @@
           </el-col>
           <el-col :span=4>
             <el-select value="" multiple v-model="measurePoint" placeholder="测点选择">
-              <el-option v-for="item in allMeasurePoint" :value="item"/>
+              <el-option v-for="item in limitedMeasurePoint" :value="item"/>
             </el-select>
           </el-col>
           <el-col :span=10>
@@ -74,7 +74,7 @@
   import axios from "axios"
   import MyFrame from "../components/Frame";
   import OlapTable from "../components/olapTable";
-  import {changeDateFormat} from "../tool/toolFunc";
+  import {changeDateFormat, getUnit} from "../tool/toolFunc";
 
   export default {
     name: "zuanqu",
@@ -85,6 +85,15 @@
         temp[0] = "00:00:00"
         temp[1] = "23:59:59"
         return temp
+      },
+      limitedMeasurePoint: function(){
+        let temp = []
+        for(let one of this.allMeasurePoint){
+          if (getUnit(one) == 'kWh' || getUnit(one) == 'kW' || getUnit(one)=='kVar' || getUnit(one)=='kVarh') {
+            temp.push(one)
+          }
+        }
+        return temp;
       }
     },
     data: function () {

@@ -13,11 +13,8 @@
         />
       </el-col>
       <el-col span=5>
-        <el-select v-if="baseLine==true" v-model="measurePoint" 测点选择>
-          <el-option v-for="item in baseLineMeasurePoint" :value="item"/>
-        </el-select>
-        <el-select v-else value="" v-model="measurePoint" placeholder="测点选择">
-          <el-option v-for="item in allMeasurePoint" :value="item"/>
+        <el-select v-model="measurePoint" placeholder="测点选择" >
+          <el-option v-for="item in limitedMeasurePoint" :value="item"/>
         </el-select>
       </el-col>
       <el-col span=10>
@@ -153,10 +150,10 @@
         temp[1] = "23:59:59"
         return temp
       },
-      baseLineMeasurePoint: function(){
+      limitedMeasurePoint: function(){
         let temp = []
         for(let one of this.allMeasurePoint){
-          if (getUnit(one) == 'kWh' || getUnit(one) == 'kW') {
+          if (getUnit(one) == 'kWh' || getUnit(one) == 'kW' || getUnit(one)=='kVar' || getUnit(one)=='kVarh') {
             temp.push(one)
           }
         }
