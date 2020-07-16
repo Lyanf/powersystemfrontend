@@ -1,6 +1,6 @@
 <template>
   <my-frame>
-    <BaseSelectInput title="能耗基线提取" :loading="this.loading" @searchClicked="searchClicked" date-select="date"/>
+    <BaseSelectInput :base-line="true" title="能耗基线提取" :loading="this.loading" @searchClicked="searchClicked" date-select="date"/>
     <div id="chart1" style="height: 600px;width: 100%;"></div>
   </my-frame>
 </template>
@@ -9,7 +9,7 @@
   import MyFrame from "../components/Frame";
   import axios from "axios"
   import * as echarts from 'echarts';
-  import {getMeasurePointAndUnit, getUnit, loadingButton} from "../tool/toolFunc";
+  import {getMeasurePointAndUnit, loadingButton} from "../tool/toolFunc";
   import BaseSelectInput from "../components/BaseSelectInput";
 
   export default {
