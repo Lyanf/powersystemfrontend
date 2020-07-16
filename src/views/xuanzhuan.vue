@@ -147,6 +147,8 @@
         }).catch(function (error) {
           console.log(error)
           that.$message.error("计算出现错误，请检查所选参数是否正确！")
+          that.textr = "旋转"
+          that.flagr = false
           that.loadingButton(false)
 
 
