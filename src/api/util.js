@@ -25,11 +25,11 @@ const catchError = function(error) {
           type: 'warning'
         });
         break;
-      default:
-        Vue.prototype.$message({
-          message: error.response.data.message || '服务端异常，请联系技术支持',
-          type: 'error'
-        });
+      // default:
+      //   Vue.prototype.$message({
+      //     message: error.response.data.message || '服务端异常，请联系技术支持',
+      //     type: 'error'
+      //   });
     }
   }
   return Promise.reject(error);
@@ -37,7 +37,7 @@ const catchError = function(error) {
 const getCookie = function(cname){
   var name = cname + "=";
   var ca = document.cookie.split(';');
-  for(var i=0; i<ca.length; i++) 
+  for(var i=0; i<ca.length; i++)
   {
     var c = ca[i].trim();
     if (c.indexOf(name)==0) return c.substring(name.length,c.length);
@@ -48,7 +48,7 @@ const getCookie = function(cname){
 const setCookie = function(cname,value,expiredays){
   var exdate = new Date();
   exdate.setDate(exdate.getDate() + expiredays);
-  document.cookie = cname + "=" + escape(value) + ((expiredays==null)? "" : ";expiredays=" + exdate.toGMTString());  
+  document.cookie = cname + "=" + escape(value) + ((expiredays==null)? "" : ";expiredays=" + exdate.toGMTString());
 }
 
 const delCookie = function(name){

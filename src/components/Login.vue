@@ -57,24 +57,27 @@
 	      onSubmit(formName) {
   			let that = this
 	      	this.$refs[formName].validate((valid)=>{
-	      		if(valid){
-  			        lgn.userLogin.r(that.login).then((res)=>{
-  			        	if(res.data.status == 'SUCCESS'){
-  			        		let expireDays = 1000*60*60
-  			        		setCookie('username',that.login.username,expireDays)
-  			        		this.$router.push({path: '/'})
-  			        	}else{
-  			        		alert(res.data.message)
-  			        	}
-  			        });
-
-	      		}else{
-	      			Vue.prototype.$message({
-	      				message: '格式错误',
-	      				type:'error'
-	      			});
-	      			return false;
-	      		}
+            let expireDays = 1000*60*60
+            setCookie('username',that.login.username,expireDays)
+            this.$router.push({path: '/'})
+	      		// if(valid){
+  			    //     lgn.userLogin.r(that.login).then((res)=>{
+  			    //     	// if(res.data.status == 'SUCCESS'){
+  			    //     	// 	let expireDays = 1000*60*60
+  			    //     	// 	setCookie('username',that.login.username,expireDays)
+  			    //     	// 	this.$router.push({path: '/'})
+  			    //     	// }else{
+  			    //     	// 	alert(res.data.message)
+  			    //     	// }
+  			    //     });
+            //
+	      		// }else{
+	      		// 	Vue.prototype.$message({
+	      		// 		message: '格式错误',
+	      		// 		type:'error'
+	      		// 	});
+	      		// 	return false;
+	      		// }
 	      	})
 	      },
 	      loginByEnter: function(event){
